@@ -1,0 +1,147 @@
+{
+    "57d64e39-e004-4025-9e85-6c0f54d5e7d2": {
+      "id": "57d64e39-e004-4025-9e85-6c0f54d5e7d2",
+      "rentalPrice": 120.50,
+      "make": "Toyota",
+      "model": "Camry",
+      "year": 2022,
+      "imageUrl": "https://example.com/camry.jpg",
+      "carType": "Sedan",
+      "horsePower": 180,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "A comfortable and fuel-efficient sedan.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Sofia",
+        "address": "Boulevard Vitosha 1",
+        "latitude": 42.6977,
+        "longitude": 23.3219
+      }
+    },
+    "d190d5c0-1ea9-4c42-b5d4-057d05f9b26a": {
+      "id": "d190d5c0-1ea9-4c42-b5d4-057d05f9b26a",
+      "rentalPrice": 150.75,
+      "make": "Honda",
+      "model": "Civic",
+      "year": 2023,
+      "imageUrl": "https://example.com/civic.jpg",
+      "carType": "Compact",
+      "horsePower": 160,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "A reliable and stylish compact car.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Plovdiv",
+        "address": "Boulevard Maritsa 2",
+        "latitude": 42.1354,
+        "longitude": 24.7453
+      }
+    },
+    "b31c13f4-7fe1-4b82-aa6b-26e2f88d9e64": {
+      "id": "b31c13f4-7fe1-4b82-aa6b-26e2f88d9e64",
+      "rentalPrice": 130.25,
+      "make": "Ford",
+      "model": "Escape",
+      "year": 2022,
+      "imageUrl": "https://example.com/escape.jpg",
+      "carType": "SUV",
+      "horsePower": 220,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "An SUV with great cargo space.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Varna",
+        "address": "Boulevard Primorski 3",
+        "latitude": 43.2167,
+        "longitude": 27.9116
+      }
+    },
+    "bc20b071-104c-4ff9-a6f0-6f9e1ac8ce8f": {
+      "id": "bc20b071-104c-4ff9-a6f0-6f9e1ac8ce8f",
+      "rentalPrice": 160.00,
+      "make": "Chevrolet",
+      "model": "Silverado",
+      "year": 2023,
+      "imageUrl": "https://example.com/silverado.jpg",
+      "carType": "Pickup Truck",
+      "horsePower": 300,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "A powerful and rugged pickup truck.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Burgas",
+        "address": "Boulevard Tsarigradsko shose 4",
+        "latitude": 42.5048,
+        "longitude": 27.4626
+      }
+    },
+    "f232b94c-2677-46a3-aa07-9e0b2b8d0c57": {
+      "id": "f232b94c-2677-46a3-aa07-9e0b2b8d0c57",
+      "rentalPrice": 140.75,
+      "make": "Nissan",
+      "model": "Altima",
+      "year": 2023,
+      "imageUrl": "https://example.com/altima.jpg",
+      "carType": "Midsize Sedan",
+      "horsePower": 170,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "A sporty and efficient midsize sedan.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Ruse",
+        "address": "Boulevard Aleksandrovska 5",
+        "latitude": 43.8563,
+        "longitude": 25.9706
+      }
+    },
+    "71c1d9c3-794f-4ed0-8d1c-9aa1ebac7b10": {
+      "id": "71c1d9c3-794f-4ed0-8d1c-9aa1ebac7b10",
+      "rentalPrice": 110.50,
+      "make": "Jeep",
+      "model": "Wrangler",
+      "year": 2022,
+      "imageUrl": "https://example.com/wrangler.jpg",
+      "carType": "SUV",
+      "horsePower": 240,
+      "renterId": null,
+      "renterFullName": null,
+      "renterEmailAddress": null,
+      "rentalStartDate": null,
+      "rentalEndDate": null,
+      "isAvailable": true,
+      "description": "An off-road adventure SUV.",
+      "location": {
+        "country": "Bulgaria",
+        "city": "Stara Zagora",
+        "address": "Boulevard Khan Asparuh 6",
+        "latitude": 42.4258,
+        "longitude": 25.6347
+      }
+    }
+  }
+  
