@@ -4,8 +4,7 @@ import HowItWorks from "../components/HowItWorks";
 import AvailYourCar from "../components/AvailYourCar";
 import CarListing from "../components/CarListing";
 import Features from "../components/Features";
-import Testimonials from "../components/Testimonials";
-import WhatAreYouWaitingFor from "../components/WhatAreYouWaitingFor";
+import MapContainer from "../components/MapContainer";
 import Footer from "../components/Footer";
 import { useState } from "react";
 
@@ -28,8 +27,8 @@ function App() {
 
       {/* <Testimonials /> */}
 
-      <WhatAreYouWaitingFor /> 
-
+      <MapContainer />
+      
       <Footer />
     </>
   );

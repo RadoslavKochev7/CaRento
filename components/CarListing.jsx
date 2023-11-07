@@ -6,25 +6,34 @@ export default function CarListing() {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
-    rentingService.getAllCars()
-    .then((result) => setCars(result));
+    rentingService.getAllCars().then((result) => setCars(result));
   }, []);
 
   return (
     <div className="site-section bg-light">
+      <h1 className="heading text-center">Best Available Cars For Rent!</h1>
+      <h2 style={{ textAlign: "center" }}>
+        <b>You have an extra car, which you don't want to sell ? <br/>That's fine, just
+        press the button below and leave it for rent.</b>
+      </h2>
       <div className="container">
         <div className="row">
           <div className="col-lg-7">
-            <h2 className="section-heading">
+            {/* <h2 className="section-heading">
               <strong>Best Cars</strong>
-            </h2>
-            <p className="mb-5">Available cars for renting</p>
+            </h2> */}
+            <button className="btn btn-info" style={{ marginLeft: 30, marginBottom: 30 }}>
+              + Add Car
+            </button>
+
+            {/* <h4 className="mb-6 text-center">Available cars for renting</h4> */}
           </div>
         </div>
 
         <div className="row">
-          {cars.map(car => ( <Car key={car.id} {...car}/> ))}
-          
+          {cars.map((car) => (
+            <Car key={car.id} {...car} />
+          ))}
 
           {/* <div className="col-md-6 col-lg-4 mb-4">
             <div className="listing d-block  align-items-stretch">

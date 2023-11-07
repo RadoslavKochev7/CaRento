@@ -11,7 +11,7 @@ export default function Car(props) {
         }}
       >
         <div className="listing-img h-100 mr-4">
-          <img src={'images/car_5.jpg'} alt="Image" className="img-fluid" />
+          <img src={imageUrl} alt="Image" className="img-fluid" />
         </div>
         <div className="listing-contents h-100">
           <h3>{make} {model}</h3>
