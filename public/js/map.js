@@ -1,9 +1,9 @@
-// import { getCityName } from 'src/services/locationService.js';
+import * as locationService from 'D:/React/CaRento/src/services/locationService.js';
 
 var map;
-const latitude = 42.7339;
-const longitude = 25.4858;
-const zoomLevel = 7;
+const latitude = 42.7339; // Default map latitude
+const longitude = 25.4858; // Default map longitude
+const zoomLevel = 7; // Default map zoom level
 
 // Initializing the map container
 export const initializeMap = () => {
@@ -25,36 +25,18 @@ export const initializeMap = () => {
   map.on('click', onMapClick);
 }
 
-// TODO: try to import the service somehow
-async function testServRes(latitude, longitude) {
-  const Reverse_Geocoding_Url = `https://api.api-ninjas.com/v1/reversegeocoding?lat=${latitude}&lon=${longitude}`
-  const apiKey = { "X-Api-Key": "Ri0O2NTNQth/Ff/zzdDK5A==ilUiwkcmWHuVknrN" };
-
-  try {
-    const res = await fetch(Reverse_Geocoding_Url, { headers: apiKey });
-    const data = await res.json();
-
-    return Object.values(data);
-  } catch (err) {
-    return console.log(err);
-  }
-
-}
-
+// Fetching the name of the clicked city on the map from external API
 function onMapClick(e) {
   let { lat, lng } = e.latlng;
 
-  testServRes(lat, lng)
+  locationService.getCityName(lat, lng)
     .then(response => {
       L.popup()
         .setLatLng(e.latlng)
         .setContent("Hello, from " + response.map(r => r.name) + '!')
         .openOn(map);
     })
-}
-
-
-
+};
 
 // Adding markers on the map
 export const setMarkers = (cars) => {
@@ -90,7 +72,3 @@ export const setMarkers = (cars) => {
   // document.getElementById('map-button').addEventListener('click', () => console.log("clicked"));
 
 }
-
-{/* <script src='src/services/locationService.js'></script> */}
-
-

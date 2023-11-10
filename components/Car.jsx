@@ -26,7 +26,7 @@ export default function Car(props) {
             </span>
             <span><b>HP: </b></span>
             <span>{horsePower}</span>
-            <span >
+            <span style={{ paddingLeft: 4}}>
               <b>Type:</b> 
             </span>
             <span>{carType}</span>
@@ -43,7 +43,7 @@ export default function Car(props) {
           <span className="caption">
             <b>Description:</b>
           </span>
-          <p>{description}.</p>
+          <p>{description}</p>
           <hr />
           <p>
             <button className="btn btn-primary btn-sm">Rent Now</button>
