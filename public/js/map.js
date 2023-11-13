@@ -36,6 +36,7 @@ function onMapClick(e) {
         .setContent("Hello, from " + response.map(r => r.name) + '!')
         .openOn(map);
     })
+    .catch(err => console.log(err));
 };
 
 // Adding markers on the map

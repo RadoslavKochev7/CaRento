@@ -4,10 +4,6 @@ import * as rentingService from "../src/services/rentingService";
 
 export default function WhatAreYouWaitingFor() {
   const [cars, setCars] = useState([]);
-//   const [coordinates, setCoordinates] = useState([
-//     { id: "", latitude: 0, longitude: 0 },
-//   ]);
-
 
   // Fetching car data from the server
   useEffect(() => {
@@ -22,18 +18,6 @@ export default function WhatAreYouWaitingFor() {
   useEffect(() => {
     map.initializeMap();
   }, []);
-
-// Setting coordinates based on cars data
-//   useEffect(() => {
-//     const carCoordinates = cars.map((car) => ({
-//       id: car.id,
-//       latitude: car.location.latitude,
-//       longitude: car.location.longitude,
-//     }));
-    
-//     // Set the coordinates state with the extracted data
-//     setCoordinates(carCoordinates);
-//   }, [cars]);
 
 // Setting markers on the map for each car
   useEffect(() => {

@@ -1,6 +1,17 @@
 export default function Car(props) {
-    const { id, rentalPrice, make, model, year, imageUrl, carType, horsePower, description } = props;
-    const { country, city, address } = props.location;
+  const {
+    id,
+    rentalPrice,
+    make,
+    model,
+    year,
+    imageUrl,
+    carType,
+    horsePower,
+    description,
+    mileage,
+  } = props;
+  const { country, city, address } = props.location;
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
@@ -14,9 +25,13 @@ export default function Car(props) {
           <img src={imageUrl} alt="Image" className="img-fluid" />
         </div>
         <div className="listing-contents h-100">
-          <h3>{make} {model}</h3>
+          <h3>
+            {make} {model}
+          </h3>
           <div className="rent-price">
-            <span><b>Price:</b></span>
+            <span>
+              <b>Price:</b>
+            </span>
             <strong> {rentalPrice.toFixed(2)}$</strong>
             <span className="mx-1">/</span>day
           </div>
@@ -24,20 +39,20 @@ export default function Car(props) {
             <span className="caption">
               <b>Year:</b> {year}
             </span>
-            <span><b>HP: </b></span>
-            <span>{horsePower}</span>
-            <span style={{ paddingLeft: 4}}>
-              <b>Type:</b> 
+            <span className="caption">
+              <b>HP :</b> {horsePower}
             </span>
-            <span>{carType}</span>
+            <span className="caption">
+              <b>Mileage: </b>
+              {mileage}
+            </span>
           </div>
-         
+
           <div>
             <div className="d-block d-md-flex border-bottom">
               <span>
                 <b>Location:</b> {city}, {address}
               </span>
-              
             </div>
           </div>
           <span className="caption">
