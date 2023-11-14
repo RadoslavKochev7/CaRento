@@ -33,7 +33,7 @@ function onMapClick(e) {
     .then(response => {
       L.popup()
         .setLatLng(e.latlng)
-        .setContent("Hello, from " + response.map(r => r.name) + '!')
+        .setContent("Hello, from " + response[0].name + '!')
         .openOn(map);
     })
     .catch(err => console.log(err));
@@ -52,7 +52,7 @@ export const setMarkers = (cars) => {
         <div class="listing-contents h-100">
           <h3>${car.make} ${car.model}</h3>
           <div>
-            <strong>${car.rentalPrice.toFixed(2)}$</strong><span class="mx-1">/</span>day
+            <strong>${car.rentalPrice}$</strong><span class="mx-1">/</span>day
           </div>
           <div>
             <div>

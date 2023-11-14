@@ -7,8 +7,7 @@ export const getCityCoordinates = async (cityName, countryName) => {
             { headers: apiKey });
         const data = await res.json();
 
-        // return Object.values(data);
-        return console.log(Object.values(data));
+        return Object.values(data);
     } catch (err) {
         return console.log(err);
     }
@@ -20,7 +19,6 @@ export const getCityName = async (currentLatitude, currentLongitude) => {
             { headers: apiKey });
 
         const data = await res.json();
-
         return Object.values(data);
     } catch (err) {
         return console.log(err);

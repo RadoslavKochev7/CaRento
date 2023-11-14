@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Modal, Form, Button, ButtonGroup  } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
+import styles from "./AddCarModalForm.module.css";
+import * as rentingService from "../src/services/rentingService";
 
 const formInitialState = {
   model: "",
@@ -12,7 +14,6 @@ const formInitialState = {
   description: "",
   city: "",
   country: "",
-  fuelConsumption: "",
   address: "",
 };
 
@@ -20,27 +21,40 @@ export default function AddCarModalForm() {
   const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
+  const [selected, setSelected] = useState("Diesel");
 
-  console.log(formValues);
-  console.log(validations);
-
-  const onSubmitHandler = (e) => {
+  const handleDropdownBehavior = (e) => {
     e.preventDefault();
-    let value = "";
-    console.log("on submit");
-    if (value === "") {
-      setValidations((state) => ({
-        ...state,
-        [e.target.name]: "Field is required",
-      }));
-    } else {
-      setValidations((state) => ({
-        ...state,
-        [e.target.name]: ""
-      }));
-    }
+    setSelected(e.target.text);
+  };
 
-    setShowModal(false);
+//   const addCarHandler = async () => {
+//     await rentingService.addCar(...formValues, selected);
+//     setShowModal(false);
+//     setFormValues(formInitialState);
+//   };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    let isValid = true;
+
+    // if (Object.values(formValues).some((x) => !x)) {
+    //   setValidations((state) => ({
+    //     ...state,
+    //     [e.target.name]: "Field is required",
+    //   }));
+
+    //   isValid = false;
+    // }
+
+    // if (!isValid) {
+    //     console.log("not valid")
+    //   return;
+    // }
+
+    await rentingService.addCar({...formValues, selected});
+    // setShowModal(false);
+    // setFormValues(formInitialState);
   };
 
   const changeInputValueHandler = (e) => {
@@ -49,6 +63,9 @@ export default function AddCarModalForm() {
     switch (e.target.type) {
       case "number":
         value = Number(e.target.value);
+        break;
+      case "month":
+        value = e.target.value.toString();
         break;
       default:
         value = e.target.value;
@@ -59,6 +76,11 @@ export default function AddCarModalForm() {
       ...state,
       [e.target.name]: value,
     }));
+
+    setValidations((state) => ({
+      ...state,
+      [e.target.name]: "",
+    }));
   };
 
   return (
@@ -66,18 +88,25 @@ export default function AddCarModalForm() {
       <Button variant="primary" onClick={() => setShowModal(true)}>
         + Add Car
       </Button>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+          setFormValues(formInitialState);
+        }}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Car Form</Modal.Title>
+          <Modal.Title>Please, populate the fields below</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={onSubmitHandler}>
+          <Form className={styles.addCarModalForm} onSubmit={onSubmitHandler}>
             <Form.Group>
-              <Form.Label>Make</Form.Label>
+              <Form.Label className={styles.formLabel}>Make</Form.Label>
               <Form.Control
                 type="text"
                 name="make"
-                placeholder="Enter your car's make"
+                required
+                placeholder="Enter car's make"
                 value={formValues.make}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.make}
@@ -87,63 +116,180 @@ export default function AddCarModalForm() {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Model</Form.Label>
+              <Form.Label className={styles.formLabel}>Model</Form.Label>
               <Form.Control
                 type="text"
                 name="model"
-                placeholder="Enter your car's model"
+                required
+                placeholder="Enter car's model"
                 value={formValues.model}
                 onChange={changeInputValueHandler}
+                isInvalid={!!validations.model}
               />
+              <Form.Control.Feedback type="invalid">
+                {validations.model}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Image URL</Form.Label>
+              <Form.Label className={styles.formLabel}>Image URL</Form.Label>
               <Form.Control
                 type="text"
                 name="imageUrl"
                 placeholder="Enter valid image url"
                 value={formValues.imageUrl}
                 onChange={changeInputValueHandler}
-                //   isInvalid={!!passwordError}
+                isInvalid={!!validations.imageUrl}
               />
-              {/* <Form.Control.Feedback type="invalid">
-              {passwordError}
-            </Form.Control.Feedback> */}
+              <Form.Control.Feedback type="invalid">
+                {validations.imageUrl}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Price</Form.Label>
+              <Form.Label className={styles.formLabel}>Price</Form.Label>
               <Form.Control
                 type="number"
                 name="price"
-                placeholder="Enter the price for a day"
+                placeholder="Enter price for a day"
                 min={0}
                 required
                 value={formValues.price}
                 onChange={changeInputValueHandler}
-                //   isInvalid={!!emailError}
+                isInvalid={!!validations.price}
               />
-              {/* <Form.Control.Feedback type="invalid">
-              {emailError}
-            </Form.Control.Feedback> */}
+              <Form.Control.Feedback type="invalid">
+                {validations.price}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Year</Form.Label>
+              <Form.Label className={styles.dateInput}>Year</Form.Label>
               <Form.Control
-                type="date"
+                type="month"
                 name="year"
+                required
                 value={formValues.year}
                 onChange={changeInputValueHandler}
-                //   isInvalid={!!emailError}
+                isInvalid={!!validations.year}
               />
-              {/* <Form.Control.Feedback type="invalid">
-              {emailError}
-            </Form.Control.Feedback> */}
+              <Form.Control.Feedback type="invalid">
+                {validations.year}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <ButtonGroup aria-label="Buttons">
-                {/* <Button
+              <Form.Label className={styles.formLabel}>Horse Power</Form.Label>
+              <Form.Control
+                type="number"
+                name="horsePower"
+                placeholder="Enter car's horse power"
+                min={0}
+                value={formValues.horsePower}
+                onChange={changeInputValueHandler}
+                isInvalid={!!validations.horsePower}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validations.horsePower}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>Mileage</Form.Label>
+              <Form.Control
+                type="number"
+                name="mileage"
+                placeholder="Enter car's mileage"
+                min={0}
+                value={formValues.mileage}
+                onChange={changeInputValueHandler}
+                isInvalid={!!validations.mileage}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validations.mileage}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>City</Form.Label>
+              <Form.Control
+                type="text"
+                name="city"
+                required
+                placeholder="Enter car's city"
+                value={formValues.city}
+                onChange={changeInputValueHandler}
+                isInvalid={!!validations.city}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validations.city}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                required
+                placeholder="Enter car's address"
+                value={formValues.address}
+                onChange={changeInputValueHandler}
+                isInvalid={!!validations.city}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validations.city}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>Country</Form.Label>
+              <Form.Control
+                type="text"
+                name="country"
+                required
+                placeholder="Enter car's country"
+                value={formValues.country}
+                onChange={changeInputValueHandler}
+                isInvalid={!!validations.make}
+              />
+              <Form.Control.Feedback type="invalid">
+                {validations.country}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>Description</Form.Label>
+              <Form.Control
+                type="text"
+                name="description"
+                placeholder="Enter description"
+                value={formValues.description}
+                onChange={changeInputValueHandler}
+              />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label className={styles.formLabel}>Fuel Type</Form.Label>
+              <Dropdown>
+                <Dropdown.Toggle
+                  className={styles.formDropdown}
+                  variant="transperant"
+                  id="dropdown-basic"
+                >
+                  {selected}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu onClick={handleDropdownBehavior}>
+                  <Dropdown.Item>Diesel</Dropdown.Item>
+                  <Dropdown.Item>Gas</Dropdown.Item>
+                  <Dropdown.Item>Gasoline</Dropdown.Item>
+                  <Dropdown.Item>Electric</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Form.Group>
+
+            <Form.Group>
+              <ButtonGroup className={styles.buttonGroup} aria-label="Buttons">
+                <Button
                   className="btn btn-info"
                   type="reset"
                   onClick={() => {
@@ -152,49 +298,23 @@ export default function AddCarModalForm() {
                   }}
                 >
                   Reset
-                </Button> */}
+                </Button>
                 <Button
                   className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setShowModal(false);
+                    setFormValues(formInitialState);
+                  }}
                 >
                   Cancel
                 </Button>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  // onClick={(e) => console.log(e.target)}
-                >
+                <Button variant="primary" type="submit">
                   Save
                 </Button>
               </ButtonGroup>
             </Form.Group>
           </Form>
         </Modal.Body>
-        {/* <Modal.Footer> */}
-          {/* <Button
-            className="btn btn-info"
-            type="reset"
-            onClick={() => {(
-                setFormValues(formInitialState)); 
-                setValidations({})}
-            }
-          >
-            Reset
-          </Button>
-          <Button
-            className="btn btn-secondary"
-            onClick={() => setShowModal(false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            // onClick={(e) => console.log(e.target)}
-          >
-            Save
-          </Button> */}
-        {/* </Modal.Footer> */}
       </Modal>
     </div>
   );

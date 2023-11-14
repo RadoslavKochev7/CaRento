@@ -1,0 +1,29 @@
+.addCarModalForm {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.formLabel {
+    margin: 0;
+    font-weight: 600;
+}
+
+.dateInput {
+    margin-bottom: 0;
+    font-weight: 600;
+    width: 210px;
+}
+
+.formDropdown {
+    width: 210px;
+    border: 1px solid lightgrey;
+    padding: 14px;
+}

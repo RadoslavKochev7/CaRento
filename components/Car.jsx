@@ -1,6 +1,6 @@
 export default function Car(props) {
   const {
-    id,
+    _id,
     rentalPrice,
     make,
     model,
@@ -32,7 +32,7 @@ export default function Car(props) {
             <span>
               <b>Price:</b>
             </span>
-            <strong> {rentalPrice.toFixed(2)}$</strong>
+            <strong> {rentalPrice}$</strong>
             <span className="mx-1">/</span>day
           </div>
           <div className="listing-feature pr-4">
