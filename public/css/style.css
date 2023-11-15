@@ -431,10 +431,10 @@ h1, h2, h3, h4, h5,
   font-size: large;
   margin-bottom: 0px;
   z-index: 9;
-  position: absolute;
   top: 0;
   width: 100%;
-  padding: 1rem; }
+  padding: 1rem; 
+  background-color: rgb(227, 223, 218) !important}
   @media (max-width: 991.98px) {
     .site-navbar {
       padding-top: 3rem;

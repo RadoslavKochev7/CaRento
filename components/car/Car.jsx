@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import styles from "./Car.module.css";
 
 export default function Car(props) {
   const {
@@ -11,12 +12,11 @@ export default function Car(props) {
     model,
     year,
     imageUrl,
-    carType,
     horsePower,
     description,
     mileage,
   } = props;
-  const { country, city, address } = props.location;
+  const { city, address } = props.location;
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
@@ -41,7 +41,7 @@ export default function Car(props) {
             <strong> {rentalPrice}$</strong>
             <span className="mx-1">/</span>day
           </div>
-          <div className="listing-feature pr-4">
+          <div className="listing-feature">
             <span className="caption">
               <b>Year:</b> {year}
             </span>
@@ -50,36 +50,36 @@ export default function Car(props) {
             </span>
             <span className="caption">
               <b>Mileage: </b>
-              {mileage}
+              {mileage} km
             </span>
           </div>
 
           <div>
             <div className="d-block d-md-flex border-bottom">
               <span>
-                <b>Location:</b> {city}, {address}
+                <b>City:</b> {city}
               </span>
             </div>
           </div>
           <span className="caption">
             <b>Description:</b>
           </span>
-          <p>{description}</p>
+          <p className={styles.desc}>{description}</p>
           <hr />
-          <div className="button-group" style={{ padding: '4px'}}>
-            <button className="btn btn-success">
-            <span>
+          <div className={styles.buttons}>
+            <button className={`btn btn-success ${styles.buttonItem}`}>
+            <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPlus} />
               </span>
               Rent Now</button>
-            <button className="btn btn-danger">
-              <span>
+            <button className={`btn btn-danger ${styles.buttonItem}`}>
+              <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faTrashCan} />
               </span>
               Delete
             </button>
-            <button className="btn btn-warning">
-              <span>
+            <button className={`btn btn-warning ${styles.buttonEdit}`}>
+              <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPenToSquare} />
               </span>
               Edit

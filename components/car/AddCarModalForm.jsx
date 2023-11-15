@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
 import styles from "./AddCarModalForm.module.css";
-import * as rentingService from "../src/services/rentingService";
+import * as rentingService from "../../src/services/rentingService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 

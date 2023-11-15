@@ -1,6 +1,6 @@
 import Car from "./Car";
 import { useEffect, useState } from "react";
-import * as rentingService from "../src/services/rentingService";
+import * as rentingService from "../../src/services/rentingService";
 import AddCarModalForm from "./AddCarModalForm";
 
 export default function CarListing() {
@@ -24,7 +24,7 @@ export default function CarListing() {
       </h2>
       <div className="container">
         <div className="row">
-          <div className="col-lg-7" style={{ marginLeft: 30, marginBottom: 30 }}>
+          <div className="col-lg-7" style={{ marginTop: 30, marginBottom: 30 }}>
             <AddCarModalForm />
           </div>
         </div>

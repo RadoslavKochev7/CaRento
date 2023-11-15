@@ -1,0 +1,32 @@
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.buttonItem {
+    margin: 0;
+    padding: 12px;
+    color: black;
+}
+
+.buttonEdit {
+    margin: 0;
+    padding: 12px;
+    color: black;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.buttonEdit:hover {
+    color: #ffff;
+}
+
+.desc {
+    font-size: unset !important;
+}
+
+.spanSVG {
+    padding-right: 4px;
+}
