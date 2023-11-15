@@ -1,10 +1,11 @@
-import Car from "./Car";
 import { useEffect, useState } from "react";
-import * as rentingService from "../../src/services/rentingService";
+import Car from "./Car";
 import AddCarModalForm from "./AddCarModalForm";
+import * as rentingService from "../../src/services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
+  const [currentCarId, setCurrentCarId] = useState(null);
 
   useEffect(() => {
     rentingService
@@ -12,6 +13,16 @@ export default function CarListing() {
       .then((result) => setCars(result))
       .catch((err) => console.error(err));
   }, []);
+
+  const onDeleteClickHandler = (carId) => {
+    setCurrentCarId(carId);
+    deleteHandler();
+  };
+
+  const deleteHandler = async () => {
+    await rentingService.deleteCarById(currentCarId);
+    setCars((state) => state.filter((car) => car._id !== currentCarId));
+  };
 
   return (
     <div className="site-section bg-light">
@@ -31,7 +42,7 @@ export default function CarListing() {
 
         <div className="row">
           {cars.map((car) => (
-            <Car key={car._id} {...car} />
+            <Car key={car._id} {...car} deleteHandler={onDeleteClickHandler} />
           ))}
         </div>
       </div>

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import DeleteModal from "../DeleteModal";
 import styles from "./Car.module.css";
 
 export default function Car(props) {
@@ -15,12 +17,21 @@ export default function Car(props) {
     horsePower,
     description,
     mileage,
+    deleteHandler,
   } = props;
   const { city, address } = props.location;
 
+  const [showDelete, setShowDelete] = useState(false);
+  const setUserIdToDeleteHandler = () => {
+    setShowDelete(true);
+    const carId = _id;
+    deleteHandler(carId);
+  };
+
   return (
     <div className="col-md-6 col-lg-4 mb-4">
-      <span style={{ display: "none"}}>{_id}</span>
+      {showDelete && <DeleteModal />}
+      <span style={{ display: "none" }}>{_id}</span>
       <div
         className="listing d-block  align-items-stretch"
         style={{
@@ -68,11 +79,15 @@ export default function Car(props) {
           <hr />
           <div className={styles.buttons}>
             <button className={`btn btn-success ${styles.buttonItem}`}>
-            <span className={styles.spanSVG}>
+              <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPlus} />
               </span>
-              Rent Now</button>
-            <button className={`btn btn-danger ${styles.buttonItem}`}>
+              Rent Now
+            </button>
+            <button
+              className={`btn btn-danger ${styles.buttonItem}`}
+              onClick={setUserIdToDeleteHandler}
+            >
               <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faTrashCan} />
               </span>
