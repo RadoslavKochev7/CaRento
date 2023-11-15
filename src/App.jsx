@@ -4,30 +4,16 @@ import HowItWorks from "../components/HowItWorks";
 import AvailYourCar from "../components/AvailYourCar";
 import CarListing from "../components/CarListing";
 import Features from "../components/Features";
-import MapContainer from "../components/MapContainer";
 import Footer from "../components/Footer";
 import { useState } from "react";
+import AllCars from "../components/AllCars";
 
 function App() {
-  
-
   return (
     <>
-      <Header /> 
-
-      <Hero />
-
-      <HowItWorks />
-
-      <AvailYourCar />
-
-      <CarListing />
-
-      {/* <Features /> */}
-
-      {/* <Testimonials /> */}
-
-      <MapContainer />
+      <Header />
+      
+      <AllCars />
       
       <Footer />
     </>

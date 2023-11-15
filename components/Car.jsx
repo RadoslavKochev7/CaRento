@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Car(props) {
   const {
@@ -18,6 +20,7 @@ export default function Car(props) {
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
+      <span style={{ display: "none"}}>{_id}</span>
       <div
         className="listing d-block  align-items-stretch"
         style={{
@@ -63,13 +66,23 @@ export default function Car(props) {
           </span>
           <p>{description}</p>
           <hr />
-          <div className="button-group">
-            <button className="btn btn-success">Rent Now</button>
+          <div className="button-group" style={{ padding: '4px'}}>
+            <button className="btn btn-success">
+            <span>
+                <FontAwesomeIcon icon={faPlus} />
+              </span>
+              Rent Now</button>
             <button className="btn btn-danger">
               <span>
                 <FontAwesomeIcon icon={faTrashCan} />
               </span>
               Delete
+            </button>
+            <button className="btn btn-warning">
+              <span>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </span>
+              Edit
             </button>
           </div>
         </div>
