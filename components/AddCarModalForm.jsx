@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
 import styles from "./AddCarModalForm.module.css";
 import * as rentingService from "../src/services/rentingService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const formInitialState = {
   model: "",
@@ -28,11 +30,15 @@ export default function AddCarModalForm() {
     setSelected(e.target.text);
   };
 
-//   const addCarHandler = async () => {
-//     await rentingService.addCar(...formValues, selected);
-//     setShowModal(false);
-//     setFormValues(formInitialState);
-//   };
+  const closeModalHandler = () => {
+    setShowModal(false);
+    setFormValues(formInitialState);
+  };
+  //   const addCarHandler = async () => {
+  //     await rentingService.addCar(...formValues, selected);
+  //     setShowModal(false);
+  //     setFormValues(formInitialState);
+  //   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -52,7 +58,7 @@ export default function AddCarModalForm() {
     //   return;
     // }
 
-    await rentingService.addCar({...formValues, selected});
+    await rentingService.addCar({ ...formValues, selected });
     // setShowModal(false);
     // setFormValues(formInitialState);
   };
@@ -88,15 +94,12 @@ export default function AddCarModalForm() {
       <Button variant="primary" onClick={() => setShowModal(true)}>
         + Add Car
       </Button>
-      <Modal
-        show={showModal}
-        onHide={() => {
-          setShowModal(false);
-          setFormValues(formInitialState);
-        }}
-      >
-        <Modal.Header closeButton>
+      <Modal show={showModal} onHide={closeModalHandler}>
+        <Modal.Header>
           <Modal.Title>Please, populate the fields below</Modal.Title>
+          <button className={styles.closeButton}>
+          <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
+          </button>
         </Modal.Header>
         <Modal.Body>
           <Form className={styles.addCarModalForm} onSubmit={onSubmitHandler}>

@@ -28,7 +28,7 @@ export const getCarById = async (carId) => {
     }
 }
 
-// Sends a DELETE request to the server and returs the deleted car
+// Sends a DELETE request to the server and returs the deleted car 
 export const deleteCarById = async (carId) => {
     try {
         const res = await fetch(`${BASE_URL}${carId}`, { method: 'DELETE' });
@@ -41,6 +41,7 @@ export const deleteCarById = async (carId) => {
     }
 }
 
+// Sends a POST request to the server and returns the added car data
 export const addCar = async (data) => {
     const coordinates = await getCityCoordinates(data.city, data.country);
 
@@ -64,12 +65,12 @@ export const addCar = async (data) => {
                 longitude: coordinates[0].longitude
             }
         };
-        const car = await fetch(BASE_URL, {
+        const response = await fetch(BASE_URL, {
             method: 'POST',
             body: JSON.stringify(carBody)
         });
 
-        const result = await car.json();
+        const result = await response.json();
         return result;
     } catch (err) {
         return console.log(err);

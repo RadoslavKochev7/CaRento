@@ -27,3 +27,28 @@
     border: 1px solid lightgrey;
     padding: 14px;
 }
+
+.closeButton {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #ffffff80;
+    opacity: .5; 
+}
+
+.closeButton:hover {
+    color: #000;
+    text-decoration: none; 
+  }
+.closeButton:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+    opacity: .75; 
+}
+

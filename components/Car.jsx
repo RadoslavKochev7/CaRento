@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+
 export default function Car(props) {
   const {
     _id,
@@ -60,9 +63,15 @@ export default function Car(props) {
           </span>
           <p>{description}</p>
           <hr />
-          <p>
-            <button className="btn btn-primary btn-sm">Rent Now</button>
-          </p>
+          <div className="button-group">
+            <button className="btn btn-success">Rent Now</button>
+            <button className="btn btn-danger">
+              <span>
+                <FontAwesomeIcon icon={faTrashCan} />
+              </span>
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

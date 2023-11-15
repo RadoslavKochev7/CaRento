@@ -25,11 +25,7 @@ export default function CarListing() {
       <div className="container">
         <div className="row">
           <div className="col-lg-7" style={{ marginLeft: 30, marginBottom: 30 }}>
-            {/* <h2 className="section-heading">
-              <strong>Best Cars</strong>
-            </h2> */}
             <AddCarModalForm />
-            {/* <h4 className="mb-6 text-center">Available cars for renting</h4> */}
           </div>
         </div>
 
