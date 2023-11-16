@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
-import styles from "./AddCarModalForm.module.css";
-import * as rentingService from "../../src/services/rentingService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import * as rentingService from "../../src/services/rentingService";
+import styles from "./AddCarModalForm.module.css";
 
 const formInitialState = {
   model: "",
@@ -19,7 +19,7 @@ const formInitialState = {
   address: "",
 };
 
-export default function AddCarModalForm() {
+export default function AddCarModalForm({onSubmit}) {
   const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
@@ -58,8 +58,9 @@ export default function AddCarModalForm() {
     //   return;
     // }
 
-    await rentingService.addCar({ ...formValues, selected });
-    // setShowModal(false);
+    // await rentingService.addCar({ ...formValues, selected });
+    setShowModal(false);
+    onSubmit({ ...formValues, selected })
     // setFormValues(formInitialState);
   };
 
@@ -108,7 +109,7 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="text"
                 name="make"
-                required
+                // required
                 placeholder="Enter car's make"
                 value={formValues.make}
                 onChange={changeInputValueHandler}
@@ -123,7 +124,7 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="text"
                 name="model"
-                required
+                // required
                 placeholder="Enter car's model"
                 value={formValues.model}
                 onChange={changeInputValueHandler}
@@ -155,7 +156,7 @@ export default function AddCarModalForm() {
                 name="price"
                 placeholder="Enter price for a day"
                 min={0}
-                required
+                // required
                 value={formValues.price}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.price}
@@ -170,7 +171,7 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="month"
                 name="year"
-                required
+                // required
                 value={formValues.year}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.year}
@@ -216,7 +217,7 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="text"
                 name="city"
-                required
+                // required
                 placeholder="Enter car's city"
                 value={formValues.city}
                 onChange={changeInputValueHandler}
@@ -232,7 +233,6 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="text"
                 name="address"
-                required
                 placeholder="Enter car's address"
                 value={formValues.address}
                 onChange={changeInputValueHandler}
@@ -248,7 +248,7 @@ export default function AddCarModalForm() {
               <Form.Control
                 type="text"
                 name="country"
-                required
+                // required
                 placeholder="Enter car's country"
                 value={formValues.country}
                 onChange={changeInputValueHandler}

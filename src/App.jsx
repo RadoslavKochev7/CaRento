@@ -13,7 +13,7 @@ function App() {
     <>
       <Header />
       
-      <AllCars />
+      <CarListing />
 
       <Footer />
     </>

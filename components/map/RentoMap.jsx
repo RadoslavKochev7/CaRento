@@ -11,7 +11,7 @@ import * as rentingService from "../../src/services/rentingService";
 import * as locationService from "../../src/services/locationService.js";
 import PopupBody from "./PopupBody";
 
-export default function RentoMap() {
+export default function RentoMap({ carsData }) {
   const latitude = 42.7339; // Default map latitude
   const longitude = 25.4858; // Default map longitude
   const zoomLevel = 7; // Default map zoom level
@@ -19,11 +19,8 @@ export default function RentoMap() {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
-    rentingService
-      .getAllCars()
-      .then((result) => setCars(result))
-      .catch((err) => console.error(err));
-  }, []);
+    setCars(carsData)
+  }, [carsData]);
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
@@ -55,7 +52,7 @@ export default function RentoMap() {
         pathOptions={{ fillColor: "#f03", fillOpacity: 0.5, color: "red" }}
         radius={4000}
       >
-        <Popup autoPan={true}>You are here</Popup>
+        <Popup>You are here</Popup>
       </Circle>
     );
   }

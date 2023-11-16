@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import DeleteModal from "../DeleteModal";
 import styles from "./Car.module.css";
+import DeleteModal from "../DeleteModal";
 
 export default function Car(props) {
   const {
@@ -17,20 +17,33 @@ export default function Car(props) {
     horsePower,
     description,
     mileage,
-    deleteHandler,
+    onDeleteHandler,
   } = props;
   const { city, address } = props.location;
 
-  const [showDelete, setShowDelete] = useState(false);
-  const setUserIdToDeleteHandler = () => {
-    setShowDelete(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const onDeleteModalClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const deleteModalHandler = () => {
     const carId = _id;
-    deleteHandler(carId);
+    onDeleteHandler(carId);
+  };
+
+  const closeModal = () => {
+    setShowDeleteModal(false);
   };
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
-      {showDelete && <DeleteModal />}
+      {showDeleteModal && (
+        <DeleteModal
+          deleteHandler={deleteModalHandler}
+          closeModalHandler={closeModal}
+        />
+      )}
       <span style={{ display: "none" }}>{_id}</span>
       <div
         className="listing d-block  align-items-stretch"
@@ -86,7 +99,7 @@ export default function Car(props) {
             </button>
             <button
               className={`btn btn-danger ${styles.buttonItem}`}
-              onClick={setUserIdToDeleteHandler}
+              onClick={onDeleteModalClick}
             >
               <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faTrashCan} />

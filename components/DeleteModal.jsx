@@ -1,21 +1,23 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
-export default function DeleteModal() {
-  const [show, setShow] = useState(true);
+export default function DeleteModal({ deleteHandler, closeModalHandler }) {
+  const handleClose = () => {
+    closeModalHandler();
+  };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const deleteResult = () => {
+    closeModalHandler();
+    deleteHandler();
+  };
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button> */}
-
       <Modal
-        show={show}
+        show={true}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -28,7 +30,10 @@ export default function DeleteModal() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="danger" onClick={deleteResult}>
+            <FontAwesomeIcon icon={faTrashCan} />
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
