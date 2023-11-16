@@ -6,7 +6,6 @@ import CarListing from "../components/car/CarListing";
 import Features from "../components/Features";
 import Footer from "../components/Footer";
 import { useState } from "react";
-import AllCars from "../components/car/AllCars";
 
 function App() {
   return (

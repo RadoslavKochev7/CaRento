@@ -19,7 +19,7 @@ const formInitialState = {
   address: "",
 };
 
-export default function AddCarModalForm({onSubmit}) {
+export default function AddCarModalForm({ onSubmit }) {
   const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
@@ -60,7 +60,7 @@ export default function AddCarModalForm({onSubmit}) {
 
     // await rentingService.addCar({ ...formValues, selected });
     setShowModal(false);
-    onSubmit({ ...formValues, selected })
+    onSubmit({ ...formValues, selected });
     // setFormValues(formInitialState);
   };
 
@@ -99,7 +99,7 @@ export default function AddCarModalForm({onSubmit}) {
         <Modal.Header>
           <Modal.Title>Please, populate the fields below</Modal.Title>
           <button className={styles.closeButton}>
-          <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
+            <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
           </button>
         </Modal.Header>
         <Modal.Body>

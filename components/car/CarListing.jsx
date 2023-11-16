@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Car from "./Car";
 import AddCarModalForm from "./AddCarModalForm";
-import * as rentingService from "../../src/services/rentingService";
 import RentoMap from "../map/RentoMap";
+import * as rentingService from "../../src/services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
