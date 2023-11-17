@@ -19,7 +19,7 @@ export default function Car(props) {
     mileage,
     onDeleteHandler,
   } = props;
-  const { city, address } = props.location;
+  const { city, country } = props.location;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -44,9 +44,8 @@ export default function Car(props) {
           closeModalHandler={closeModal}
         />
       )}
-      <span style={{ display: "none" }}>{_id}</span>
       <div
-        className="listing d-block  align-items-stretch"
+        className="listing d-block align-items-stretch"
         style={{
           background: "#e3dfda",
         }}
@@ -79,9 +78,13 @@ export default function Car(props) {
           </div>
 
           <div>
-            <div className="d-block d-md-flex border-bottom">
-              <span>
+            <div>
+              <span className="caption">
                 <b>City:</b> {city}
+              </span>
+              <span className="caption">
+                <b>Country: </b>
+                {country}
               </span>
             </div>
           </div>

@@ -34,31 +34,25 @@ export default function AddCarModalForm({ onSubmit }) {
     setShowModal(false);
     setFormValues(formInitialState);
   };
-  //   const addCarHandler = async () => {
-  //     await rentingService.addCar(...formValues, selected);
-  //     setShowModal(false);
-  //     setFormValues(formInitialState);
-  //   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     let isValid = true;
 
-    // if (Object.values(formValues).some((x) => !x)) {
-    //   setValidations((state) => ({
-    //     ...state,
-    //     [e.target.name]: "Field is required",
-    //   }));
+    if (Object.values(formValues).some((x) => !x)) {
+      setValidations((state) => ({
+        ...state,
+        [e.target.name]: "Field is required",
+      }));
 
-    //   isValid = false;
-    // }
+      isValid = false;
+    }
 
-    // if (!isValid) {
-    //     console.log("not valid")
-    //   return;
-    // }
+    if (!isValid) {
+        console.log("not valid")
+      return;
+    }
 
-    // await rentingService.addCar({ ...formValues, selected });
     setShowModal(false);
     onSubmit({ ...formValues, selected });
     // setFormValues(formInitialState);

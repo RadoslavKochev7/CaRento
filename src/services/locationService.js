@@ -13,9 +13,9 @@ export const getCityCoordinates = async (cityName, countryName) => {
     }
 }
 
-export const getCityName = async (currentLatitude, currentLongitude) => {
+export const getCityName = async (latitude, longitude) => {
     try {
-        const res = await fetch(`https://api.api-ninjas.com/v1/reversegeocoding?lat=${currentLatitude}&lon=${currentLongitude}`,
+        const res = await fetch(`https://api.api-ninjas.com/v1/reversegeocoding?lat=${latitude}&lon=${longitude}`,
             { headers: apiKey });
 
         const data = await res.json();
