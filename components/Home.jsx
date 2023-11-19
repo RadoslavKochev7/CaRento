@@ -80,11 +80,8 @@ export default function Home() {
                 <span>1</span>
                 <div className="step-inner">
                   <span className="number text-primary">01.</span>
-                  <h3>Select a car</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Vero, laboriosam!
-                  </p>
+                  <h3>Sign Up or Login</h3>
+                  <p>Follow the links for login or sign-up</p>
                 </div>
               </div>
             </div>
@@ -93,11 +90,8 @@ export default function Home() {
                 <span>2</span>
                 <div className="step-inner">
                   <span className="number text-primary">02.</span>
-                  <h3>Fill up form</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Vero, laboriosam!
-                  </p>
+                  <h3>Choose</h3>
+                  <p>Select a car from our map or catalogue</p>
                 </div>
               </div>
             </div>
@@ -106,10 +100,9 @@ export default function Home() {
                 <span>3</span>
                 <div className="step-inner">
                   <span className="number text-primary">03.</span>
-                  <h3>Payment</h3>
+                  <h3>Enjoy</h3>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Vero, laboriosam!
+                    Enjoy driving with the best rental cars
                   </p>
                 </div>
               </div>

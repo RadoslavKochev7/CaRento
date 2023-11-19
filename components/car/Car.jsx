@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
 import DeleteModal from "../DeleteModal";
 
@@ -22,6 +23,7 @@ export default function Car(props) {
   const { city, country } = props.location;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   const onDeleteModalClick = () => {
     setShowDeleteModal(true);
@@ -91,11 +93,11 @@ export default function Car(props) {
           <p className={styles.desc}>{description}</p>
           <hr />
           <div className={styles.buttons}>
-            <button className={`btn btn-success ${styles.buttonItem}`}>
+            <button className={`btn btn-info ${styles.buttonItem}`} onClick={() => navigate(`/cars/details/${_id}`)}>
               <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPlus} />
               </span>
-              Rent Now
+              Details
             </button>
             <button
               className={`btn btn-danger ${styles.buttonItem}`}

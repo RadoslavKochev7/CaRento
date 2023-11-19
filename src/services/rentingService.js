@@ -21,8 +21,7 @@ export const getCarById = async (carId) => {
         const res = await fetch(`${BASE_URL}${carId}`);
         const data = await res.json();
 
-        // return Object.values(data);
-        return console.log(Object.values(data))
+        return data
     } catch (err) {
         return console.log(err);
     }
@@ -33,7 +32,7 @@ export const deleteCarById = async (carId) => {
     try {
         const res = await fetch(`${BASE_URL}${carId}`, { method: 'DELETE' });
         const data = await res.json();
-        
+
         return data;
     } catch (err) {
         return console.log(err);
