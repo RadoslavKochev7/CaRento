@@ -1,3 +1,9 @@
+.card {
+    background-color: #e3dfda;
+    box-shadow: 0 15px 24px 0 grey;
+    opacity: 0.9;
+}
+
 .buttons {
     display: flex;
     width: 100%;

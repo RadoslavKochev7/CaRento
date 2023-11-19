@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
 
 export default function Header() {
   return (
@@ -8,7 +9,7 @@ export default function Header() {
           <div className="col-3">
             <div className="site-logo">
               <Link to={"/"}>
-                <strong>CarRental</strong>
+                <strong className={styles.logo}>CarRento</strong>
               </Link>
             </div>
           </div>
@@ -26,37 +27,37 @@ export default function Header() {
             >
               <ul className="site-menu main-menu js-clone-nav ml-auto ">
                 <li className="active">
-                  <Link to={"/"} className="nav-link">
+                  <Link to={"/"} className={styles.navItem}>
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link to={"/cars"} className="nav-link">
+                <li >
+                  <Link to={"/cars"} className={styles.navItem}>
                     Listing
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/cars/details"} className="nav-link">
+                  <Link to={"/cars/details"} className={styles.navItem}>
                     Details
                   </Link>
                 </li>
                 <li>
-                  <Link to={"testimonials.html"} className="nav-link">
+                  <Link to={"testimonials.html"} className={styles.navItem}>
                     Testimonials
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/login"} className="nav-link">
+                  <Link to={"/login"} className={styles.navItem}>
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/about"} className="nav-link">
+                  <Link to={"/about"} className={styles.navItem}>
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link to={"contact.html"} className="nav-link">
+                  <Link to={"contact.html"} className={styles.navItem}>
                     Contact
                   </Link>
                 </li>

@@ -1,0 +1,18 @@
+.modalBody {
+  color: white;
+  font-size: xx-large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: end;
+  padding: 0;
+  border-bottom: unset;
+}
+
+.closeBtn {
+  font-size: x-large;
+  color: white;
+}

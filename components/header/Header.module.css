@@ -1,0 +1,20 @@
+.logo {
+  color: yellow;
+  background-color: #007bff;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.navItem {
+  font-weight: 600;
+  padding: 0.5rem 0.5rem;
+}
+
+.navItem:hover {
+  color: yellow !important;
+  background-color: #007bff;
+  padding: 10px 10px !important;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bolder;
+}

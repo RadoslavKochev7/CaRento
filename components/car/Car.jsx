@@ -45,10 +45,7 @@ export default function Car(props) {
         />
       )}
       <div
-        className="listing d-block align-items-stretch"
-        style={{
-          background: "#e3dfda",
-        }}
+        className={`listing d-block align-items-stretch ${styles.card}`}
       >
         <div className="listing-img h-100 mr-4">
           <img src={imageUrl} alt="Image" className="img-fluid" />
