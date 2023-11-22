@@ -42,8 +42,8 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to={"testimonials.html"} className={styles.navItem}>
-                    Testimonials
+                  <Link to={"/register"} className={styles.navItem}>
+                    Register
                   </Link>
                 </li>
                 <li>

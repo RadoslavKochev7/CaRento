@@ -1,0 +1,40 @@
+.pageWrapper {
+  background-image: url("../../public/images/hero_1.jpg");
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  padding: 40px;
+  background-color: lightgrey;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.formWrapper {
+  margin: 40px auto;
+  width: 30%;
+  min-height: 60vh;
+}
+
+.heading {
+  text-align: center;
+  font-weight: bold;
+}
+
+.formLabel {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.loginBtn{
+    padding: 14px;
+    margin-top: 28px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+input {
+  margin-bottom: 6px;
+}
