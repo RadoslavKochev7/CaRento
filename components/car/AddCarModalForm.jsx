@@ -39,19 +39,19 @@ export default function AddCarModalForm({ onSubmit }) {
     e.preventDefault();
     let isValid = true;
 
-    if (Object.values(formValues).some((x) => !x)) {
-      setValidations((state) => ({
-        ...state,
-        [e.target.name]: "Field is required",
-      }));
+    // if (Object.values(formValues).some((x) => !x)) {
+    //   setValidations((state) => ({
+    //     ...state,
+    //     [e.target.name]: "Field is required",
+    //   }));
 
-      isValid = false;
-    }
+    //   isValid = false;
+    // }
 
-    if (!isValid) {
-        console.log("not valid")
-      return;
-    }
+    // if (!isValid) {
+    //     console.log("not valid")
+    //   return;
+    // }
 
     setShowModal(false);
     onSubmit({ ...formValues, selected });

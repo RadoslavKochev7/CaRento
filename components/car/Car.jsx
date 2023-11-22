@@ -50,7 +50,7 @@ export default function Car(props) {
         className={`listing d-block align-items-stretch ${styles.card}`}
       >
         <div className="listing-img h-100 mr-4">
-          <img src={imageUrl} alt="Image" className="img-fluid" />
+          <img src={imageUrl} alt="Image" className={styles.carImage} />
         </div>
         <div className="listing-contents h-100">
           <h3>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import * as rentingService from "../../src/services/rentingService";
-import styles from "./CarDetails.module.css"
+import styles from "./CarDetails.module.css";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -12,20 +12,27 @@ export default function CarDetails() {
       .getCarById(id)
       .then((result) => setCar(result))
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   return (
     <div className="site-section">
-      <button className="btn btn-secondary" onClick={() => history.go(-1)}>Go Back</button>
+      <button className="btn btn-secondary" onClick={() => history.go(-1)}>
+        Go Back
+      </button>
       <div className="container">
         <div className="row">
           <div className="col-lg-6 mb-5 mb-lg-0">
-            s
-            <img
-              src={`../../${car.imageUrl}`}
-              alt="Image"
-              className="img-fluid rounded"
-            />
+            {car.imageUrl && (
+              <img
+                src={
+                  car.imageUrl.startsWith("images")
+                    ? `../../${car.imageUrl}`
+                    : car.imageUrl
+                }
+                alt="Image"
+                className="img-fluid rounded"
+              />
+            )}
           </div>
           <div className="col-lg-4 ml-auto">
             {/* {showDeleteModal && (

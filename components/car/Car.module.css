@@ -36,3 +36,8 @@
 .spanSVG {
     padding-right: 4px;
 }
+
+.carImage {
+    max-width: 100%;
+    min-height: 250px;
+}
