@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, FormGroup } from "react-bootstrap";
 import styles from "./LoginForm.module.css";
+import AuthContext from "../../../src/contexts/AuthContext";
 
-function LoginForm() {
+export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-  
+
   const navigate = useNavigate();
+  const { loginHandler } = useContext(AuthContext);
+  // console.log(loginHandler);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
-    setUsernameError("");
   };
 
   const handlePasswordChange = (event) => {
@@ -32,11 +33,6 @@ function LoginForm() {
     event.preventDefault();
     let valid = true;
 
-    if (username.trim() === "") {
-      setUsernameError("Username is required");
-      valid = false;
-    }
-
     if (password.trim() === "") {
       setPasswordError("Password is required");
       valid = false;
@@ -51,7 +47,8 @@ function LoginForm() {
     }
 
     if (valid) {
-      navigate("/");
+      loginHandler({ username, email, password });
+      // navigate("/");
     }
   };
 
@@ -72,11 +69,7 @@ function LoginForm() {
               placeholder="Enter your username"
               value={username}
               onChange={handleUsernameChange}
-              isInvalid={!!usernameError}
             />
-            <Form.Control.Feedback type="invalid">
-              {usernameError}
-            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formPassword">
@@ -111,7 +104,13 @@ function LoginForm() {
             <Button className={styles.loginBtn} variant="primary" type="submit">
               Login
             </Button>
-            <Button className={styles.loginBtn} variant="info" type="button" as={Link} to={"/register"}>
+            <Button
+              className={styles.loginBtn}
+              variant="info"
+              type="button"
+              as={Link}
+              to={"/register"}
+            >
               Register
             </Button>
           </FormGroup>
@@ -120,5 +119,3 @@ function LoginForm() {
     </div>
   );
 }
-
-export default LoginForm;

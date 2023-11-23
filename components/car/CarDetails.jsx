@@ -16,9 +16,9 @@ export default function CarDetails() {
 
   return (
     <div className="site-section">
-      <button className="btn btn-secondary" onClick={() => history.go(-1)}>
+      <Link className="btn btn-secondary" to={"/cars"}>
         Go Back
-      </button>
+      </Link>
       <div className="container">
         <div className="row">
           <div className="col-lg-6 mb-5 mb-lg-0">
