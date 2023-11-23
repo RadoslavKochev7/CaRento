@@ -1,19 +1,19 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 
+import styles from "./Register.module.css";
+
 export default function Register() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const handleFirstNameChange = (event) => setFirstName(event.target.value);
-  const handleLastNameChange = (event) => setLastName(event.target.value);
+  const handleUsernameChange = (event) => setUsername(event.target.value);
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     setEmailError("");
@@ -27,26 +27,32 @@ export default function Register() {
   };
 
   const handleSubmit = (event) => {
+    debugger;
     event.preventDefault();
-    let valid = true;
+    let isValid = true;
 
-    if (!isValidEmail) {
+    if (isValidEmail) {
       setEmailError("Please, enter valid email address");
+      isValid = false;
     }
 
-    if (!isConfirmPasswordValid) {
+    if (isConfirmPasswordValid) {
       setConfirmPasswordError("Confirm password does not match");
+      isValid = false;
     }
 
-    if (valid) {
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
+    if (isPasswordLengthValid) {
+      setPasswordError("Password must be longer than 3 characters");
+      isValid = false;
+    }
+
+    if (isValid) {
+      console.log("Username:", username);
       console.log("Email:", email);
       console.log("Password:", password);
 
       // Clear form fields
-      setFirstName("");
-      setLastName("");
+      setUsername("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
@@ -60,31 +66,21 @@ export default function Register() {
 
   const isConfirmPasswordValid = () => confirmPassword === password;
 
+  const isPasswordLengthValid = () => password.length >= 3;
+
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.formWrapper}>
         <h1 className={styles.heading}>Register</h1>
         <Form className={styles.form} onSubmit={handleSubmit}>
-          <Form.Group controlId="formFirstName">
-            <Form.Label>First Name</Form.Label>
+          <Form.Group controlId="formUsername">
+            <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              name="firstname"
-              placeholder="Enter your first name"
-              value={firstName}
-              onChange={handleFirstNameChange}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formLastName">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastname"
-              placeholder="Enter your last name"
-              value={lastName}
-              onChange={handleLastNameChange}
+              name="username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={handleUsernameChange}
               required
             />
           </Form.Group>
@@ -113,8 +109,12 @@ export default function Register() {
               placeholder="Enter your password"
               value={password}
               onChange={handlePasswordChange}
+              isInvalid={!!passwordError}
               required
             />
+             <Form.Control.Feedback type="invalid">
+              {passwordError}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="formConfirmPassword">
