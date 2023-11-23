@@ -1,6 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import * as authService from "../../../src/services/authService";
 
 import styles from "./Register.module.css";
 
@@ -12,6 +13,8 @@ export default function Register() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => setUsername(event.target.value);
   const handleEmailChange = (event) => {
@@ -26,36 +29,42 @@ export default function Register() {
     setConfirmPasswordError("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     debugger;
     event.preventDefault();
     let isValid = true;
 
-    if (isValidEmail) {
+    if (!isValidEmail) {
       setEmailError("Please, enter valid email address");
       isValid = false;
     }
 
-    if (isConfirmPasswordValid) {
+    if (!isConfirmPasswordValid) {
       setConfirmPasswordError("Confirm password does not match");
       isValid = false;
     }
 
-    if (isPasswordLengthValid) {
+    if (!isPasswordLengthValid) {
       setPasswordError("Password must be longer than 3 characters");
       isValid = false;
     }
 
     if (isValid) {
-      console.log("Username:", username);
-      console.log("Email:", email);
-      console.log("Password:", password);
+      // console.log("Username:", username);
+      // console.log("Email:", email);
+      // console.log("Password:", password);
 
+      const response = await authService.register(email, password, username);
+      console.log(response);
+      navigate("/login");
       // Clear form fields
       setUsername("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      setEmailError("");
+      setPasswordError("");
+      setConfirmPasswordError("");
     }
   };
 

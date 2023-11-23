@@ -9,21 +9,12 @@ import CarDetails from "../components/car/CarDetails";
 import Home from "../components/Home";
 import LoginForm from "../components/authentication/login/LoginForm";
 import Register from "../components/authentication/register/Register";
-import * as authService from "./services/authService";
-import AuthContext from "./contexts/AuthContext";
-import { useState } from "react";
+import AuthProvider from "./contexts/AuthContext";
 
 function App() {
-  const [auth, setAuth] = useState({});
-
-  const loginHandler =  (values) => {
-    // const result = await authService.login(values.email, values.password);
-    console.log(values);
-  };
-
   return (
     <>
-      <AuthContext.Provider value={{ loginHandler }}>
+      <AuthProvider>
         <Header />
 
         <Routes>
@@ -37,7 +28,7 @@ function App() {
         </Routes>
 
         <Footer />
-      </AuthContext.Provider>
+      </AuthProvider>
     </>
   );
 }

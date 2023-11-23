@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, FormGroup } from "react-bootstrap";
+import * as authService from "../../../src/services/authService";
+import { authContext } from "../../../src/contexts/AuthContext";
 import styles from "./LoginForm.module.css";
-import AuthContext from "../../../src/contexts/AuthContext";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -12,8 +13,7 @@ export default function LoginForm() {
   const [emailError, setEmailError] = useState("");
 
   const navigate = useNavigate();
-  const { loginHandler } = useContext(AuthContext);
-  // console.log(loginHandler);
+  const { auth, setAuthData } = useContext(authContext);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -29,7 +29,7 @@ export default function LoginForm() {
     setEmailError("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let valid = true;
 
@@ -47,7 +47,9 @@ export default function LoginForm() {
     }
 
     if (valid) {
-      loginHandler({ username, email, password });
+      const res = await authService.login(email, password);
+      setAuthData(res);
+      console.log(auth);
       // navigate("/");
     }
   };
@@ -69,6 +71,7 @@ export default function LoginForm() {
               placeholder="Enter your username"
               value={username}
               onChange={handleUsernameChange}
+              required
             />
           </Form.Group>
 
