@@ -1,9 +1,10 @@
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as authService from "../../../src/services/authService";
 
 import styles from "./Register.module.css";
+import { authContext } from "../../../src/contexts/AuthContext";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ export default function Register() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const navigate = useNavigate();
+  const { setAuthData } = useContext(authContext);
 
   const handleUsernameChange = (event) => setUsername(event.target.value);
   const handleEmailChange = (event) => {
@@ -52,6 +54,7 @@ export default function Register() {
     if (isValid) {
 
       const response = await authService.register(email, password, username);
+      setAuthData(response);
       window.localStorage.setItem("authData", response.accessToken);
 
       navigate("/login");

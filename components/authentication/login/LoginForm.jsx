@@ -49,8 +49,8 @@ export default function LoginForm() {
     if (valid) {
       try {
         const res = await authService.login(email, password, username);
-        console.log(res.status);
         setAuthData(res);
+        console.log(auth);
         window.localStorage.setItem("authData", res.accessToken);
 
         navigate("/");

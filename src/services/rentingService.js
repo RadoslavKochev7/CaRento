@@ -1,7 +1,7 @@
 import { getCityCoordinates } from './locationService.js';
 
 const BASE_URL = 'http://localhost:3030/data/cars/';
-
+const token = localStorage.getItem("authData");
 
 // Sends a GET request to the server and returns all cars
 export const getAllCars = async () => {
@@ -65,11 +65,29 @@ export const addCar = async (data) => {
         };
         const response = await fetch(BASE_URL, {
             method: 'POST',
+            headers: {
+               "X-Authorization": token
+            },
             body: JSON.stringify(carBody)
         });
 
         const result = await response.json();
         return result;
+    } catch (err) {
+        return console.log(err);
+    }
+}
+
+export const getMyCars = async (ownerId) => {
+    const query = new URLSearchParams({
+        where: `_ownerId="${ownerId}"`
+    });
+
+    try {
+        const res = await fetch(`${BASE_URL}?${query}`);
+        const data = await res.json();
+
+        return data
     } catch (err) {
         return console.log(err);
     }

@@ -36,6 +36,11 @@ export default function Header() {
                     Listing
                   </Link>
                 </li>
+                <li >
+                  <Link to={"/mine"} className={styles.navItem}>
+                    My Cars
+                  </Link>
+                </li>
                 <li>
                   <Link to={"/logout"} className={styles.navItem}>
                     Logout

@@ -11,6 +11,7 @@ import LoginForm from "../components/authentication/login/LoginForm";
 import Register from "../components/authentication/register/Register";
 import AuthProvider from "./contexts/AuthContext";
 import Logout from "../components/authentication/logout/Logout";
+import Mine from "../components/car/mine/Mine";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cars" element={<CarListing />} />
           <Route path="/cars/details/:id" element={<CarDetails />} />
+          <Route path="/mine" element={<Mine />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<Register />} />
