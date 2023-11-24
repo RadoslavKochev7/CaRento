@@ -1,6 +1,6 @@
 import { getCityCoordinates } from './locationService.js';
 
-const BASE_URL = 'http://localhost:3030/jsonstore/cars/';
+const BASE_URL = 'http://localhost:3030/data/cars/';
 
 
 // Sends a GET request to the server and returns all cars
@@ -27,7 +27,7 @@ export const getCarById = async (carId) => {
     }
 }
 
-// Sends a DELETE request to the server and returs the deleted car 
+// Sends a DELETE request to the server and returns the deleted car 
 export const deleteCarById = async (carId) => {
     try {
         const res = await fetch(`${BASE_URL}${carId}`, { method: 'DELETE' });

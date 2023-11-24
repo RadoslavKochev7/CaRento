@@ -47,10 +47,16 @@ export default function LoginForm() {
     }
 
     if (valid) {
-      const res = await authService.login(email, password);
-      setAuthData(res);
-      console.log(auth);
-      // navigate("/");
+      try {
+        const res = await authService.login(email, password, username);
+        console.log(res.status);
+        setAuthData(res);
+        window.localStorage.setItem("authData", res.accessToken);
+
+        navigate("/");
+      } catch (error) {
+        console.log("error " + error);
+      }
     }
   };
 

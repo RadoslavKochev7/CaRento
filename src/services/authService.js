@@ -1,3 +1,7 @@
+import { useContext } from "react";
+import { authContext } from "../contexts/AuthContext";
+
+// const { auth } = useContext(authContext);
 const BASE_URL = 'http://localhost:3030/users/';
 
 export const login = async (email, password, username) => {
@@ -21,12 +25,17 @@ export const register = async (email, password, username) => {
 };
 
 export const logout = async () => {
-    const response = await fetch(BASE_URL + 'logout');
+
+    const response = await fetch(BASE_URL + 'logout', {
+        headers: {
+            'X-Authorization': window.localStorage.getItem("authData")
+        }
+    });
 
     if (response.status === 204) {
-        return "Logout successfull!";
+        return { 'логаутнат си брат': {} };
     }
     else {
-        return "Logout failed...";
+        throw Error;
     }
 };

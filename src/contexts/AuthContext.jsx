@@ -1,16 +1,13 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from "react";
 
 export const authContext = createContext({});
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({ loading: true, data: {} });
-// we will use loading later
-
+  const [auth, setAuth] = useState({});
 
   const setAuthData = (data) => {
-    setAuth({data: data});
+    setAuth({ data });
   };
- // a function that will help us to add the user data in the auth;
 
   return (
     <authContext.Provider value={{ auth, setAuthData }}>

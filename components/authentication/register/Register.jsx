@@ -50,12 +50,10 @@ export default function Register() {
     }
 
     if (isValid) {
-      // console.log("Username:", username);
-      // console.log("Email:", email);
-      // console.log("Password:", password);
 
       const response = await authService.register(email, password, username);
-      console.log(response);
+      window.localStorage.setItem("authData", response.accessToken);
+
       navigate("/login");
       // Clear form fields
       setUsername("");

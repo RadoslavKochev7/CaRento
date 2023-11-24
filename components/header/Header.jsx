@@ -37,8 +37,8 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/cars/details"} className={styles.navItem}>
-                    Details
+                  <Link to={"/logout"} className={styles.navItem}>
+                    Logout
                   </Link>
                 </li>
                 <li>
