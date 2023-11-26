@@ -50,11 +50,11 @@ export default function Register() {
 
     if (isValid) {
       try {
-        registerSubmitHandler({ email, password, username });
+        registerSubmitHandler(email, password, username);
       } catch (error) {
         console.log(error);
       }
-      
+
       // Clear form fields
       setUsername("");
       setEmail("");
@@ -145,7 +145,7 @@ export default function Register() {
             variant="primary"
             type="submit"
           >
-            Sign up
+            Sign Up
           </Button>
 
           <p className="mb-1">Already registered?</p>

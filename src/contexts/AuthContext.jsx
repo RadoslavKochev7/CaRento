@@ -9,34 +9,47 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = usePersistedState("auth", {});
   const navigate = useNavigate();
 
-  const loginSubmitHandler = async (values) => {
-    const result = await authService.login(
-      values.email,
-      values.password,
-      values.username
-    );
+  const loginSubmitHandler = async (email, password, username) => {
+    try {
+      const result = await authService.login(email, password, username);
 
-    setAuth(result);
+      if (!result.accessToken) {
+        // bad request
+        console.log(result.message);
+      } else {
+        setAuth(result);
 
-    localStorage.setItem("accessToken", result.accessToken);
+        localStorage.setItem("accessToken", result.accessToken);
 
-    navigate("/");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const registerSubmitHandler = async (values) => {
-    const result = await authService.register(values.email, values.password);
+  const registerSubmitHandler = async (email, password, username) => {
+    try {
+      const result = await authService.register(email, password, username);
+      if (!result.accessToken) {
+        // bad request
+        console.log(result.message);
+      } else {
+        setAuth(result);
 
-    setAuth(result);
+        localStorage.setItem("accessToken", result.accessToken);
 
-    localStorage.setItem("accessToken", result.accessToken);
-
-    navigate("/login");
+        navigate("/login");
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logoutHandler = () => {
     setAuth({});
     localStorage.removeItem("accessToken");
-
     navigate("/");
   };
 

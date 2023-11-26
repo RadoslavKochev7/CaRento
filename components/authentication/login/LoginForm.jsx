@@ -46,11 +46,9 @@ export default function LoginForm() {
 
     if (valid) {
       try {
-        const result = loginSubmitHandler({ email, password, username });
-        console.log(result);
-        // navigate("/");
+        loginSubmitHandler(email, password, username);
       } catch (error) {
-        console.log("error " + error);
+        console.log(error);
       }
     }
   };
