@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, FormGroup } from "react-bootstrap";
-import { authContext } from "../../../src/contexts/AuthContext";
+import { authContext } from "../../../contexts/AuthContext";
 import styles from "./LoginForm.module.css";
 
 export default function LoginForm() {

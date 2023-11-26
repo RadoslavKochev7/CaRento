@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styles from "./Register.module.css";
-import { authContext } from "../../../src/contexts/AuthContext";
+import { authContext } from "../../../contexts/AuthContext";
 
 export default function Register() {
   const [username, setUsername] = useState("");

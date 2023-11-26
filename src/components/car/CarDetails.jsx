@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import * as rentingService from "../../src/services/rentingService";
+import * as rentingService from "../../services/rentingService";
 import styles from "./CarDetails.module.css";
 
 export default function CarDetails() {

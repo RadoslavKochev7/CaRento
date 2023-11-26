@@ -1,17 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 
-import Header from "../components/header/Header";
-import CarListing from "../components/car/CarListing";
-import Footer from "../components/Footer";
-import Error from "../components/Error";
-import About from "../components/About";
-import CarDetails from "../components/car/CarDetails";
-import Home from "../components/Home";
-import LoginForm from "../components/authentication/login/LoginForm";
-import Register from "../components/authentication/register/Register";
+import Header from "../src/components/header/Header";
+import CarListing from "../src/components/car/CarListing";
+import Footer from "../src/components/Footer";
+import Error from "../src/components/Error";
+import About from "../src/components/About";
+import CarDetails from "../src/components/car/CarDetails";
+import Home from "../src/components/Home";
+import LoginForm from "../src/components/authentication/login/LoginForm";
+import Register from "../src/components/authentication/register/Register";
 import AuthProvider from "./contexts/AuthContext";
-import Logout from "../components/authentication/logout/Logout";
-import Mine from "../components/car/mine/Mine";
+import Logout from "../src/components/authentication/logout/Logout";
+import Mine from "../src/components/car/mine/Mine";
 
 function App() {
   return (

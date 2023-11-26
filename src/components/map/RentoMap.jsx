@@ -7,8 +7,7 @@ import {
   Circle,
 } from "react-leaflet";
 import { useState, useEffect } from "react";
-import * as rentingService from "../../src/services/rentingService";
-import * as locationService from "../../src/services/locationService.js";
+import * as locationService from "../../services/locationService.js";
 import PopupBody from "./PopupBody";
 
 export default function RentoMap({ carsData }) {

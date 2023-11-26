@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import * as rentingService from "../../../src/services/rentingService";
+import * as rentingService from "../../../services/rentingService";
 import { useContext } from "react";
-import { authContext } from "../../../src/contexts/AuthContext";
+import { authContext } from "../../../contexts/AuthContext";
 import Car from "../Car";
 
 export default function Mine() {
