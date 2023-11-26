@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, FormGroup } from "react-bootstrap";
-import * as authService from "../../../src/services/authService";
 import { authContext } from "../../../src/contexts/AuthContext";
 import styles from "./LoginForm.module.css";
 
@@ -12,8 +11,7 @@ export default function LoginForm() {
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  const navigate = useNavigate();
-  const { auth, setAuthData } = useContext(authContext);
+  const { loginSubmitHandler } = useContext(authContext);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -48,12 +46,9 @@ export default function LoginForm() {
 
     if (valid) {
       try {
-        const res = await authService.login(email, password, username);
-        setAuthData(res);
-        console.log(auth);
-        window.localStorage.setItem("authData", res.accessToken);
-
-        navigate("/");
+        const result = loginSubmitHandler({ email, password, username });
+        console.log(result);
+        // navigate("/");
       } catch (error) {
         console.log("error " + error);
       }

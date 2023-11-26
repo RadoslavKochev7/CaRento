@@ -1,7 +1,3 @@
-import { useContext } from "react";
-import { authContext } from "../contexts/AuthContext";
-
-// const { auth } = useContext(authContext);
 const BASE_URL = 'http://localhost:3030/users/';
 
 export const login = async (email, password, username) => {
@@ -28,12 +24,12 @@ export const logout = async () => {
 
     const response = await fetch(BASE_URL + 'logout', {
         headers: {
-            'X-Authorization': window.localStorage.getItem("authData")
+            'X-Authorization': window.localStorage.getItem("accessToken")
         }
     });
 
     if (response.status === 204) {
-        return { 'логаутнат си брат': {} };
+        return {};
     }
     else {
         throw Error;

@@ -7,8 +7,6 @@ import Car from "../Car";
 export default function Mine() {
   const { auth } = useContext(authContext);
   const [cars, setCars] = useState([]);
-  console.log(auth?.data?._id);
-  console.log(!!cars);
 
   useEffect(() => {
     rentingService

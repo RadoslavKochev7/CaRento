@@ -1,7 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as authService from "../../../src/services/authService";
+import { Link } from "react-router-dom";
 
 import styles from "./Register.module.css";
 import { authContext } from "../../../src/contexts/AuthContext";
@@ -15,8 +14,7 @@ export default function Register() {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const navigate = useNavigate();
-  const { setAuthData } = useContext(authContext);
+  const { registerSubmitHandler } = useContext(authContext);
 
   const handleUsernameChange = (event) => setUsername(event.target.value);
   const handleEmailChange = (event) => {
@@ -32,7 +30,6 @@ export default function Register() {
   };
 
   const handleSubmit = async (event) => {
-    debugger;
     event.preventDefault();
     let isValid = true;
 
@@ -52,12 +49,12 @@ export default function Register() {
     }
 
     if (isValid) {
-
-      const response = await authService.register(email, password, username);
-      setAuthData(response);
-      window.localStorage.setItem("authData", response.accessToken);
-
-      navigate("/login");
+      try {
+        registerSubmitHandler({ email, password, username });
+      } catch (error) {
+        console.log(error);
+      }
+      
       // Clear form fields
       setUsername("");
       setEmail("");
@@ -122,7 +119,7 @@ export default function Register() {
               isInvalid={!!passwordError}
               required
             />
-             <Form.Control.Feedback type="invalid">
+            <Form.Control.Feedback type="invalid">
               {passwordError}
             </Form.Control.Feedback>
           </Form.Group>

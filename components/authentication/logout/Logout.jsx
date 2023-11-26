@@ -4,25 +4,16 @@ import { useNavigate } from "react-router-dom";
 import * as authService from "../../../src/services/authService";
 
 export default function Logout() {
-  const { setAuthData } = useContext(authContext);
+  const { logoutHandler } = useContext(authContext);
   const navigate = useNavigate();
-
-  const onLogout = () => {
-    authService.logout();
-    setAuthData({});
-    localStorage.removeItem("authData");
-  };
 
   useEffect(() => {
     authService.logout()
       .then(() => {
-        onLogout;
+        logoutHandler();
         navigate("/");
       })
-      .catch((error) => {
-        console.error(error)
-        navigate("/")
-    });
+      .catch(() => navigate("/"));
   }, []);
 
   return null;

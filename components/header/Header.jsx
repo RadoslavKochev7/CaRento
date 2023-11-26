@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
+import { useContext } from "react";
+import { authContext } from "../../src/contexts/AuthContext";
 
 export default function Header() {
+  const { isAuthenticated, username } = useContext(authContext);
+
   return (
     <header className="site-navbar site-navbar-target" role="banner">
       <div className="container">
@@ -31,41 +35,49 @@ export default function Header() {
                     Home
                   </Link>
                 </li>
-                <li >
-                  <Link to={"/cars"} className={styles.navItem}>
-                    Listing
-                  </Link>
-                </li>
-                <li >
-                  <Link to={"/mine"} className={styles.navItem}>
-                    My Cars
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/logout"} className={styles.navItem}>
-                    Logout
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/register"} className={styles.navItem}>
-                    Register
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/login"} className={styles.navItem}>
-                    Login
-                  </Link>
-                </li>
-                <li>
+                {isAuthenticated && (
+                  <>
+                    <li>
+                      <Link to={"/cars"} className={styles.navItem}>
+                        Listing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/mine"} className={styles.navItem}>
+                        My Cars
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/logout"} className={styles.navItem}>
+                        Logout
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {!isAuthenticated && (
+                  <>
+                    <li>
+                      <Link to={"/register"} className={styles.navItem}>
+                        Register
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/login"} className={styles.navItem}>
+                        Login
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {/* <li>
                   <Link to={"/about"} className={styles.navItem}>
                     About
                   </Link>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <Link to={"contact.html"} className={styles.navItem}>
                     Contact
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>
