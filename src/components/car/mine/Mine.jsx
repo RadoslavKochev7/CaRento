@@ -7,7 +7,6 @@ import Car from "../Car";
 export default function Mine() {
   const { userId } = useContext(authContext);
   const [cars, setCars] = useState([]);
-  console.log(cars);
 
   const handleDelete = async (carId) => {
     setCurrentCarId(carId);

@@ -52,6 +52,7 @@ export default function Header() {
                         Logout
                       </Link>
                     </li>
+                    <span style={{ marginLeft: 100}}>Hello, {username}!</span>
                   </>
                 )}
                 {!isAuthenticated && (

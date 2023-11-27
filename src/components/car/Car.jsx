@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
 import DeleteModal from "../DeleteModal";
 
@@ -93,7 +93,7 @@ export default function Car(props) {
           <p className={styles.desc}>{description}</p>
           <hr />
           <div className={styles.buttons}>
-            <button className={`btn btn-info ${styles.buttonItem}`} onClick={() => navigate(`/cars/details/${_id}`)}>
+            <button as={Link} className={`btn btn-info ${styles.buttonItem}`} onClick={() => navigate(`/cars/details/${_id}`)}>
               <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPlus} />
               </span>
