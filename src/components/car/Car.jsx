@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -6,6 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
 import DeleteModal from "../DeleteModal";
+import { authContext } from "../../contexts/AuthContext";
 
 export default function Car(props) {
   const {
@@ -23,6 +24,7 @@ export default function Car(props) {
   const { city, country } = props.location;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { isAdmin } = useContext(authContext);
   const navigate = useNavigate();
 
   const onDeleteModalClick = () => {
@@ -46,9 +48,7 @@ export default function Car(props) {
           closeModalHandler={closeModal}
         />
       )}
-      <div
-        className={`listing d-block align-items-stretch ${styles.card}`}
-      >
+      <div className={`listing d-block align-items-stretch ${styles.card}`}>
         <div className="listing-img h-100 mr-4">
           <img src={imageUrl} alt="Image" className={styles.carImage} />
         </div>
@@ -92,29 +92,35 @@ export default function Car(props) {
           </span>
           <p className={styles.desc}>{description}</p>
           <hr />
-          <div className={styles.buttons}>
-            <button as={Link} className={`btn btn-info ${styles.buttonItem}`} onClick={() => navigate(`/cars/details/${_id}`)}>
-              <span className={styles.spanSVG}>
-                <FontAwesomeIcon icon={faPlus} />
-              </span>
-              Details
-            </button>
-            <button
-              className={`btn btn-danger ${styles.buttonItem}`}
-              onClick={onDeleteModalClick}
-            >
-              <span className={styles.spanSVG}>
-                <FontAwesomeIcon icon={faTrashCan} />
-              </span>
-              Delete
-            </button>
-            <button className={`btn btn-warning ${styles.buttonEdit}`}>
-              <span className={styles.spanSVG}>
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </span>
-              Edit
-            </button>
-          </div>
+          {isAdmin && (
+            <div className={styles.buttons}>
+              <button
+                as={Link}
+                className={`btn btn-info ${styles.buttonItem}`}
+                onClick={() => navigate(`/cars/details/${_id}`)}
+              >
+                <span className={styles.spanSVG}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </span>
+                Details
+              </button>
+              <button
+                className={`btn btn-danger ${styles.buttonItem}`}
+                onClick={onDeleteModalClick}
+              >
+                <span className={styles.spanSVG}>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </span>
+                Delete
+              </button>
+              <button className={`btn btn-warning ${styles.buttonEdit}`}>
+                <span className={styles.spanSVG}>
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </span>
+                Edit
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

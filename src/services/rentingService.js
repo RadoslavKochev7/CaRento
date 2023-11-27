@@ -1,4 +1,3 @@
-import { getCityCoordinates } from './locationService.js';
 
 const BASE_URL = 'http://localhost:3030/data/cars/';
 const token = localStorage.getItem('accessToken');
@@ -46,7 +45,6 @@ export const deleteCarById = async (carId) => {
 
 // Sends a POST request to the server and returns the added car data
 export const addCar = async (data) => {
-    const coordinates = await getCityCoordinates(data.city, data.country);
 
     try {
         const carBody = {
@@ -64,8 +62,8 @@ export const addCar = async (data) => {
                 country: data.country,
                 city: data.city,
                 address: data.address,
-                latitude: coordinates[0].latitude,
-                longitude: coordinates[0].longitude
+                latitude: data.latitude,
+                longitude: data.longitude
             }
         };
         const response = await fetch(BASE_URL, {

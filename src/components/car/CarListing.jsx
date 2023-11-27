@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Car from "./Car";
 import AddCarModalForm from "./AddCarModalForm";
 import RentoMap from "../map/RentoMap";
+import { getCityCoordinates } from "../../services/locationService";
 import * as rentingService from "../../services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
   const [currentCarId, setCurrentCarId] = useState(null);
-
+  
   useEffect(() => {
     rentingService
       .getAllCars()
@@ -15,7 +16,6 @@ export default function CarListing() {
       .catch((err) => console.error(err));
   }, []);
 
- 
   const handleDelete = async (carId) => {
     setCurrentCarId(carId);
 
@@ -24,7 +24,19 @@ export default function CarListing() {
   };
 
   const submitHandler = async (car) => {
+    const coordinates = await getCityCoordinates(car.city, car.country);
+    if (!coordinates) {
+      // add toast for fail
+      return "Invalid coordinates"
+    }
+    car.longitude = coordinates[0]?.longitude;
+    car.latitude = coordinates[0]?.latitude;
     const result = await rentingService.addCar(car);
+
+    if (result.message) {
+      // add toast for fail
+      return "Invalid coordinates"
+    }
     setCars((state) => [...state, result]);
   };
 
@@ -50,11 +62,7 @@ export default function CarListing() {
 
           <div className="row">
             {cars.map((car) => (
-              <Car
-                key={car._id}
-                {...car}
-                onDeleteHandler={handleDelete}
-              />
+              <Car key={car._id} {...car} onDeleteHandler={handleDelete} />
             ))}
           </div>
         </div>
