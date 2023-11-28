@@ -7,7 +7,7 @@ import * as rentingService from "../../services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
-  const [currentCarId, setCurrentCarId] = useState(null);
+  // const [currentCarId, setCurrentCarId] = useState(null);
 
   useEffect(() => {
     rentingService
@@ -45,7 +45,7 @@ export default function CarListing() {
     setCurrentCarId(carId);
 
     await rentingService.deleteCarById(carId);
-    setCars((state) => state.filter((car) => car._id !== currentCarId));
+    setCars((state) => state.filter((car) => car._id !== carId));
   };
 
   const submitHandler = async (car) => {

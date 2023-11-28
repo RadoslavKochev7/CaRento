@@ -3,9 +3,18 @@ import { authContext } from "../contexts/AuthContext";
 
 const BASE_URL = 'http://localhost:3030/data/cars/';
 const token = localStorage.getItem('accessToken');
-const headers = {
+const auth = localStorage.getItem('auth');
+let headers = {
     "X-Authorization": token
 };
+
+if (auth.includes('admin@abv.bg')) {
+    headers = {
+        ...headers,
+        "X-Admin": ""
+    }
+}
+
 
 console.log(headers);
 // Sends a GET request to the server and returns all cars

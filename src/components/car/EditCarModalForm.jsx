@@ -22,17 +22,15 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
     }
   };
 
-//   console.log(formInitialState);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
-  const [selected, setSelected] = useState("Diesel");
 
   const handleDropdownBehavior = (e) => {
     e.preventDefault();
-    setSelected(e.target.text)
+
     setFormValues((state) => ({
         ...state,
-        [e.target.name]: e.target.value,
+        ["fuelType"]: e.target.text
       }));
   };
 
@@ -274,8 +272,9 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                   variant="transperant"
                   id="dropdown-basic"
                   name="fuelType"
+                  value={formValues.fuelType}
                 >
-                  {selected}
+                  {formValues.fuelType}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>

@@ -20,6 +20,7 @@ export default function Car(props) {
     horsePower,
     description,
     mileage,
+    fuelType,
     onDeleteHandler,
     onEditHandler
   } = props;
@@ -111,6 +112,9 @@ export default function Car(props) {
             <b>Description:</b>
           </span>
           <p className={styles.desc}>{description}</p>
+          <span className="caption">
+            <b>Fuel Type: {fuelType}</b>
+          </span>
           <hr />
           {isAdmin && (
             <div className={styles.buttons}>
