@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Car from "./Car";
 import AddCarModalForm from "./AddCarModalForm";
 import RentoMap from "../map/RentoMap";
@@ -8,13 +8,38 @@ import * as rentingService from "../../services/rentingService";
 export default function CarListing() {
   const [cars, setCars] = useState([]);
   const [currentCarId, setCurrentCarId] = useState(null);
-  
+
   useEffect(() => {
     rentingService
       .getAllCars()
       .then((result) => setCars(result))
       .catch((err) => console.error(err));
   }, []);
+
+  const handleEdit = async (carId, carData) => {
+    if (!carData.location.latitude || carData.location.longitude) {
+      const coordinates = await getCityCoordinates(
+        carData.location.city,
+        carData.location.country
+      );
+      carData.location.latitude = coordinates[0].latitude;
+      carData.location.longitude = coordinates[0].longitude;
+    }
+    const result = await rentingService.editCarById(carId, carData);
+
+    if (result.message) {
+      console.log(result.message);
+    } else {
+      setCars((state) => {
+        return state.map((car) => {
+          if (car._id === result._id) {
+            return result;
+          }
+          return car;
+        });
+      });
+    }
+  };
 
   const handleDelete = async (carId) => {
     setCurrentCarId(carId);
@@ -27,7 +52,7 @@ export default function CarListing() {
     const coordinates = await getCityCoordinates(car.city, car.country);
     if (!coordinates) {
       // add toast for fail
-      return "Invalid coordinates"
+      return "Invalid coordinates";
     }
     car.longitude = coordinates[0]?.longitude;
     car.latitude = coordinates[0]?.latitude;
@@ -35,7 +60,7 @@ export default function CarListing() {
 
     if (result.message) {
       // add toast for fail
-      return "Invalid coordinates"
+      return "Invalid coordinates";
     }
     setCars((state) => [...state, result]);
   };
@@ -62,7 +87,12 @@ export default function CarListing() {
 
           <div className="row">
             {cars.map((car) => (
-              <Car key={car._id} {...car} onDeleteHandler={handleDelete} />
+              <Car
+                key={car._id}
+                {...car}
+                onDeleteHandler={handleDelete}
+                onEditHandler={handleEdit}
+              />
             ))}
           </div>
         </div>

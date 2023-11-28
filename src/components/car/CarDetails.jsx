@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { canUserManage } from "../../utils/userManager";
 import DeleteModal from "../DeleteModal";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
@@ -23,7 +22,7 @@ export default function CarDetails() {
   const onDeleteModalClick = () => {
     setShowDeleteModal(true);
   };
-  
+
   const deleteModalHandler = async () => {
     try {
        const result = await rentingService.deleteCarById(id);
@@ -109,7 +108,7 @@ export default function CarDetails() {
               </span>
               <p>{car.description}</p>
               <hr />
-              {canUserManage(car._ownerId) && (
+              { (
                 <div>
                   <button
                     className={`btn btn-danger ${styles.buttonItem}`}

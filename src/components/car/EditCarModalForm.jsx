@@ -4,34 +4,40 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AddCarModalForm.module.css";
 
-const formInitialState = {
-  model: "",
-  make: "",
-  imageUrl: "",
-  year: "",
-  price: "",
-  mileage: "",
-  horsePower: "",
-  description: "",
-  city: "",
-  country: "",
-  address: "",
-};
+export default function EditCarModalForm({data, editHandler, closeModalHandler,}) {
+  const formInitialState = {
+    model: data.model,
+    make: data.make,
+    imageUrl: data.imageUrl,
+    year: data.year,
+    rentalPrice: data.rentalPrice,
+    mileage: data.mileage,
+    horsePower: data.horsePower,
+    description: data.description,
+    fuelType: data.fuelType,
+    location: {
+        city: data.location.city,
+        country: data.location.country,
+        address: data.location.address
+    }
+  };
 
-export default function AddCarModalForm({ onSubmit }) {
-  const [showModal, setShowModal] = useState(false);
+//   console.log(formInitialState);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
   const [selected, setSelected] = useState("Diesel");
 
   const handleDropdownBehavior = (e) => {
     e.preventDefault();
-    setSelected(e.target.text);
+    setSelected(e.target.text)
+    setFormValues((state) => ({
+        ...state,
+        [e.target.name]: e.target.value,
+      }));
   };
 
-  const closeModalHandler = () => {
-    setShowModal(false);
-    setFormValues(formInitialState);
+  const handleClose = () => {
+    closeModalHandler();
   };
 
   const onSubmitHandler = async (e) => {
@@ -52,9 +58,8 @@ export default function AddCarModalForm({ onSubmit }) {
     //   return;
     // }
 
-    setShowModal(false);
-    onSubmit({ ...formValues, selected });
-    // setFormValues(formInitialState);
+    editHandler(data._id, formValues);
+    handleClose();
   };
 
   const changeInputValueHandler = (e) => {
@@ -85,14 +90,11 @@ export default function AddCarModalForm({ onSubmit }) {
 
   return (
     <div>
-      <Button variant="primary" onClick={() => setShowModal(true)}>
-        + Add Car
-      </Button>
-      <Modal show={showModal} onHide={closeModalHandler}>
+      <Modal show={true} onHide={closeModalHandler}>
         <Modal.Header>
           <Modal.Title>Please, populate the fields below</Modal.Title>
           <button className={styles.closeButton}>
-            <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
+            <FontAwesomeIcon icon={faXmark} onClick={handleClose} />
           </button>
         </Modal.Header>
         <Modal.Body>
@@ -148,15 +150,15 @@ export default function AddCarModalForm({ onSubmit }) {
                 type="number"
                 name="price"
                 placeholder="Enter price for a day"
-                min={0}
+                min={0.00}
                 step={0.01}
                 // required
-                value={formValues.price}
+                value={formValues.rentalPrice}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.price}
               />
               <Form.Control.Feedback type="invalid">
-                {validations.price}
+                {validations.rentalPrice}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -213,7 +215,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 name="city"
                 // required
                 placeholder="Enter car's city"
-                value={formValues.city}
+                value={formValues.location.city}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -228,7 +230,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 type="text"
                 name="address"
                 placeholder="Enter car's address"
-                value={formValues.address}
+                value={formValues.location.address}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -244,7 +246,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 name="country"
                 // required
                 placeholder="Enter car's country"
-                value={formValues.country}
+                value={formValues.location.country}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.make}
               />
@@ -271,6 +273,7 @@ export default function AddCarModalForm({ onSubmit }) {
                   className={styles.formDropdown}
                   variant="transperant"
                   id="dropdown-basic"
+                  name="fuelType"
                 >
                   {selected}
                 </Dropdown.Toggle>
@@ -299,7 +302,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 <Button
                   className="btn btn-secondary"
                   onClick={() => {
-                    setShowModal(false);
+                    handleClose();
                     setFormValues(formInitialState);
                   }}
                 >

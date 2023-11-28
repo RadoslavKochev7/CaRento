@@ -1,7 +1,13 @@
+import { useContext } from "react";
+import { authContext } from "../contexts/AuthContext";
 
 const BASE_URL = 'http://localhost:3030/data/cars/';
 const token = localStorage.getItem('accessToken');
+const headers = {
+    "X-Authorization": token
+};
 
+console.log(headers);
 // Sends a GET request to the server and returns all cars
 export const getAllCars = async () => {
     try {
@@ -30,10 +36,8 @@ export const getCarById = async (carId) => {
 export const deleteCarById = async (carId) => {
     try {
         const res = await fetch(`${BASE_URL}${carId}`, {
-            method: 'DELETE', 
-            headers: {
-                "X-Authorization": token
-            }
+            method: 'DELETE',
+            headers: headers
         });
         const data = await res.json();
 
@@ -46,39 +50,34 @@ export const deleteCarById = async (carId) => {
 // Sends a POST request to the server and returns the added car data
 export const addCar = async (data) => {
 
-    try {
-        const carBody = {
-            rentalPrice: data.price.toFixed(2),
-            make: data.make,
-            model: data.model,
-            year: new Date(data.year).getFullYear(),
-            imageUrl: data.imageUrl,
-            fuelType: data.selected,
-            horsePower: data.horsePower,
-            mileage: data.mileage,
-            isAvailable: true,
-            description: data.description,
-            location: {
-                country: data.country,
-                city: data.city,
-                address: data.address,
-                latitude: data.latitude,
-                longitude: data.longitude
-            }
-        };
-        const response = await fetch(BASE_URL, {
-            method: 'POST',
-            headers: {
-                "X-Authorization": token
-            },
-            body: JSON.stringify(carBody)
-        });
+    const carBody = {
+        rentalPrice: data.price.toFixed(2),
+        make: data.make,
+        model: data.model,
+        year: data.year,
+        imageUrl: data.imageUrl,
+        fuelType: data.selected,
+        horsePower: data.horsePower,
+        mileage: data.mileage,
+        isAvailable: true,
+        description: data.description,
+        location: {
+            country: data.country,
+            city: data.city,
+            address: data.address,
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+    };
+    const response = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(carBody)
+    });
 
-        const result = await response.json();
-        return result;
-    } catch (err) {
-        return console.log(err);
-    }
+    const result = await response.json();
+    return result;
+
 }
 
 export const getMyCars = async (ownerId) => {
@@ -94,4 +93,22 @@ export const getMyCars = async (ownerId) => {
     } catch (err) {
         return console.log(err);
     }
+}
+
+// Sends a PUT request to the server and returns the edited car
+export const editCarById = async (carId, carData) => {
+    const res = await fetch(`${BASE_URL}${carId}`, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(carData)
+    });
+    const data = await res.json();
+    return data;
+}
+
+export const getCount = async () => {
+    const res = await fetch(`${BASE_URL}?count`);
+    const count = await res.json();
+
+    return count;
 }

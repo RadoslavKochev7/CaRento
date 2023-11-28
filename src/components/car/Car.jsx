@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
 import DeleteModal from "../DeleteModal";
 import { authContext } from "../../contexts/AuthContext";
+import EditCarModalForm from "./EditCarModalForm";
 
 export default function Car(props) {
   const {
@@ -20,15 +21,26 @@ export default function Car(props) {
     description,
     mileage,
     onDeleteHandler,
+    onEditHandler
   } = props;
   const { city, country } = props.location;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { isAdmin } = useContext(authContext);
   const navigate = useNavigate();
 
   const onDeleteModalClick = () => {
     setShowDeleteModal(true);
+  };
+
+  const onEditModalClick = () => {
+    setShowEditModal(true);
+  };
+
+  const editModalHandler = (carId, carData) => {
+    // TODO: edit
+    onEditHandler(carId, carData);
   };
 
   const deleteModalHandler = () => {
@@ -38,6 +50,7 @@ export default function Car(props) {
 
   const closeModal = () => {
     setShowDeleteModal(false);
+    setShowEditModal(false);
   };
 
   return (
@@ -46,6 +59,13 @@ export default function Car(props) {
         <DeleteModal
           deleteHandler={deleteModalHandler}
           closeModalHandler={closeModal}
+        />
+      )}
+      {showEditModal && (
+        <EditCarModalForm
+          editHandler={editModalHandler}
+          closeModalHandler={closeModal}
+          data={props}
         />
       )}
       <div className={`listing d-block align-items-stretch ${styles.card}`}>
@@ -113,7 +133,10 @@ export default function Car(props) {
                 </span>
                 Delete
               </button>
-              <button className={`btn btn-warning ${styles.buttonEdit}`}>
+              <button
+                className={`btn btn-warning ${styles.buttonEdit}`}
+                onClick={onEditModalClick}
+              >
                 <span className={styles.spanSVG}>
                   <FontAwesomeIcon icon={faPenToSquare} />
                 </span>

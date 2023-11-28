@@ -15,6 +15,23 @@ export default function Mine() {
     setCars((state) => state.filter((car) => car._id !== currentCarId));
   };
 
+  const handleEdit = async (carId, carData) => {
+    const result = await rentingService.editCarById(carId, carData);
+    if (result.message) {
+      // throw validation
+      return alert("not ok")
+    }
+
+    setCars((state) => {
+        return state.map((car) => {
+          if (car._id === result._id) {
+            return result;
+          }
+          return car;
+        });
+      });
+  };
+
   useEffect(() => {
     rentingService
       .getMyCars(userId)
@@ -30,7 +47,12 @@ export default function Mine() {
         <div className="row">
           {cars &&
             cars.map((car) => (
-              <Car key={car._id} {...car} onDeleteHandler={handleDelete} />
+              <Car
+                key={car._id}
+                {...car}
+                onDeleteHandler={handleDelete}
+                onEditHandler={handleEdit}
+              />
             ))}
 
           {cars?.length === 0 && (
