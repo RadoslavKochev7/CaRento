@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
   const logoutHandler = () => {
     setAuth({});
     localStorage.removeItem("accessToken");
-    navigate("/");
+    navigate("/login");
   };
 
   const values = {

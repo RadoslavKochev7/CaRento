@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -6,11 +6,15 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import DeleteModal from "../DeleteModal";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
+import { authContext } from "../../contexts/AuthContext";
+import EditCarModalForm from "./EditCarModalForm";
 
 export default function CarDetails() {
   const { id } = useParams();
+  const { isAdmin } = useContext(authContext);
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     rentingService
@@ -21,6 +25,28 @@ export default function CarDetails() {
 
   const onDeleteModalClick = () => {
     setShowDeleteModal(true);
+  };
+
+  const editModalClick = () => {
+     setShowEditModal(true);
+  };
+
+  const editHandler = async (carId, carData) => {
+    const result = await rentingService.editCarById(carId, carData);
+    if (result.message) {
+      // throw validation
+      return alert("not ok")
+    }
+
+    setCar(result);
+    // setCar((state) => {
+    //     return state.map((car) => {
+    //       if (car._id === result._id) {
+    //         return result;
+    //       }
+    //       return car;
+    //     });
+    //   });
   };
 
   const deleteModalHandler = async () => {
@@ -39,6 +65,7 @@ export default function CarDetails() {
 
   const closeModal = () => {
     setShowDeleteModal(false);
+    setShowEditModal(false);
   };
 
   return (
@@ -66,6 +93,14 @@ export default function CarDetails() {
               <DeleteModal
                 deleteHandler={deleteModalHandler}
                 closeModalHandler={closeModal}
+              />
+            )}
+
+            {showEditModal && (
+              <EditCarModalForm
+              editHandler={editHandler}
+              closeModalHandler={closeModal}
+              data={car}
               />
             )}
             <div className="listing-contents">
@@ -108,7 +143,7 @@ export default function CarDetails() {
               </span>
               <p>{car.description}</p>
               <hr />
-              { (
+              {isAdmin && (
                 <div>
                   <button
                     className={`btn btn-danger ${styles.buttonItem}`}
@@ -119,7 +154,7 @@ export default function CarDetails() {
                     </span>
                     Delete
                   </button>
-                  <button className={`btn btn-warning ${styles.buttonEdit}`}>
+                  <button className={`btn btn-warning ${styles.buttonEdit}`} onClick={editModalClick} >
                     <span className={styles.spanSVG}>
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </span>

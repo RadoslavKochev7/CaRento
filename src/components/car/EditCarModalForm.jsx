@@ -213,7 +213,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 name="city"
                 // required
                 placeholder="Enter car's city"
-                value={formValues.location.city}
+                value={formValues?.location?.city}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -228,7 +228,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 type="text"
                 name="address"
                 placeholder="Enter car's address"
-                value={formValues.location.address}
+                value={formValues?.location?.address}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -244,7 +244,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 name="country"
                 // required
                 placeholder="Enter car's country"
-                value={formValues.location.country}
+                value={formValues?.location?.country}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.make}
               />
@@ -288,21 +288,21 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
 
             <Form.Group>
               <ButtonGroup className={styles.buttonGroup} aria-label="Buttons">
-                <Button
+                {/* <Button
                   className="btn btn-info"
                   type="reset"
                   onClick={() => {
-                    setFormValues(formInitialState);
+                    setFormValues({formInitialState});
                     setValidations({});
                   }}
                 >
                   Reset
-                </Button>
+                </Button> */}
                 <Button
                   className="btn btn-secondary"
                   onClick={() => {
                     handleClose();
-                    setFormValues(formInitialState);
+                    setFormValues({formInitialState});
                   }}
                 >
                   Cancel

@@ -7,7 +7,6 @@ import * as rentingService from "../../services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
-  // const [currentCarId, setCurrentCarId] = useState(null);
 
   useEffect(() => {
     rentingService
