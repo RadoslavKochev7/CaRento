@@ -1,17 +1,18 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
 import DeleteModal from "../DeleteModal";
-import { authContext } from "../../contexts/AuthContext";
 import EditCarModalForm from "./EditCarModalForm";
+import { canUserManage } from "../../utils/userManager";
 
 export default function Car(props) {
   const {
     _id,
+    _ownerId,
     rentalPrice,
     make,
     model,
@@ -29,7 +30,6 @@ export default function Car(props) {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const { isAdmin } = useContext(authContext);
   const navigate = useNavigate();
 
   const onDeleteModalClick = () => {
@@ -120,7 +120,6 @@ export default function Car(props) {
 
           <div className={styles.buttons}>
             <button
-              as={Link}
               className={`btn btn-info ${styles.buttonItem}`}
               onClick={() => navigate(`/cars/details/${_id}`)}
             >
@@ -129,7 +128,7 @@ export default function Car(props) {
               </span>
               Details
             </button>
-            {isAdmin && (
+            {canUserManage(_ownerId) && (
               <>
                 <button
                   className={`btn btn-danger ${styles.buttonItem}`}

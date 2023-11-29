@@ -1,20 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import DeleteModal from "../DeleteModal";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
-import { authContext } from "../../contexts/AuthContext";
 import EditCarModalForm from "./EditCarModalForm";
+import { canUserManage } from "../../utils/userManager";
 
 export default function CarDetails() {
   const { id } = useParams();
-  const { isAdmin } = useContext(authContext);
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     rentingService
@@ -55,6 +56,7 @@ export default function CarDetails() {
        if (result.message) {
         return "toast for error " + result.message;
        } else {
+        navigate("/cars");
         return "toast for success";
        }
       
@@ -143,7 +145,7 @@ export default function CarDetails() {
               </span>
               <p>{car.description}</p>
               <hr />
-              {isAdmin && (
+              {canUserManage(car._ownerId) && (
                 <div>
                   <button
                     className={`btn btn-danger ${styles.buttonItem}`}

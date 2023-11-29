@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as styles from "./PopupBody.module.css";
 
 export default function PopupBody(car) {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.cardWrapper}>
       <div>
@@ -24,10 +26,9 @@ export default function PopupBody(car) {
           <br />
           <div className={styles.buttonContainer}>
             <button
-              as={Link}
-              to={`/cars/${car._id}`}
               id="map-button"
               className="btn btn-secondary"
+              onClick={() => navigate(`/cars/details/${car._id}`)}
             >
               View More
             </button>
