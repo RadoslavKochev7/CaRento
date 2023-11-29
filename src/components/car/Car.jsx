@@ -21,10 +21,11 @@ export default function Car(props) {
     description,
     mileage,
     fuelType,
+    city,
+    country,
     onDeleteHandler,
     onEditHandler,
   } = props;
-  const { city, country } = props.location;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -89,7 +90,7 @@ export default function Car(props) {
               <b>Year:</b> {year}
             </span>
             <span className="caption">
-              <b>HP :</b> {horsePower}
+              <b>HP:</b> {horsePower}
             </span>
             <span className="caption">
               <b>Mileage: </b>

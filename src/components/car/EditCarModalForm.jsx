@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import styles from "./AddCarModalForm.module.css";
+import styles from "./EditCarModalForm.module.css";
 
 export default function EditCarModalForm({data, editHandler, closeModalHandler,}) {
   const formInitialState = {
@@ -15,11 +15,9 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
     horsePower: data.horsePower,
     description: data.description,
     fuelType: data.fuelType,
-    location: {
-        city: data.location.city,
-        country: data.location.country,
-        address: data.location.address
-    }
+    city: data.city,
+    country: data.country,
+    address: data.address
   };
 
   const [formValues, setFormValues] = useState(formInitialState);
@@ -146,7 +144,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
               <Form.Label className={styles.formLabel}>Price</Form.Label>
               <Form.Control
                 type="number"
-                name="price"
+                name="rentalPrice"
                 placeholder="Enter price for a day"
                 min={0.00}
                 step={0.01}
@@ -213,7 +211,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 name="city"
                 // required
                 placeholder="Enter car's city"
-                value={formValues?.location?.city}
+                value={formValues.city}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -228,7 +226,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 type="text"
                 name="address"
                 placeholder="Enter car's address"
-                value={formValues?.location?.address}
+                value={formValues.address}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.city}
               />
@@ -244,7 +242,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 name="country"
                 // required
                 placeholder="Enter car's country"
-                value={formValues?.location?.country}
+                value={formValues.country}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.make}
               />
@@ -272,7 +270,6 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                   variant="transperant"
                   id="dropdown-basic"
                   name="fuelType"
-                  value={formValues.fuelType}
                 >
                   {formValues.fuelType}
                 </Dropdown.Toggle>

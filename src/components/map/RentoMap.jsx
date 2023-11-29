@@ -68,7 +68,7 @@ export default function RentoMap({ carsData }) {
         {[...cars].map((car) => (
           <Marker
             key={car._id + 'map'}
-            position={[car.location.latitude, car.location.longitude]}
+            position={[car.latitude, car.longitude]}
           >
             <Popup>
               <PopupBody {...car} />

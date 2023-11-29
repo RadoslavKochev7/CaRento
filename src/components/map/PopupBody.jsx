@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import * as styles from "./PopupBody.module.css";
 
 export default function PopupBody(car) {
@@ -17,22 +18,18 @@ export default function PopupBody(car) {
         <div>
           <div>
             <span>City:</span>
-            <span>{car.location.city}</span>
+            <span>{car.city}</span>
           </div>
           <span>{car.isAvailable ? "Available" : "Rented"}</span>
           <br />
           <div className={styles.buttonContainer}>
             <button
+              as={Link}
+              to={`/cars/${car._id}`}
               id="map-button"
               className="btn btn-secondary"
             >
               View More
-            </button>
-            <button
-              id="map-button"
-              className="btn btn-primary"
-            >
-              Rent Now
             </button>
           </div>
         </div>

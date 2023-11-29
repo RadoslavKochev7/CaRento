@@ -9,24 +9,27 @@ const formInitialState = {
   make: "",
   imageUrl: "",
   year: "",
-  price: "",
+  rentalPrice: "",
   mileage: "",
   horsePower: "",
   description: "",
   city: "",
   country: "",
   address: "",
+  fuelType: "Diesel"
 };
 
 export default function AddCarModalForm({ onSubmit }) {
   const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
-  const [selected, setSelected] = useState("Diesel");
 
   const handleDropdownBehavior = (e) => {
     e.preventDefault();
-    setSelected(e.target.text);
+    setFormValues((state) => ({
+      ...state,
+      ["fuelType"]: e.target.text
+    }));
   };
 
   const closeModalHandler = () => {
@@ -50,10 +53,10 @@ export default function AddCarModalForm({ onSubmit }) {
     // if (!isValid) {
     //     console.log("not valid")
     //   return;
-    // }
+    // }s
 
     setShowModal(false);
-    onSubmit({ ...formValues, selected });
+    onSubmit(formValues);
     // setFormValues(formInitialState);
   };
 
@@ -146,7 +149,7 @@ export default function AddCarModalForm({ onSubmit }) {
               <Form.Label className={styles.formLabel}>Price</Form.Label>
               <Form.Control
                 type="number"
-                name="price"
+                name="rentalPrice"
                 placeholder="Enter price for a day"
                 min={0}
                 step={0.01}
@@ -269,10 +272,11 @@ export default function AddCarModalForm({ onSubmit }) {
               <Dropdown>
                 <Dropdown.Toggle
                   className={styles.formDropdown}
+                  name="fuelType"
                   variant="transperant"
                   id="dropdown-basic"
                 >
-                  {selected}
+                  {formValues.fuelType}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>
