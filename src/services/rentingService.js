@@ -13,8 +13,7 @@ if (auth.includes('admin@abv.bg')) {
     }
 }
 
-
-console.log(headers);
+console.log(headers)
 // Sends a GET request to the server and returns all cars
 export const getAllCars = async () => {
     const res = await fetch(BASE_URL);

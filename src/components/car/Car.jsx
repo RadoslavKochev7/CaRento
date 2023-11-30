@@ -4,10 +4,10 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import styles from "./Car.module.css";
-import DeleteModal from "../DeleteModal/DeleteModal";
-import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import { canUserManage } from "../../utils/userManager";
+import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import styles from "./Car.module.css";
 
 export default function Car(props) {
   const {
@@ -41,7 +41,6 @@ export default function Car(props) {
   };
 
   const editModalHandler = (carId, carData) => {
-    // TODO: edit
     onEditHandler(carId, carData);
   };
 
@@ -82,7 +81,7 @@ export default function Car(props) {
             <span>
               <b>Price:</b>
             </span>
-            <strong> {rentalPrice}$</strong>
+            <strong>{rentalPrice}$</strong>
             <span className="mx-1">/</span>day
           </div>
           <div className="listing-feature">

@@ -3,17 +3,22 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { canUserManage } from "../../utils/userManager";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
-import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
-import { canUserManage } from "../../utils/userManager";
+import * as reviewService from "../../services/reviewsService";
+import Testimonials from "../Testimonials";
+import { Form, Button } from "react-bootstrap";
 
 export default function CarDetails() {
   const { id } = useParams();
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [reviews, setReviews] = useState([]);
 
   const navigate = useNavigate();
 
@@ -22,6 +27,11 @@ export default function CarDetails() {
       .getCarById(id)
       .then((result) => setCar(result))
       .catch((err) => console.error(err));
+
+    reviewService
+      .getAllReviewsForCurrentCar(id)
+      .then((result) => setReviews(result))
+      .catch((err) => console.log(err));
   }, [id]);
 
   const onDeleteModalClick = () => {
@@ -29,40 +39,40 @@ export default function CarDetails() {
   };
 
   const editModalClick = () => {
-     setShowEditModal(true);
+    setShowEditModal(true);
   };
 
   const editHandler = async (carId, carData) => {
     const result = await rentingService.editCarById(carId, carData);
     if (result.message) {
       // throw validation
-      return alert("not ok")
+      return alert("not ok");
     }
 
     setCar(result);
-    // setCar((state) => {
-    //     return state.map((car) => {
-    //       if (car._id === result._id) {
-    //         return result;
-    //       }
-    //       return car;
-    //     });
-    //   });
   };
-
   const deleteModalHandler = async () => {
     try {
-       const result = await rentingService.deleteCarById(id);
-       if (result.message) {
+      const result = await rentingService.deleteCarById(id);
+      if (result.message) {
         return "toast for error " + result.message;
-       } else {
+      } else {
         navigate("/cars");
         return "toast for success";
-       }
-      
+      }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const addReviewHandler = async (e) => {
+    e.preventDefault();
+
+    if (!reviewText) {
+      alert("There should be value")
+    }
+    const result = await reviewService.addReview(id, reviewText);
+    console.log(result)
   };
 
   const closeModal = () => {
@@ -100,9 +110,9 @@ export default function CarDetails() {
 
             {showEditModal && (
               <EditCarModalForm
-              editHandler={editHandler}
-              closeModalHandler={closeModal}
-              data={car}
+                editHandler={editHandler}
+                closeModalHandler={closeModal}
+                data={car}
               />
             )}
             <div className="listing-contents">
@@ -156,7 +166,10 @@ export default function CarDetails() {
                     </span>
                     Delete
                   </button>
-                  <button className={`btn btn-warning ${styles.buttonEdit}`} onClick={editModalClick} >
+                  <button
+                    className={`btn btn-warning ${styles.buttonEdit}`}
+                    onClick={editModalClick}
+                  >
                     <span className={styles.spanSVG}>
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </span>
@@ -167,16 +180,23 @@ export default function CarDetails() {
             </div>
           </div>
         </div>
-        <h2>Our History</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
-          suscipit, repudiandae similique accusantium eius nulla quam laudantium
-          sequi.
-        </p>
-        <p>
-          Debitis voluptates corporis saepe molestias tenetur ab quae, quo earum
-          commodi, laborum dolore, fuga aliquid delectus cum ipsa?
-        </p>
+        <h3>Reviews</h3>
+        <section className="section">
+          <Form className="form" onSubmit={addReviewHandler}>
+            <Form.Control
+              type="textarea"
+              name="review"
+              onChange={(e) => setReviewText(e.target.value)}
+              placeholder="Place your review here"
+
+            ></Form.Control>
+            
+            <Button className="btn btn-primary" type="submit">
+              Add Review
+            </Button>
+          </Form>
+        </section>
+        <Testimonials />
       </div>
     </div>
   );

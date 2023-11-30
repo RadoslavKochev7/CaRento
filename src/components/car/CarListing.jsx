@@ -16,13 +16,13 @@ export default function CarListing() {
   }, []);
 
   const handleEdit = async (carId, carData) => {
-    if (!carData.location.latitude || carData.location.longitude) {
+    if (!carData.latitude || carData.longitude) {
       const coordinates = await getCityCoordinates(
-        carData.location.city,
-        carData.location.country
+        carData.city,
+        carData.country
       );
-      carData.location.latitude = coordinates[0].latitude;
-      carData.location.longitude = coordinates[0].longitude;
+      carData.latitude = coordinates[0].latitude;
+      carData.longitude = coordinates[0].longitude;
     }
     const result = await rentingService.editCarById(carId, carData);
 

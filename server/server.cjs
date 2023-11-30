@@ -1766,6 +1766,9 @@
                 longitude: 25.6347
             }
 
+        },
+        reviews: {
+
         }
     };
     var rules$1 = {
