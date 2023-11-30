@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Car from "./Car";
-import AddCarModalForm from "./AddCarModalForm";
+import AddCarModalForm from "./addCarModalForm/AddCarModalForm";
 import RentoMap from "../map/RentoMap";
 import { getCityCoordinates } from "../../services/locationService";
 import * as rentingService from "../../services/rentingService";

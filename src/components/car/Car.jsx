@@ -5,8 +5,8 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import styles from "./Car.module.css";
-import DeleteModal from "../DeleteModal";
-import EditCarModalForm from "./EditCarModalForm";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import { canUserManage } from "../../utils/userManager";
 
 export default function Car(props) {

@@ -3,10 +3,10 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import DeleteModal from "../DeleteModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
-import EditCarModalForm from "./EditCarModalForm";
+import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import { canUserManage } from "../../utils/userManager";
 
 export default function CarDetails() {
