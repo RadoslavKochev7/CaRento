@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { canUserManage } from "../../utils/userManager";
+import { Form, Button } from "react-bootstrap";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
+import Review from "../review/Review";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
 import * as reviewService from "../../services/reviewsService";
-import { Form, Button } from "react-bootstrap";
-import Review from "../review/Review";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -19,6 +19,8 @@ export default function CarDetails() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingReviewId, setEditingReviewId] = useState("");
 
   const navigate = useNavigate();
 
@@ -51,6 +53,7 @@ export default function CarDetails() {
 
     setCar(result);
   };
+
   const deleteModalHandler = async () => {
     try {
       const result = await rentingService.deleteCarById(id);
@@ -64,13 +67,7 @@ export default function CarDetails() {
       console.log(error);
     }
   };
-
-  const addReviewHandler = async (e) => {
-    e.preventDefault();
-
-    if (!reviewText) {
-      alert("There should be value");
-    }
+  const addReview = async () => {
     const result = await reviewService.addReview(id, reviewText);
 
     if (result.message) {
@@ -80,6 +77,40 @@ export default function CarDetails() {
     result.owner = JSON.parse(localStorage.getItem("auth"));
 
     setReviews((state) => [...state, result]);
+  };
+
+  const editReview = async () => {
+    const result = await reviewService.editReview(editingReviewId, reviewText);
+    if (result.message) {
+      console.log(result);
+      return alert(result.message);
+    }
+
+    setReviews((state) => {
+      return state.map((review) => {
+        if (review._id === result._id) {
+          result.owner = JSON.parse(localStorage.getItem("auth"));
+          return result;
+        }
+        return review;
+      });
+    });
+
+    setIsEditMode(false);
+  };
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!reviewText) {
+      alert("There should be value");
+    }
+
+    if (isEditMode) {
+      editReview();
+    } else {
+      addReview();
+    }
+
     setReviewText("");
   };
 
@@ -90,6 +121,12 @@ export default function CarDetails() {
     }
 
     setReviews((state) => state.filter((review) => review._id !== id));
+  };
+
+  const editReviewHandler = async (id, text) => {
+    setReviewText(text);
+    setIsEditMode(true);
+    setEditingReviewId(id);
   };
 
   const closeModal = () => {
@@ -199,7 +236,7 @@ export default function CarDetails() {
         </div>
         <h3>Reviews</h3>
         <section className="section">
-          <Form className="form" onSubmit={addReviewHandler}>
+          <Form className="form" onSubmit={submitHandler}>
             <Form.Control
               type="textarea"
               name="review"
@@ -220,6 +257,7 @@ export default function CarDetails() {
                   key={review._id}
                   {...review}
                   deleteHandler={deleteReviewHandler}
+                  editHandler={editReviewHandler}
                 />
               ))
             : "No Reviews added ..."}

@@ -1,10 +1,14 @@
 import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, ButtonGroup } from "react-bootstrap";
+import { ButtonGroup } from "react-bootstrap";
 
 export const Review = (props) => {
   const deleteClickHandler = () => {
     props.deleteHandler(props._id);
+  };
+
+  const editClickHandler = () => {
+    props.editHandler(props._id, props.text);
   };
 
   return (
@@ -25,7 +29,8 @@ export const Review = (props) => {
             <ButtonGroup>
             <button
                 className="btn btn-outline-warning"
-                onClick={deleteClickHandler}
+                onClick={editClickHandler}
+                data-toggle="tooltip" title="Edit"
               >
                 <span>
                   <FontAwesomeIcon icon={faEdit} />
@@ -34,6 +39,7 @@ export const Review = (props) => {
               <button
                 className="btn btn-outline-danger"
                 onClick={deleteClickHandler}
+                data-toggle="tooltip" title="Delete"
               >
                 <span>
                   <FontAwesomeIcon icon={faTrashCan} />

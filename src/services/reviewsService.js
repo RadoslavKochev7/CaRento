@@ -33,7 +33,23 @@ export const deleteReview = async (id) => {
     };
 
     const response = await fetch(`${BASE_URL}${id}`, {
+        method: "DELETE",
         headers: headers
+    })
+
+    return response.json();
+}
+
+export const editReview = async (id, text) => {
+    const token = localStorage.getItem('accessToken');
+    const headers = {
+        "X-Authorization": token
+    };
+
+    const response = await fetch(`${BASE_URL}${id}`, {
+        headers: headers,
+        method: "PUT",
+        body: JSON.stringify({text: text})
     })
 
     return response.json();
