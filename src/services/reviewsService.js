@@ -25,3 +25,16 @@ export const addReview = async (carId, text) => {
 
     return review.json();
 };
+
+export const deleteReview = async (id) => {
+    const token = localStorage.getItem('accessToken');
+    const headers = {
+        "X-Authorization": token
+    };
+
+    const response = await fetch(`${BASE_URL}${id}`, {
+        headers: headers
+    })
+
+    return response.json();
+}

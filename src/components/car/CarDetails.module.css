@@ -12,3 +12,8 @@ input {
     font-weight: lighter;
     color:#AFB2B3 !important;
 }
+
+.reviewsSection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

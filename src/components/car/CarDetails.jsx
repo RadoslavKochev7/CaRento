@@ -77,10 +77,19 @@ export default function CarDetails() {
       return alert(result.message);
     }
 
-    result.owner = JSON.parse(localStorage.getItem('auth'));
+    result.owner = JSON.parse(localStorage.getItem("auth"));
 
     setReviews((state) => [...state, result]);
     setReviewText("");
+  };
+
+  const deleteReviewHandler = async (id) => {
+    const result = await reviewService.deleteReview(id);
+    if (result.message) {
+      return alert(result.message);
+    }
+
+    setReviews((state) => state.filter((review) => review._id !== id));
   };
 
   const closeModal = () => {
@@ -204,11 +213,16 @@ export default function CarDetails() {
             </Button>
           </Form>
         </section>
-        <div className="section">
+        <div className={styles.reviewsSection}>
           {reviews.length > 0
-            ? reviews.map((review) => <Review key={review._id} {...review} />)
-            : "No Reviews added ..."
-          }
+            ? reviews.map((review) => (
+                <Review
+                  key={review._id}
+                  {...review}
+                  deleteHandler={deleteReviewHandler}
+                />
+              ))
+            : "No Reviews added ..."}
         </div>
       </div>
     </div>
