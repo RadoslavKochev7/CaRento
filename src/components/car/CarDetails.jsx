@@ -9,8 +9,8 @@ import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import styles from "./CarDetails.module.css";
 import * as rentingService from "../../services/rentingService";
 import * as reviewService from "../../services/reviewsService";
-import Testimonials from "../Testimonials";
 import { Form, Button } from "react-bootstrap";
+import Review from "../review/Review";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -69,10 +69,18 @@ export default function CarDetails() {
     e.preventDefault();
 
     if (!reviewText) {
-      alert("There should be value")
+      alert("There should be value");
     }
     const result = await reviewService.addReview(id, reviewText);
-    console.log(result)
+
+    if (result.message) {
+      return alert(result.message);
+    }
+
+    result.owner = JSON.parse(localStorage.getItem('auth'));
+
+    setReviews((state) => [...state, result]);
+    setReviewText("");
   };
 
   const closeModal = () => {
@@ -186,17 +194,22 @@ export default function CarDetails() {
             <Form.Control
               type="textarea"
               name="review"
+              value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Place your review here"
-
+              placeholder="Place your review here..."
             ></Form.Control>
-            
+
             <Button className="btn btn-primary" type="submit">
               Add Review
             </Button>
           </Form>
         </section>
-        <Testimonials />
+        <div className="section">
+          {reviews.length > 0
+            ? reviews.map((review) => <Review key={review._id} {...review} />)
+            : "No Reviews added ..."
+          }
+        </div>
       </div>
     </div>
   );
