@@ -2,13 +2,13 @@ h3 {
     font-weight: 600;
 }
 
-input {
+.reviewInput {
     max-width: 45%;
     font-weight: 300;
 
 }
 
-::-webkit-input-placeholder {
+.reviewInput::placeholder {
     font-weight: lighter;
     color:#AFB2B3 !important;
 }

@@ -1,23 +1,37 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { authContext } from "../../../contexts/AuthContext";
+import { toast } from "react-toastify";
 import Car from "../Car";
 import * as rentingService from "../../../services/rentingService";
+import * as toastConstants from "../../../constants/toastConstants";
 
 export default function Mine() {
   const { userId } = useContext(authContext);
   const [cars, setCars] = useState([]);
 
+  useEffect(() => {
+    rentingService
+      .getMyCars(userId)
+      .then((response) => setCars(response))
+      .catch((err) => console.log(err));
+  }, [userId]);
+
   const handleDelete = async (carId) => {
-    await rentingService.deleteCarById(carId);
-    setCars((state) => state.filter((car) => car._id !== carId));
+    try {
+      await rentingService.deleteCarById(carId);
+      setCars((state) => state.filter((car) => car._id !== carId));
+      toast.success(toastConstants.deleteSuccess);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEdit = async (carId, carData) => {
     const result = await rentingService.editCarById(carId, carData);
     if (result.message) {
-      // throw validation
-      return alert("not ok");
+      // toast validation
+      return toast.error(toastConstants.editError + " " + result.message);
     }
 
     setCars((state) => {
@@ -28,14 +42,9 @@ export default function Mine() {
         return car;
       });
     });
-  };
 
-  useEffect(() => {
-    rentingService
-      .getMyCars(userId)
-      .then((response) => setCars(response))
-      .catch((err) => console.log(err));
-  }, [userId]);
+    toast.success(toastConstants.editSuccess);
+  };
 
   return (
     <div className="page-wrapper">

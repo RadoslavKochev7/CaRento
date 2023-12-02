@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { getCityCoordinates } from "../../services/locationService";
+import { addSuccess, deleteSuccess, editSuccess, invalidCoordinates } from "../../constants/toastConstants";
+import { toast } from "react-toastify";
 import Car from "./Car";
 import AddCarModalForm from "./addCarModalForm/AddCarModalForm";
 import RentoMap from "../map/RentoMap";
-import { getCityCoordinates } from "../../services/locationService";
 import * as rentingService from "../../services/rentingService";
 
 export default function CarListing() {
@@ -16,7 +18,7 @@ export default function CarListing() {
   }, []);
 
   const handleEdit = async (carId, carData) => {
-    if (!carData.latitude || carData.longitude) {
+    if (!carData.latitude || !carData.longitude) {
       const coordinates = await getCityCoordinates(
         carData.city,
         carData.country
@@ -27,7 +29,7 @@ export default function CarListing() {
     const result = await rentingService.editCarById(carId, carData);
 
     if (result.message) {
-      console.log(result.message);
+      toast.error(result.message);
     } else {
       setCars((state) => {
         return state.map((car) => {
@@ -37,6 +39,7 @@ export default function CarListing() {
           return car;
         });
       });
+      toast.success(editSuccess);
     }
   };
 
@@ -44,7 +47,11 @@ export default function CarListing() {
     setCurrentCarId(carId);
 
     await rentingService.deleteCarById(carId);
+    if (result.message) {
+      return toast.error(result.message);
+    }
     setCars((state) => state.filter((car) => car._id !== carId));
+    toast.success(deleteSuccess);
   };
 
   const submitHandler = async (car) => {
@@ -58,10 +65,10 @@ export default function CarListing() {
     const result = await rentingService.addCar(car);
 
     if (result.message) {
-      // add toast for fail
-      return "Invalid coordinates";
+      return toast.error(invalidCoordinates);
     }
     setCars((state) => [...state, result]);
+    toast.success(addSuccess);
   };
 
   return (

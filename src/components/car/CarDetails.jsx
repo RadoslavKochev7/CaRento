@@ -5,10 +5,12 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { canUserManage } from "../../utils/userManager";
 import { Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
 import Review from "../review/Review";
 import styles from "./CarDetails.module.css";
+import * as toastConstants from "../../constants/toastConstants";
 import * as rentingService from "../../services/rentingService";
 import * as reviewService from "../../services/reviewsService";
 
@@ -21,6 +23,7 @@ export default function CarDetails() {
   const [reviews, setReviews] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState("");
+  const reviewButton = document.getElementById("review");
 
   const navigate = useNavigate();
 
@@ -47,22 +50,22 @@ export default function CarDetails() {
   const editHandler = async (carId, carData) => {
     const result = await rentingService.editCarById(carId, carData);
     if (result.message) {
-      // throw validation
-      return alert("not ok");
+      // toast with validation with the message from request
+      return toast.warning(result.message);
     }
 
     setCar(result);
+    toast.success(toastConstants.editSuccess);
   };
 
   const deleteModalHandler = async () => {
     try {
       const result = await rentingService.deleteCarById(id);
       if (result.message) {
-        return "toast for error " + result.message;
-      } else {
-        navigate("/cars");
-        return "toast for success";
+        return toast.warning(result.message);
       }
+      toast.success(toastConstants.deleteSuccess);
+      navigate("/cars");
     } catch (error) {
       console.log(error);
     }
@@ -71,11 +74,11 @@ export default function CarDetails() {
     const result = await reviewService.addReview(id, reviewText);
 
     if (result.message) {
-      return alert(result.message);
+      toast.warning(result.message);
     }
 
     result.owner = JSON.parse(localStorage.getItem("auth"));
-
+    toast.success(toastConstants.addSuccess, { autoClose: 2000 });
     setReviews((state) => [...state, result]);
   };
 
@@ -83,9 +86,10 @@ export default function CarDetails() {
     const result = await reviewService.editReview(editingReviewId, reviewText);
     if (result.message) {
       console.log(result);
-      return alert(result.message);
+      return toast.warning(result.message);
     }
 
+    toast.success(toastConstants.editSuccess);
     setReviews((state) => {
       return state.map((review) => {
         if (review._id === result._id) {
@@ -96,13 +100,16 @@ export default function CarDetails() {
       });
     });
 
+    reviewButton.textContent = "Add Review";
+    reviewButton.style.background = "";
+    reviewButton.style.color = "white"
     setIsEditMode(false);
   };
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!reviewText) {
-      alert("There should be value");
+      return toast.warning("No value provided", { autoClose: 2000 });
     }
 
     if (isEditMode) {
@@ -117,9 +124,10 @@ export default function CarDetails() {
   const deleteReviewHandler = async (id) => {
     const result = await reviewService.deleteReview(id);
     if (result.message) {
-      return alert(result.message);
+      return toast.warning(result.message);
     }
 
+    toast.success(toastConstants.deleteSuccess, { autoClose: 2000 });
     setReviews((state) => state.filter((review) => review._id !== id));
   };
 
@@ -127,6 +135,10 @@ export default function CarDetails() {
     setReviewText(text);
     setIsEditMode(true);
     setEditingReviewId(id);
+
+    reviewButton.textContent = "Edit Review";
+    reviewButton.style.background = "#ffc107"
+    reviewButton.style.color = "black"
   };
 
   const closeModal = () => {
@@ -238,6 +250,7 @@ export default function CarDetails() {
         <section className="section">
           <Form className="form" onSubmit={submitHandler}>
             <Form.Control
+              className={styles.reviewInput}
               type="textarea"
               name="review"
               value={reviewText}
@@ -245,7 +258,7 @@ export default function CarDetails() {
               placeholder="Place your review here..."
             ></Form.Control>
 
-            <Button className="btn btn-primary" type="submit">
+            <Button id="review" className="btn btn-primary" type="submit">
               Add Review
             </Button>
           </Form>

@@ -12,6 +12,7 @@ import Register from "../src/components/authentication/register/Register";
 import AuthProvider from "./contexts/AuthContext";
 import Logout from "../src/components/authentication/logout/Logout";
 import Mine from "../src/components/car/mine/Mine";
+import CaRentoToastContainer from "./components/CaRentoToastContainer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
 
+        <CaRentoToastContainer />
         <Footer />
       </AuthProvider>
     </>
