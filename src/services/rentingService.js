@@ -1,19 +1,7 @@
+import createHeaders from "./headers/authHeaders";
+
 const BASE_URL = 'http://localhost:3030/data/cars/';
 
-const token = localStorage.getItem('accessToken');
-const auth = localStorage.getItem('auth');
-let headers = {
-    "X-Authorization": token
-};
-
-if (auth.includes('admin@abv.bg')) {
-    headers = {
-        ...headers,
-        "X-Admin": ""
-    }
-}
-
-console.log(headers)
 // Sends a GET request to the server and returns all cars
 export const getAllCars = async () => {
     const res = await fetch(BASE_URL);
@@ -32,6 +20,7 @@ export const getCarById = async (carId) => {
 
 // Sends a DELETE request to the server and returns the deleted car 
 export const deleteCarById = async (carId) => {
+    const headers = createHeaders();
     const res = await fetch(`${BASE_URL}${carId}`, {
         method: 'DELETE',
         headers: headers
@@ -43,6 +32,7 @@ export const deleteCarById = async (carId) => {
 
 // Sends a POST request to the server and returns the added car data
 export const addCar = async (data) => {
+    const headers = createHeaders();
     const response = await fetch(BASE_URL, {
         method: 'POST',
         headers: headers,
@@ -67,6 +57,7 @@ export const getMyCars = async (ownerId) => {
 
 // Sends a PUT request to the server and returns the edited car
 export const editCarById = async (carId, carData) => {
+    const headers = createHeaders();
     const res = await fetch(`${BASE_URL}${carId}`, {
         method: 'PUT',
         headers: headers,

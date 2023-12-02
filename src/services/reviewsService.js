@@ -1,3 +1,5 @@
+import createHeaders from "./headers/authHeaders";
+
 const BASE_URL = 'http://localhost:3030/data/reviews/';
 
 export const getAllReviewsForCurrentCar = async (carId) => {
@@ -12,11 +14,7 @@ export const getAllReviewsForCurrentCar = async (carId) => {
 }
 
 export const addReview = async (carId, text) => {
-    const token = localStorage.getItem('accessToken');
-    const headers = {
-        "X-Authorization": token
-    };
-
+    const headers = createHeaders();
     const review = await fetch(BASE_URL, {
         method: "POST",
         headers: headers,
@@ -27,11 +25,7 @@ export const addReview = async (carId, text) => {
 };
 
 export const deleteReview = async (id) => {
-    const token = localStorage.getItem('accessToken');
-    const headers = {
-        "X-Authorization": token
-    };
-
+    const headers = createHeaders();
     const response = await fetch(`${BASE_URL}${id}`, {
         method: "DELETE",
         headers: headers
@@ -41,11 +35,7 @@ export const deleteReview = async (id) => {
 }
 
 export const editReview = async (id, text) => {
-    const token = localStorage.getItem('accessToken');
-    const headers = {
-        "X-Authorization": token
-    };
-
+    const headers = createHeaders();
     const response = await fetch(`${BASE_URL}${id}`, {
         headers: headers,
         method: "PUT",

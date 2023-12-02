@@ -14,6 +14,6 @@ export const deleteError = `Delete Failed at ${currentTime}`;
 export const invalidCoordinates = "Invalid coordinates";
 
 // auth
-export const loginSucces = "Welcome";
+export const loginSucces = "Hello, ";
 export const logoutSucces = "Logout Successfull";
 export const registerSucces = "Registered";

@@ -93,7 +93,7 @@ export default function AddCarModalForm({ onSubmit }) {
       </Button>
       <Modal show={showModal} onHide={closeModalHandler}>
         <Modal.Header>
-          <Modal.Title>Please, populate the fields below</Modal.Title>
+          <Modal.Title className={styles.modalTitle}>Please, populate the required fields</Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
           </button>
@@ -101,11 +101,11 @@ export default function AddCarModalForm({ onSubmit }) {
         <Modal.Body>
           <Form className={styles.addCarModalForm} onSubmit={onSubmitHandler}>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Make</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Make</Form.Label>
               <Form.Control
                 type="text"
                 name="make"
-                // required
+                required
                 placeholder="Enter car's make"
                 value={formValues.make}
                 onChange={changeInputValueHandler}
@@ -116,11 +116,11 @@ export default function AddCarModalForm({ onSubmit }) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Model</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Model</Form.Label>
               <Form.Control
                 type="text"
                 name="model"
-                // required
+                required
                 placeholder="Enter car's model"
                 value={formValues.model}
                 onChange={changeInputValueHandler}
@@ -131,11 +131,12 @@ export default function AddCarModalForm({ onSubmit }) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Image URL</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Image URL</Form.Label>
               <Form.Control
                 type="text"
                 name="imageUrl"
                 placeholder="Enter valid image url"
+                required
                 value={formValues.imageUrl}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.imageUrl}
@@ -146,14 +147,14 @@ export default function AddCarModalForm({ onSubmit }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Price</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Price</Form.Label>
               <Form.Control
                 type="number"
                 name="rentalPrice"
                 placeholder="Enter price for a day"
                 min={0}
                 step={0.01}
-                // required
+                required
                 value={formValues.price}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.price}
@@ -164,11 +165,11 @@ export default function AddCarModalForm({ onSubmit }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.dateInput}>Year</Form.Label>
+              <Form.Label className={[styles.dateInput, styles.formLabel, styles.required]}>Year</Form.Label>
               <Form.Control
                 type="month"
                 name="year"
-                // required
+                required
                 value={formValues.year}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.year}
@@ -210,11 +211,11 @@ export default function AddCarModalForm({ onSubmit }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>City</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>City</Form.Label>
               <Form.Control
                 type="text"
                 name="city"
-                // required
+                required
                 placeholder="Enter car's city"
                 value={formValues.city}
                 onChange={changeInputValueHandler}
@@ -241,11 +242,11 @@ export default function AddCarModalForm({ onSubmit }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Country</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Country</Form.Label>
               <Form.Control
                 type="text"
                 name="country"
-                // required
+                required
                 placeholder="Enter car's country"
                 value={formValues.country}
                 onChange={changeInputValueHandler}
@@ -280,15 +281,15 @@ export default function AddCarModalForm({ onSubmit }) {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>
-                  <Dropdown.Item>Diesel</Dropdown.Item>
-                  <Dropdown.Item>Gas</Dropdown.Item>
-                  <Dropdown.Item>Gasoline</Dropdown.Item>
-                  <Dropdown.Item>Electric</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Diesel</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Gas</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Gasoline</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Electric</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group className={styles.buttonsDiv}>
               <ButtonGroup className={styles.buttonGroup} aria-label="Buttons">
                 <Button
                   className="btn btn-info"

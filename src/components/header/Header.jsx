@@ -52,7 +52,7 @@ export default function Header() {
                         Logout
                       </Link>
                     </li>
-                    <span style={{ marginLeft: 100}}>Hello, {username}!</span>
+                    <span className={styles.userSpan}>Welcome, {username}!</span>
                   </>
                 )}
                 {!isAuthenticated && (
@@ -69,16 +69,6 @@ export default function Header() {
                     </li>
                   </>
                 )}
-                {/* <li>
-                  <Link to={"/about"} className={styles.navItem}>
-                    About
-                  </Link>
-                </li> */}
-                {/* <li>
-                  <Link to={"contact.html"} className={styles.navItem}>
-                    Contact
-                  </Link>
-                </li> */}
               </ul>
             </nav>
           </div>

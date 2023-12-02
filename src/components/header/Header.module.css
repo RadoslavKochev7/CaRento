@@ -18,3 +18,14 @@
   font-size: 18px;
   font-weight: bolder;
 }
+
+.userSpan {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 20px;
+  right: -240px;
+  width: 12rem;
+  font-style: italic;
+  font-weight: bold;
+}

@@ -44,9 +44,7 @@ export default function CarListing() {
   };
 
   const handleDelete = async (carId) => {
-    setCurrentCarId(carId);
-
-    await rentingService.deleteCarById(carId);
+    const result = await rentingService.deleteCarById(carId);
     if (result.message) {
       return toast.error(result.message);
     }

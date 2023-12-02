@@ -22,7 +22,7 @@
   width: 210px;
 }
 
-label:after {
+.formLabel::after {
   content: "*";
   color: red;
 }

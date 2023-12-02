@@ -5,10 +5,18 @@
   margin: 10px;
 }
 
+.modalTitle {
+  font-weight: bold;
+}
+
 .buttonGroup {
   display: flex;
-  justify-content: space-around;
+  justify-content: end;
   margin-top: 10px;
+}
+
+.buttonsDiv {
+  width: 100%;
 }
 
 .formLabel {
@@ -22,7 +30,7 @@
   width: 210px;
 }
 
-label:after {
+.required::after {
   content: "*";
   color: red;
 }
@@ -56,4 +64,9 @@ label:after {
 .closeButton:not(:disabled):not(.disabled):hover,
 .close:not(:disabled):not(.disabled):focus {
   opacity: 0.75;
+}
+
+.dropdownItem:hover {
+  background-color: var(--primary);
+  color: white;
 }
