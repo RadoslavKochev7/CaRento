@@ -79,12 +79,12 @@ export default function Car(props) {
           </h3>
           <div className="rent-price">
             <span>
-              <b>Price:</b>
+              <b>Price: </b>
             </span>
             <strong>{rentalPrice}$</strong>
             <span className="mx-1">/</span>day
           </div>
-          <div className="listing-feature">
+          {/* <div className="listing-feature">
             <span className="caption">
               <b>Year:</b> {year}
             </span>
@@ -111,12 +111,12 @@ export default function Car(props) {
           <span className="caption">
             <b>Description:</b>
           </span>
-          <p className={styles.desc}>{description}</p>
+          <p className={styles.desc}>{description ? description : "No description added"}</p>
           <span className="caption">
             <b>Fuel Type: {fuelType}</b>
           </span>
+          <hr /> */}
           <hr />
-
           <div className={styles.buttons}>
             <button
               className={`btn btn-info ${styles.buttonItem}`}

@@ -1,26 +1,16 @@
 import { useState } from "react";
-import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
+import { Modal,Form, Button,ButtonGroup,Dropdown, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AddCarModalForm.module.css";
+import * as locationService from "../../../services/locationService";
+import * as carConstants from "../../../constants/carConstants";
 
-const formInitialState = {
-  model: "",
-  make: "",
-  imageUrl: "",
-  year: "",
-  rentalPrice: "",
-  mileage: "",
-  horsePower: "",
-  description: "",
-  city: "",
-  country: "",
-  address: "",
-  fuelType: "Diesel"
-};
+const formInitialState = carConstants.formInitialStateConstant;
 
 export default function AddCarModalForm({ onSubmit }) {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
 
@@ -28,7 +18,7 @@ export default function AddCarModalForm({ onSubmit }) {
     e.preventDefault();
     setFormValues((state) => ({
       ...state,
-      ["fuelType"]: e.target.text
+      fuelType: e.target.text,
     }));
   };
 
@@ -37,27 +27,44 @@ export default function AddCarModalForm({ onSubmit }) {
     setFormValues(formInitialState);
   };
 
+  const validateLocations = async (city, country) => {
+    try {
+      const result = await locationService.getCityCoordinates(city, country);
+      if (result.length === 0) {
+        setValidationForCountryAndCity();
+      }
+
+    } catch (error) {
+      setValidationForCountryAndCity();
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const validateDate = () => {
+    if (new Date(formValues.year).getFullYear() > new Date().getFullYear()) {
+      setValidations((state) => ({
+        ...state,
+        year: invalidYear,
+      }));
+    }
+  };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    let isValid = true;
+    setLoading(true);
 
-    // if (Object.values(formValues).some((x) => !x)) {
-    //   setValidations((state) => ({
-    //     ...state,
-    //     [e.target.name]: "Field is required",
-    //   }));
+    await validateLocations(formValues.city, formValues.country);
+    validateDate();
 
-    //   isValid = false;
-    // }
+    if (validations.city || validations.year) {
+      return;
+    }
 
-    // if (!isValid) {
-    //     console.log("not valid")
-    //   return;
-    // }s
-
+    await onSubmit(formValues);
+    setFormValues(formInitialState);
     setShowModal(false);
-    onSubmit(formValues);
-    // setFormValues(formInitialState);
   };
 
   const changeInputValueHandler = (e) => {
@@ -86,22 +93,46 @@ export default function AddCarModalForm({ onSubmit }) {
     }));
   };
 
+  const onModalLoad = () => {
+    setShowModal(true);
+    setValidations({});
+  };
+
+  const setValidationForCountryAndCity = () => {
+    setValidations((state) => ({
+      ...state,
+      city: notExistingCity,
+    }));
+  };
+
   return (
     <div>
-      <Button variant="primary" onClick={() => setShowModal(true)}>
+      <Button variant="primary" onClick={onModalLoad}>
         + Add Car
       </Button>
       <Modal show={showModal} onHide={closeModalHandler}>
         <Modal.Header>
-          <Modal.Title className={styles.modalTitle}>Please, populate the required fields</Modal.Title>
+          <Modal.Title className={styles.modalTitle}>
+            Please, populate the required fields
+          </Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
           </button>
         </Modal.Header>
+        {loading && (
+          <Spinner
+            variant="primary"
+            className={styles.formSpinner}
+            animation="border"
+            role="status"
+          ></Spinner>
+        )}
         <Modal.Body>
           <Form className={styles.addCarModalForm} onSubmit={onSubmitHandler}>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Make</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Make
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="make"
@@ -109,14 +140,12 @@ export default function AddCarModalForm({ onSubmit }) {
                 placeholder="Enter car's make"
                 value={formValues.make}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.make}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.make}
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Model</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Model
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="model"
@@ -124,30 +153,26 @@ export default function AddCarModalForm({ onSubmit }) {
                 placeholder="Enter car's model"
                 value={formValues.model}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.model}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.model}
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Image URL</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Image URL
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="imageUrl"
-                placeholder="Enter valid image url"
+                placeholder="Enter valid image URL"
                 required
                 value={formValues.imageUrl}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.imageUrl}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.imageUrl}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Price</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Price
+              </Form.Label>
               <Form.Control
                 type="number"
                 name="rentalPrice"
@@ -157,15 +182,19 @@ export default function AddCarModalForm({ onSubmit }) {
                 required
                 value={formValues.price}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.price}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.price}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.dateInput, styles.formLabel, styles.required]}>Year</Form.Label>
+              <Form.Label
+                className={[
+                  styles.dateInput,
+                  styles.formLabel,
+                  styles.required,
+                ]}
+              >
+                Year
+              </Form.Label>
               <Form.Control
                 type="month"
                 name="year"
@@ -187,11 +216,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 min={0}
                 value={formValues.horsePower}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.horsePower}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.horsePower}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -203,15 +228,13 @@ export default function AddCarModalForm({ onSubmit }) {
                 min={0}
                 value={formValues.mileage}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.mileage}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.mileage}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>City</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                City
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="city"
@@ -234,15 +257,13 @@ export default function AddCarModalForm({ onSubmit }) {
                 placeholder="Enter car's address"
                 value={formValues.address}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.city}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.city}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Country</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Country
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="country"
@@ -250,7 +271,7 @@ export default function AddCarModalForm({ onSubmit }) {
                 placeholder="Enter car's country"
                 value={formValues.country}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.make}
+                isInvalid={!!validations.country}
               />
               <Form.Control.Feedback type="invalid">
                 {validations.country}
@@ -281,10 +302,18 @@ export default function AddCarModalForm({ onSubmit }) {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>
-                  <Dropdown.Item className={styles.dropdownItem}>Diesel</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Gas</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Gasoline</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Electric</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Diesel
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Gas
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Gasoline
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Electric
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>

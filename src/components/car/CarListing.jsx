@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { getCityCoordinates } from "../../services/locationService";
-import { addSuccess, deleteSuccess, editSuccess, invalidCoordinates } from "../../constants/toastConstants";
 import { toast } from "react-toastify";
 import Car from "./Car";
 import AddCarModalForm from "./addCarModalForm/AddCarModalForm";
 import RentoMap from "../map/RentoMap";
+import styles from "./CarListing.module.css";
+import * as carConstants from "../../constants/toastConstants";
 import * as rentingService from "../../services/rentingService";
 
 export default function CarListing() {
@@ -19,10 +20,7 @@ export default function CarListing() {
 
   const handleEdit = async (carId, carData) => {
     if (!carData.latitude || !carData.longitude) {
-      const coordinates = await getCityCoordinates(
-        carData.city,
-        carData.country
-      );
+      const coordinates = await getCityCoordinates(carData.city, carData.country);
       carData.latitude = coordinates[0].latitude;
       carData.longitude = coordinates[0].longitude;
     }
@@ -39,7 +37,7 @@ export default function CarListing() {
           return car;
         });
       });
-      toast.success(editSuccess);
+      toast.success(carConstants.editSuccess);
     }
   };
 
@@ -49,31 +47,31 @@ export default function CarListing() {
       return toast.error(result.message);
     }
     setCars((state) => state.filter((car) => car._id !== carId));
-    toast.success(deleteSuccess);
+    toast.success(carConstants.deleteSuccess);
   };
 
   const submitHandler = async (car) => {
     const coordinates = await getCityCoordinates(car.city, car.country);
-    if (!coordinates) {
-      // add toast for fail
-      return "Invalid coordinates";
+    if (coordinates.length === 0) {
+      return toast.warning(carConstants.invalidCoordinates);
     }
+    
     car.longitude = coordinates[0]?.longitude;
     car.latitude = coordinates[0]?.latitude;
     const result = await rentingService.addCar(car);
 
     if (result.message) {
-      return toast.error(invalidCoordinates);
+      return toast.error(carConstants.invalidCoordinates);
     }
     setCars((state) => [...state, result]);
-    toast.success(addSuccess);
+    toast.success(carConstants.addSuccess);
   };
 
   return (
     <div className="page-wrapper">
       <div className="site-section bg-light">
         <h1 className="heading text-center">Best Available Cars For Rent!</h1>
-        <h2 style={{ textAlign: "center" }}>
+        <h2 className={styles.listingH2}>
           <b>
             You have an extra car, which you don't want to sell ? <br />
             That's fine, just press the button below and leave it for rent.
@@ -81,10 +79,7 @@ export default function CarListing() {
         </h2>
         <div className="container">
           <div className="row">
-            <div
-              className="col-lg-7"
-              style={{ marginTop: 30, marginBottom: 30 }}
-            >
+            <div className={`col-lg-7 ${styles.listingCol}`}>
               <AddCarModalForm onSubmit={submitHandler} />
             </div>
           </div>

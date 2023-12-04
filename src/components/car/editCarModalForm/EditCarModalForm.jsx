@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Modal, Form, Button, ButtonGroup, Dropdown } from "react-bootstrap";
+import { Modal, Form, Button, ButtonGroup, Dropdown, Spinner,} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./EditCarModalForm.module.css";
+import * as locationService from "../../../services/locationService";
 
-export default function EditCarModalForm({data, editHandler, closeModalHandler,}) {
+export default function EditCarModalForm({
+  data,
+  editHandler,
+  closeModalHandler,
+}) {
   const formInitialState = {
     model: data.model,
     make: data.make,
@@ -17,19 +22,23 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
     fuelType: data.fuelType,
     city: data.city,
     country: data.country,
-    address: data.address
+    address: data.address,
+    isAvailable: data.isAvailable ?? true,
+    rentalStartDate: data.rentalStartDate ?? "",
+    rentalEndDate: data.rentalEndDate ?? "",
   };
 
   const [formValues, setFormValues] = useState(formInitialState);
   const [validations, setValidations] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleDropdownBehavior = (e) => {
     e.preventDefault();
 
     setFormValues((state) => ({
-        ...state,
-        ["fuelType"]: e.target.text
-      }));
+      ...state,
+      fuelType: e.target.text,
+    }));
   };
 
   const handleClose = () => {
@@ -38,24 +47,39 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    let isValid = true;
+    setLoading(true);
 
-    // if (Object.values(formValues).some((x) => !x)) {
-    //   setValidations((state) => ({
-    //     ...state,
-    //     [e.target.name]: "Field is required",
-    //   }));
+    await validateLocations(formValues.city, formValues.country);
+    validateDate();
 
-    //   isValid = false;
-    // }
+    if (validations.city || validations.year) {
+      return;
+    }
 
-    // if (!isValid) {
-    //     console.log("not valid")
-    //   return;
-    // }
-
-    editHandler(data._id, formValues);
+    await editHandler(data._id, formValues);
     handleClose();
+  };
+
+  const validateLocations = async (city, country) => {
+    try {
+      const result = await locationService.getCityCoordinates(city, country);
+      if (result.length === 0) {
+        setValidationForCountryAndCity();
+      }
+    } catch (error) {
+      setValidationForCountryAndCity();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const validateDate = () => {
+    if (new Date(formValues.year).getFullYear() > new Date().getFullYear()) {
+      setValidations((state) => ({
+        ...state,
+        year: invalidYear,
+      }));
+    }
   };
 
   const changeInputValueHandler = (e) => {
@@ -88,82 +112,78 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
     <div>
       <Modal show={true} onHide={closeModalHandler}>
         <Modal.Header>
-          <Modal.Title>Please, populate the fields below</Modal.Title>
+          <Modal.Title className={styles.modalTitle}>Please, populate the required fields</Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={handleClose} />
           </button>
         </Modal.Header>
+        {loading && (
+          <Spinner
+            variant="primary"
+            className={styles.formSpinner}
+            animation="border"
+            role="status"
+          ></Spinner>
+        )}
         <Modal.Body>
-          <Form className={styles.addCarModalForm} onSubmit={onSubmitHandler}>
+          <Form className={styles.editCarModalForm} onSubmit={onSubmitHandler}>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Make</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Make</Form.Label>
               <Form.Control
                 type="text"
                 name="make"
-                // required
+                required
                 placeholder="Enter car's make"
                 value={formValues.make}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.make}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.make}
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Model</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Model</Form.Label>
               <Form.Control
                 type="text"
                 name="model"
-                // required
+                required
                 placeholder="Enter car's model"
                 value={formValues.model}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.model}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.model}
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Image URL</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Image URL</Form.Label>
               <Form.Control
                 type="text"
                 name="imageUrl"
                 placeholder="Enter valid image url"
                 value={formValues.imageUrl}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.imageUrl}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.imageUrl}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Price</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Price</Form.Label>
               <Form.Control
                 type="number"
                 name="rentalPrice"
                 placeholder="Enter price for a day"
-                min={0.00}
+                min={0.0}
                 step={0.01}
-                // required
+                required
                 value={formValues.rentalPrice}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.price}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.rentalPrice}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.dateInput}>Year</Form.Label>
+              <Form.Label className={[
+                  styles.dateInput,
+                  styles.formLabel,
+                  styles.required,
+                ]}>Year</Form.Label>
               <Form.Control
                 type="month"
                 name="year"
-                // required
+                required
                 value={formValues.year}
                 onChange={changeInputValueHandler}
                 isInvalid={!!validations.year}
@@ -181,11 +201,7 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 min={0}
                 value={formValues.horsePower}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.horsePower}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.horsePower}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -197,19 +213,15 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 min={0}
                 value={formValues.mileage}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.mileage}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.mileage}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>City</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>City</Form.Label>
               <Form.Control
                 type="text"
                 name="city"
-                // required
+                required
                 placeholder="Enter car's city"
                 value={formValues.city}
                 onChange={changeInputValueHandler}
@@ -228,27 +240,19 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 placeholder="Enter car's address"
                 value={formValues.address}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.city}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.city}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={styles.formLabel}>Country</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>Country</Form.Label>
               <Form.Control
                 type="text"
                 name="country"
-                // required
+                required
                 placeholder="Enter car's country"
                 value={formValues.country}
                 onChange={changeInputValueHandler}
-                isInvalid={!!validations.make}
               />
-              <Form.Control.Feedback type="invalid">
-                {validations.country}
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -275,31 +279,31 @@ export default function EditCarModalForm({data, editHandler, closeModalHandler,}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>
-                  <Dropdown.Item>Diesel</Dropdown.Item>
-                  <Dropdown.Item>Gas</Dropdown.Item>
-                  <Dropdown.Item>Gasoline</Dropdown.Item>
-                  <Dropdown.Item>Electric</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Diesel</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Gas</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Gasoline</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>Electric</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group className={styles.buttonsDiv}>
               <ButtonGroup className={styles.buttonGroup} aria-label="Buttons">
-                {/* <Button
+                <Button
                   className="btn btn-info"
                   type="reset"
                   onClick={() => {
-                    setFormValues({formInitialState});
+                    setFormValues({ formInitialState });
                     setValidations({});
                   }}
                 >
                   Reset
-                </Button> */}
+                </Button>
                 <Button
                   className="btn btn-secondary"
                   onClick={() => {
                     handleClose();
-                    setFormValues({formInitialState});
+                    setFormValues({ formInitialState });
                   }}
                 >
                   Cancel
