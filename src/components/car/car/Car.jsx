@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faCircleXmark, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { canUserManage } from "../../../utils/userManager";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
@@ -17,11 +17,8 @@ export default function Car(props) {
     rentalPrice,
     make,
     model,
-    year,
     imageUrl,
-    horsePower,
-    description,
-    mileage,
+    isAvailable,
     address,
     city,
     country,
@@ -86,39 +83,26 @@ export default function Car(props) {
             <strong>{rentalPrice}$</strong>
             <span className="mx-1">/</span>day
           </div>
-          {/* <div className="listing-feature">
-            <span className="caption">
-              <b>Year:</b> {year}
-            </span>
-            <span className="caption">
-              <b>HP:</b> {horsePower}
-            </span>
-            <span className="caption">
-              <b>Mileage: </b>
-              {mileage} km
-            </span>
-          </div>
-
           <div>
-           
+            <span className="caption">
+              <b>Currently at:</b> {country}, {city}
+              {address && `, ${address}`}
+            </span>
           </div>
-          <span className="caption">
-            <b>Description:</b>
-          </span>
-          <p className={styles.desc}>{description ? description : "No description added"}</p>
-          <span className="caption">
-            <b>Fuel Type: {fuelType}</b>
-          </span>
-          <hr /> */}
-           <div>
-              <span className="caption">
-                <b>Currently at:</b> {country}, {city}{address && `, ${address}`}
-              </span>
-              {/* <span className="caption">
-                <b>Country: </b>
-                {country}
-              </span> */}
-            </div>
+          <div className={styles.isAvailable}>
+            {!isAvailable && (
+              <>
+                <span>
+                  <FontAwesomeIcon icon={faCircleXmark} />
+                </span>
+                <span>{"Rented"}</span>
+              </>
+            )}
+            <span>
+              <FontAwesomeIcon icon={faCircleCheck} />
+            </span>
+            {"Available"}
+          </div>
           <hr />
           <div className={styles.buttons}>
             <button
