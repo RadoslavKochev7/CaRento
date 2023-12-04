@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useContext } from "react";
 import { authContext } from "../../contexts/AuthContext";
+import * as pathConstants from "../../constants/pathConstants";
 
 export default function Header() {
   const { isAuthenticated, username } = useContext(authContext);
@@ -12,7 +13,7 @@ export default function Header() {
         <div className="row align-items-center position-relative">
           <div className="col-3">
             <div className="site-logo">
-              <Link to={"/"}>
+              <Link to={pathConstants.home}>
                 <strong className={styles.logo}>CarRento</strong>
               </Link>
             </div>
@@ -20,7 +21,7 @@ export default function Header() {
 
           <div className="col-9  text-right">
             <span className="d-inline-block d-lg-none">
-              <Link to={"/"} className=" site-menu-toggle js-menu-toggle py-5">
+              <Link to={pathConstants.home} className=" site-menu-toggle js-menu-toggle py-5">
                 <span className="icon-menu h3 text-black"></span>
               </Link>
             </span>
@@ -31,39 +32,46 @@ export default function Header() {
             >
               <ul className="site-menu main-menu js-clone-nav ml-auto ">
                 <li className="active">
-                  <Link to={"/"} className={styles.navItem}>
+                  <Link to={pathConstants.home} className={styles.navItem}>
                     Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to={pathConstants.cars} className={styles.navItem}>
+                    Listing
+                  </Link>
+                </li>
+                <li>
+                  <Link to={pathConstants.about} className={styles.navItem}>
+                    About
                   </Link>
                 </li>
                 {isAuthenticated && (
                   <>
                     <li>
-                      <Link to={"/cars"} className={styles.navItem}>
-                        Listing
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={"/mine"} className={styles.navItem}>
+                      <Link to={pathConstants.mine} className={styles.navItem}>
                         My Cars
                       </Link>
                     </li>
                     <li>
-                      <Link to={"/logout"} className={styles.navItem}>
+                      <Link to={pathConstants.logout} className={styles.navItem}>
                         Logout
                       </Link>
                     </li>
-                    <span className={styles.userSpan}>Welcome, {username}!</span>
+                    <span className={styles.userSpan}>
+                      Welcome, {username}!
+                    </span>
                   </>
                 )}
                 {!isAuthenticated && (
                   <>
                     <li>
-                      <Link to={"/register"} className={styles.navItem}>
+                      <Link to={pathConstants.register} className={styles.navItem}>
                         Register
                       </Link>
                     </li>
                     <li>
-                      <Link to={"/login"} className={styles.navItem}>
+                      <Link to={pathConstants.login} className={styles.navItem}>
                         Login
                       </Link>
                     </li>

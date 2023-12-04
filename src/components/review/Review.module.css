@@ -1,0 +1,8 @@
+.reviewBody {
+    width: 100%;
+    padding: 20px 20px 20px 0;
+}
+
+.reviewDiv {
+    justify-content: space-between;
+}

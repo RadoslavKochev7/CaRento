@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { authContext } from "../../../contexts/AuthContext";
 import { toast } from "react-toastify";
-import Car from "../Car";
+import Car from "../car/Car";
 import * as rentingService from "../../../services/rentingService";
 import * as toastConstants from "../../../constants/toastConstants";
 

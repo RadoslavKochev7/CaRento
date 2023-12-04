@@ -13,6 +13,7 @@ import styles from "./CarDetails.module.css";
 import * as toastConstants from "../../../constants/toastConstants";
 import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
+import * as reviewsConstant from "../../../constants/reviewConstants";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -101,16 +102,16 @@ export default function CarDetails() {
       });
     });
 
-    reviewButton.textContent = "Add Review";
-    reviewButton.style.background = "";
-    reviewButton.style.color = "white"
+    reviewButton.textContent = reviewsConstant.addButton;
+    reviewButton.style.background = reviewsConstant.addButtonBackground;
+    reviewButton.style.color = reviewsConstant.addButtonColor;
     setIsEditMode(false);
   };
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!reviewText) {
-      return toast.warning("No value provided", { autoClose: 2000 });
+      return toast.warning(reviewsConstant.emptyForm, { autoClose: 2000 });
     }
 
     if (isEditMode) {
@@ -137,9 +138,9 @@ export default function CarDetails() {
     setIsEditMode(true);
     setEditingReviewId(id);
 
-    reviewButton.textContent = "Edit Review";
-    reviewButton.style.background = "#ffc107"
-    reviewButton.style.color = "black"
+    reviewButton.textContent = reviewsConstant.editButton;
+    reviewButton.style.background = reviewsConstant.editButtonBackground;
+    reviewButton.style.color = reviewsConstant.editButtonColor;
   };
 
   const closeModal = () => {
@@ -148,7 +149,7 @@ export default function CarDetails() {
   };
 
   return (
-    <div className="site-section">
+    <div className={styles.siteSection}>
       <Link className="btn btn-secondary" to={"/cars"}>
         Go Back
       </Link>
@@ -249,20 +250,21 @@ export default function CarDetails() {
         </div>
         <h3>Reviews</h3>
         <section className="section">
-          <Form className="form" onSubmit={submitHandler}>
-            <Form.Control
-              className={styles.reviewInput}
-              type="textarea"
-              name="review"
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Place your review here..."
-            ></Form.Control>
-
-            <Button id="review" className="btn btn-primary" type="submit">
-              Add Review
-            </Button>
-          </Form>
+          {canUserManage(car._ownerId) && (
+            <Form className={styles.reviewForm} onSubmit={submitHandler}>
+              <Form.Control
+                className={styles.reviewInput}
+                type="textarea"
+                name="review"
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                placeholder="Place your review here..."
+              ></Form.Control>
+              <Button id="review" className="btn btn-primary" type="submit">
+                Add Review
+              </Button>
+            </Form>
+          )}
         </section>
         <div className={styles.reviewsSection}>
           {reviews.length > 0

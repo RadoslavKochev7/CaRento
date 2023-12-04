@@ -8,6 +8,7 @@ import { canUserManage } from "../../../utils/userManager";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
 import DeleteModal from "../../DeleteModal/DeleteModal";
 import styles from "./Car.module.css";
+import { details } from "../../../constants/pathConstants";
 
 export default function Car(props) {
   const {
@@ -122,7 +123,7 @@ export default function Car(props) {
           <div className={styles.buttons}>
             <button
               className={`btn btn-info ${styles.buttonItem}`}
-              onClick={() => navigate(`/cars/details/${_id}`)}
+              onClick={() => navigate(details.replace(":id", _id))}
             >
               <span className={styles.spanSVG}>
                 <FontAwesomeIcon icon={faPlus} />

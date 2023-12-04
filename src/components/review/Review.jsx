@@ -2,6 +2,7 @@ import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ButtonGroup } from "react-bootstrap";
 import { canUserManage } from "../../utils/userManager";
+import styles from "./Review.module.css";
 
 export const Review = (props) => {
   const deleteClickHandler = () => {
@@ -14,15 +15,12 @@ export const Review = (props) => {
 
   return (
     <div>
-      <div style={{ width: "100%", padding: "20px 20px 20px 0" }}>
+      <div className={styles.reviewBody}>
         <div className="testimonial-2">
           <blockquote className="mb-4">
             <p>{props.text}</p>
           </blockquote>
-          <div
-            style={{ justifyContent: "space-between" }}
-            className="d-flex v-card align-items-center"
-          >
+          <div className={`d-flex v-card align-items-center ${styles.reviewDiv}`}>
             <div className="author-name">
               <span className="d-block">{props.owner.username}</span>
               <span>{props.owner.email}</span>

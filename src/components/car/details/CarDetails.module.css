@@ -1,5 +1,6 @@
 h3 {
     font-weight: 600;
+    margin-top: 4rem;
 }
 
 .reviewInput {
@@ -16,4 +17,12 @@ h3 {
 .reviewsSection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+}
+
+.reviewForm {
+    margin-bottom: 20px;
+}
+
+.siteSection {
+    background-color: #d3d3d382;
 }
