@@ -3,16 +3,16 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { canUserManage } from "../../utils/userManager";
+import { canUserManage } from "../../../utils/userManager";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import DeleteModal from "../DeleteModal/DeleteModal";
-import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
-import Review from "../review/Review";
+import DeleteModal from "../../DeleteModal/DeleteModal";
+import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
+import Review from "../../review/Review";
 import styles from "./CarDetails.module.css";
-import * as toastConstants from "../../constants/toastConstants";
-import * as rentingService from "../../services/rentingService";
-import * as reviewService from "../../services/reviewsService";
+import * as toastConstants from "../../../constants/toastConstants";
+import * as rentingService from "../../../services/rentingService";
+import * as reviewService from "../../../services/reviewsService";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -26,6 +26,7 @@ export default function CarDetails() {
   const reviewButton = document.getElementById("review");
 
   const navigate = useNavigate();
+  window.scrollTo(0, 0);
 
   useEffect(() => {
     rentingService

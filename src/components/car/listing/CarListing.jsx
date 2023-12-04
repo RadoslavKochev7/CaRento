@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { getCityCoordinates } from "../../services/locationService";
+import { getCityCoordinates } from "../../../services/locationService";
 import { toast } from "react-toastify";
-import Car from "./Car";
-import AddCarModalForm from "./addCarModalForm/AddCarModalForm";
-import RentoMap from "../map/RentoMap";
+import Car from "../car/Car";
+import AddCarModalForm from "../addCarModalForm/AddCarModalForm";
+import RentoMap from "../../map/RentoMap";
 import styles from "./CarListing.module.css";
-import * as carConstants from "../../constants/toastConstants";
-import * as rentingService from "../../services/rentingService";
+import * as carConstants from "../../../constants/toastConstants";
+import * as rentingService from "../../../services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
-
+  window.scrollTo(0, 0);
+  
   useEffect(() => {
     rentingService
       .getAllCars()

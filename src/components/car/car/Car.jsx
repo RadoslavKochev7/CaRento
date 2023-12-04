@@ -4,9 +4,9 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { canUserManage } from "../../utils/userManager";
-import EditCarModalForm from "./editCarModalForm/EditCarModalForm";
-import DeleteModal from "../DeleteModal/DeleteModal";
+import { canUserManage } from "../../../utils/userManager";
+import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
+import DeleteModal from "../../DeleteModal/DeleteModal";
 import styles from "./Car.module.css";
 
 export default function Car(props) {
@@ -21,13 +21,14 @@ export default function Car(props) {
     horsePower,
     description,
     mileage,
-    fuelType,
+    address,
     city,
     country,
     onDeleteHandler,
     onEditHandler,
   } = props;
 
+  // window.scrollTo(0, 0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const navigate = useNavigate();
@@ -98,15 +99,7 @@ export default function Car(props) {
           </div>
 
           <div>
-            <div>
-              <span className="caption">
-                <b>City:</b> {city}
-              </span>
-              <span className="caption">
-                <b>Country: </b>
-                {country}
-              </span>
-            </div>
+           
           </div>
           <span className="caption">
             <b>Description:</b>
@@ -116,6 +109,15 @@ export default function Car(props) {
             <b>Fuel Type: {fuelType}</b>
           </span>
           <hr /> */}
+           <div>
+              <span className="caption">
+                <b>Currently at:</b> {country}, {city}{address && `, ${address}`}
+              </span>
+              {/* <span className="caption">
+                <b>Country: </b>
+                {country}
+              </span> */}
+            </div>
           <hr />
           <div className={styles.buttons}>
             <button
