@@ -6,7 +6,7 @@ import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { canUserManage } from "../../../utils/userManager";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
-import DeleteModal from "../../DeleteModal/DeleteModal";
+import DeleteModal from "../../deleteModal/DeleteModal";
 import styles from "./Car.module.css";
 import { details } from "../../../constants/pathConstants";
 
@@ -69,11 +69,11 @@ export default function Car(props) {
         />
       )}
       <div className={`listing d-block align-items-stretch ${styles.card}`}>
-        <div className="listing-img h-100 mr-4">
+        <div className="listing-img mr-4">
           <img src={imageUrl} alt="Image" className={styles.carImage} />
         </div>
-        <div className="listing-contents h-100">
-          <h3>
+        <div className="listing-contents">
+          <h3 className={styles.carHeading3}>
             {make} {model}
           </h3>
           <div className="rent-price">
@@ -92,13 +92,13 @@ export default function Car(props) {
           <div className={styles.isAvailable}>
             {!isAvailable && (
               <>
-                <span>
+                <span className={styles.carIconXmark}>
                   <FontAwesomeIcon icon={faCircleXmark} />
                 </span>
                 <span>{"Rented"}</span>
               </>
             )}
-            <span>
+            <span className={styles.carIconCheck}>
               <FontAwesomeIcon icon={faCircleCheck} />
             </span>
             {"Available"}

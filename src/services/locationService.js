@@ -1,3 +1,5 @@
+import { badRequest } from "../constants/globalConstants";
+
 const apiKey = { "X-Api-Key": "Ri0O2NTNQth/Ff/zzdDK5A==ilUiwkcmWHuVknrN" };
 
 // Sends a GET request to external API to get the coordinates of a city 
@@ -6,7 +8,7 @@ export const getCityCoordinates = async (cityName, countryName) => {
         { headers: apiKey });
 
     if (!response.ok) {
-        throw new Error('Bad request');
+        throw new Error(badRequest);
     }
 
     return await response.json();
@@ -18,7 +20,7 @@ export const getCityName = async (latitude, longitude) => {
         { headers: apiKey });
 
     if (!response.ok) {
-        throw new Error('Bad request');
+        throw new Error(badRequest);
     }
 
     return data = await response.json();

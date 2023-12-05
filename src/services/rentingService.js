@@ -1,6 +1,8 @@
+import { carsBaseURL } from "../constants/carConstants";
+import { notFound } from "../constants/globalConstants";
 import createHeaders from "./headers/authHeaders";
 
-const BASE_URL = 'http://localhost:3030/data/cars/';
+const BASE_URL = carsBaseURL;
 
 // Sends a GET request to the server and returns all cars
 export const getAllCars = async () => {
@@ -38,6 +40,10 @@ export const addCar = async (data) => {
         headers: headers,
         body: JSON.stringify(data)
     });
+    
+    if (response.status === 404) {
+        throw new Error(notFound);
+    }
 
     const result = await response.json();
     return result;
@@ -63,6 +69,11 @@ export const editCarById = async (carId, carData) => {
         headers: headers,
         body: JSON.stringify(carData)
     });
+
+    if (res.status === 404) {
+        throw new Error(notFound);
+    }
+
     const data = await res.json();
     return data;
 }
@@ -72,4 +83,19 @@ export const getCount = async () => {
     const count = await res.json();
 
     return count;
+}
+
+export const rentCar = async (carId, carData) => {
+    const headers = createHeaders();
+    const response = await fetch(`${BASE_URL}${carId}`, {
+        method: 'PATCH',
+        headers: headers,
+        body: JSON.stringify(carData)
+    });
+
+    if (response.status === 404) {
+        throw new Error(notFound);
+    }
+
+    return await response.json();
 }

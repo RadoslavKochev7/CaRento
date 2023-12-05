@@ -1,49 +1,62 @@
 .card {
-    background-color: #e3dfda;
-    box-shadow: 0 15px 24px 0 grey;
-    opacity: 0.9;
+  background-color: #e3dfda;
+  box-shadow: 0 15px 24px 0 grey;
+  opacity: 0.9;
 }
-
 .buttons {
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    font-family: Arial, Helvetica, sans-serif;
+  display: inline-flex;
+  justify-content: end;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .buttonItem {
-    margin: 0;
-    padding: 12px;
-    color: black;
+  margin: 0;
+  padding: 12px;
+  color: black;
 }
 
 .buttonEdit {
-    margin: 0;
-    padding: 12px;
-    color: black;
-    padding-left: 14px;
-    padding-right: 14px;
+  margin: 0;
+  padding: 12px;
+  color: black;
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 .buttonEdit:hover {
-    color: #ffff;
+  color: #ffff;
 }
 
 .desc {
-    font-size: unset !important;
+  font-size: unset !important;
 }
 
 .spanSVG {
-    padding-right: 4px;
+  padding-right: 4px;
 }
 
 .carImage {
-    max-width: 100%;
-    min-height: 250px;
+  max-width: 100%;
+  min-height: 250px;
 }
 
 .isAvailable {
-    position: absolute;
-    bottom: 250px;
-    right: 32px;
+  position: absolute;
+  bottom: 250px;
+  right: 38px;
+}
+
+.carHeading3 {
+  margin-top: 0;
+}
+
+.carIconCheck {
+  color: green;
+  margin-right: 2px;
+}
+
+.carIconXmark {
+  color: red;
+  margin-right: 2px;
 }

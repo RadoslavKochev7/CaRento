@@ -6,7 +6,7 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { canUserManage } from "../../../utils/userManager";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import DeleteModal from "../../DeleteModal/DeleteModal";
+import DeleteModal from "../../deleteModal/DeleteModal";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
 import Review from "../../review/Review";
 import styles from "./CarDetails.module.css";
@@ -14,12 +14,14 @@ import * as toastConstants from "../../../constants/toastConstants";
 import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
 import * as reviewsConstant from "../../../constants/reviewConstants";
+import RentForm from "../../rent/RentForm";
 
 export default function CarDetails() {
   const { id } = useParams();
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showRentModal, setShowRentModal] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -27,7 +29,6 @@ export default function CarDetails() {
   const reviewButton = document.getElementById("review");
 
   const navigate = useNavigate();
-  window.scrollTo(0, 0);
 
   useEffect(() => {
     rentingService
@@ -72,6 +73,22 @@ export default function CarDetails() {
       console.log(error);
     }
   };
+  const rentHandler = async (startDate, endDate) => {
+    try {
+      const data = {
+        isAvailable: false,
+        rentalStartDate: new Date(startDate),
+        rentalEndDate: new Date(endDate),
+      };
+      const result = await rentingService.rentCar(id, data);
+      setCar(result);
+
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addReview = async () => {
     const result = await reviewService.addReview(id, reviewText);
 
@@ -222,9 +239,13 @@ export default function CarDetails() {
                 <b>Description:</b>
               </span>
               <p>{car.description}</p>
+              <p>{car.fuelType}</p>
+              <p>{car.isAvailable ? "Available" : "Rented"}</p>
+              <p>{car.address}</p>
+              <p>{car.fuelType}</p>
               <hr />
               {canUserManage(car._ownerId) && (
-                <div>
+                <>
                   <button
                     className={`btn btn-danger ${styles.buttonItem}`}
                     onClick={onDeleteModalClick}
@@ -243,7 +264,8 @@ export default function CarDetails() {
                     </span>
                     Edit
                   </button>
-                </div>
+                  <RentForm rentHandler={rentHandler} />
+                </>
               )}
             </div>
           </div>
