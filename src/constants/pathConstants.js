@@ -4,6 +4,7 @@ export const details = "/cars/details/:id";
 export const about = "/about";
 export const cars = "/cars";
 export const mine = "/mine";
+export const rentings = "/rentings";
 export const login = "/login";
 export const logout = "/logout";
 export const error = "*";

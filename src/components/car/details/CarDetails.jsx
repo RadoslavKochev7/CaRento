@@ -6,6 +6,11 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { canUserManage } from "../../../utils/userManager";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { format } from 'date-fns';
+import { cars } from "../../../constants/pathConstants";
+import { authContext } from "../../../contexts/AuthContext";
+import { authString, dateFormat } from "../../../constants/globalConstants";
+import RentForm from "../../rent/RentForm";
 import DeleteModal from "../../deleteModal/DeleteModal";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
 import Review from "../../review/Review";
@@ -14,11 +19,10 @@ import * as toastConstants from "../../../constants/toastConstants";
 import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
 import * as reviewsConstant from "../../../constants/reviewConstants";
-import RentForm from "../../rent/RentForm";
-import { authContext } from "../../../contexts/AuthContext";
 
 export default function CarDetails() {
   const { id } = useParams();
+  const { userId, email } = useContext(authContext);
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -35,6 +39,7 @@ export default function CarDetails() {
     rentingService
       .getCarById(id)
       .then((result) => setCar(result))
+      .then(window.scrollTo(0,0))
       .catch((err) => console.error(err));
 
     reviewService
@@ -78,8 +83,10 @@ export default function CarDetails() {
     try {
       const data = {
         isAvailable: false,
-        rentalStartDate: new Date(startDate),
-        rentalEndDate: new Date(endDate),
+        rentalStartDate: format(new Date(startDate), dateFormat),
+        rentalEndDate: format(new Date(endDate), dateFormat),
+        renterId: userId,
+        renterEmail: email
       };
 
       const result = await rentingService.rentCar(id, data);
@@ -99,7 +106,7 @@ export default function CarDetails() {
       toast.warning(result.message);
     }
 
-    result.owner = JSON.parse(localStorage.getItem("auth"));
+    result.owner = JSON.parse(localStorage.getItem(authString));
     toast.success(toastConstants.addSuccess, { autoClose: 2000 });
     setReviews((state) => [...state, result]);
   };
@@ -115,7 +122,7 @@ export default function CarDetails() {
     setReviews((state) => {
       return state.map((review) => {
         if (review._id === result._id) {
-          result.owner = JSON.parse(localStorage.getItem("auth"));
+          result.owner = JSON.parse(localStorage.getItem(authString));
           return result;
         }
         return review;
@@ -170,7 +177,7 @@ export default function CarDetails() {
 
   return (
     <div className={styles.siteSection}>
-      <Link className="btn btn-secondary" to={"/cars"}>
+      <Link className="btn btn-secondary" onClick={() => navigate(-1)}>
         Go Back
       </Link>
       <div className="container">

@@ -13,6 +13,8 @@ import Mine from "../src/components/car/mine/Mine";
 import CaRentoToastContainer from "./components/CaRentoToastContainer";
 import CarDetails from "./components/car/details/CarDetails";
 import CarListing from "./components/car/listing/CarListing";
+import MyRentings from "./components/rent/MyRentings";
+
 import * as pathConstants from "../src/constants/pathConstants";
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
           <Route path={pathConstants.register} element={<Register />} />
           <Route path={pathConstants.logout} element={<Logout />} />
           <Route path={pathConstants.error} element={<Error />} />
+          <Route path={pathConstants.rentings} element={<MyRentings />} />
         </Routes>
 
         <CaRentoToastContainer />

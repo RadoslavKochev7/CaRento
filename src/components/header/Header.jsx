@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useContext } from "react";
 import { authContext } from "../../contexts/AuthContext";
 import * as pathConstants from "../../constants/pathConstants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const { isAuthenticated, username } = useContext(authContext);
+  const navigate = useNavigate();
 
   return (
     <header className="site-navbar site-navbar-target" role="banner">
@@ -54,6 +57,11 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
+                      <Link to={pathConstants.rentings} className={styles.navItem}>
+                        My Rentings
+                      </Link>
+                    </li>
+                    <li>
                       <Link to={pathConstants.logout} className={styles.navItem}>
                         Logout
                       </Link>
@@ -82,6 +90,9 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <Link className={`btn btn-secondary ${styles.backBtn}`} onClick={() => navigate(-1)}>
+      <FontAwesomeIcon icon={faArrowLeft} /> Go Back
+      </Link>
     </header>
   );
 }

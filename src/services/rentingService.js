@@ -101,3 +101,13 @@ export const rentCar = async (carId, carData) => {
     
     return await response.json();
 }
+
+export const getMyRentings = async (userId) => {
+    const query = new URLSearchParams({
+        where: `renterId="${userId}"`
+    });
+
+    const result = await fetch(`${BASE_URL}?${query}`);
+
+    return result.json();
+}

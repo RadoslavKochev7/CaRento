@@ -9,3 +9,6 @@ export const authString = "auth";
 // error validations
 export const notFound = "Invalid Data";
 export const badRequest = "Bad Request";
+
+// date format
+export const dateFormat = "dd-MM-yyyy";
