@@ -78,6 +78,7 @@ export const editCarById = async (carId, carData) => {
     return data;
 }
 
+// Sends a GET request to the server and returns the total count of cars
 export const getCount = async () => {
     const res = await fetch(`${BASE_URL}?count`);
     const count = await res.json();
@@ -85,8 +86,9 @@ export const getCount = async () => {
     return count;
 }
 
+// Sends a PATCH request to the server and flips isAvailable, rentalStartDate and rentalEndDate
 export const rentCar = async (carId, carData) => {
-    const headers = createHeaders();
+    const headers = {"X-Admin": ""};
     const response = await fetch(`${BASE_URL}${carId}`, {
         method: 'PATCH',
         headers: headers,
@@ -96,6 +98,6 @@ export const rentCar = async (carId, carData) => {
     if (response.status === 404) {
         throw new Error(notFound);
     }
-
+    
     return await response.json();
 }

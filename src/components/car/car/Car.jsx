@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faPlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { canUserManage } from "../../../utils/userManager";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
@@ -95,13 +95,17 @@ export default function Car(props) {
                 <span className={styles.carIconXmark}>
                   <FontAwesomeIcon icon={faCircleXmark} />
                 </span>
-                <span>{"Rented"}</span>
+                <span>Rented</span>
               </>
             )}
-            <span className={styles.carIconCheck}>
-              <FontAwesomeIcon icon={faCircleCheck} />
-            </span>
-            {"Available"}
+            {isAvailable && (
+              <>
+                <span className={styles.carIconCheck}>
+                  <FontAwesomeIcon icon={faCircleCheck} />
+                </span>
+                Available
+              </>
+            )}
           </div>
           <hr />
           <div className={styles.buttons}>

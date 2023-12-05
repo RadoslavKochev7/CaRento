@@ -14,7 +14,7 @@ export default function Header() {
           <div className="col-3">
             <div className="site-logo">
               <Link to={pathConstants.home}>
-                <strong className={styles.logo}>CarRento</strong>
+                <strong className={styles.logo}>CaRento</strong>
               </Link>
             </div>
           </div>

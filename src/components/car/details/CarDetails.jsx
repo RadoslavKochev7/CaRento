@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -15,16 +15,17 @@ import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
 import * as reviewsConstant from "../../../constants/reviewConstants";
 import RentForm from "../../rent/RentForm";
+import { authContext } from "../../../contexts/AuthContext";
 
 export default function CarDetails() {
   const { id } = useParams();
   const [car, setCar] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showRentModal, setShowRentModal] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviews, setReviews] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { isAuthenticated } = useContext(authContext);
   const [editingReviewId, setEditingReviewId] = useState("");
   const reviewButton = document.getElementById("review");
 
@@ -80,8 +81,10 @@ export default function CarDetails() {
         rentalStartDate: new Date(startDate),
         rentalEndDate: new Date(endDate),
       };
+
       const result = await rentingService.rentCar(id, data);
       setCar(result);
+      toast.success(`Successfully rented from ${startDate} to ${endDate}`);
 
       console.log(result);
     } catch (error) {
@@ -201,7 +204,7 @@ export default function CarDetails() {
               />
             )}
             <div className="listing-contents">
-              <h3 className={styles.h3}>
+              <h3 className={styles.detailsHeading3}>
                 {car.make} {car.model}
               </h3>
               <div className="rent-price">
@@ -242,7 +245,6 @@ export default function CarDetails() {
               <p>{car.fuelType}</p>
               <p>{car.isAvailable ? "Available" : "Rented"}</p>
               <p>{car.address}</p>
-              <p>{car.fuelType}</p>
               <hr />
               {canUserManage(car._ownerId) && (
                 <>
@@ -264,15 +266,19 @@ export default function CarDetails() {
                     </span>
                     Edit
                   </button>
-                  <RentForm rentHandler={rentHandler} />
                 </>
               )}
             </div>
           </div>
         </div>
+        <section className={styles.rentinForm}>
+          {isAuthenticated && car.isAvailable && (
+            <RentForm rentHandler={rentHandler} />
+          )}
+        </section>
         <h3>Reviews</h3>
         <section className="section">
-          {canUserManage(car._ownerId) && (
+          {isAuthenticated && (
             <Form className={styles.reviewForm} onSubmit={submitHandler}>
               <Form.Control
                 className={styles.reviewInput}

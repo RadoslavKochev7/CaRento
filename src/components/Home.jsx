@@ -16,7 +16,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <form className="trip-form">
+              {/* <form className="trip-form">
                 <div className="row align-items-center">
                   <div className="mb-3 mb-md-0 col-md-3">
                     <select
@@ -61,7 +61,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </form>
+              </form> */}
             </div>
           </div>
         </div>
