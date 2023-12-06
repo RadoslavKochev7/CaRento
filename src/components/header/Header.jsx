@@ -91,7 +91,7 @@ export default function Header() {
         </div>
       </div>
       <Link className={`btn btn-secondary ${styles.backBtn}`} onClick={() => navigate(-1)}>
-      <FontAwesomeIcon icon={faArrowLeft} /> Go Back
+      <FontAwesomeIcon className={styles.backBtnIcon} icon={faArrowLeft} /> Go Back
       </Link>
     </header>
   );

@@ -29,3 +29,13 @@
   font-style: italic;
   font-weight: bold;
 }
+
+.backBtn {
+  position: absolute;
+  top: 64px;
+  left: 0;
+}
+
+.backBtnIcon {
+  margin-right: 4px;
+}

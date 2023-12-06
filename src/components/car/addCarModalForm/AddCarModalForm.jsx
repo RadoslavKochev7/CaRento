@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Modal,Form, Button,ButtonGroup,Dropdown, Spinner } from "react-bootstrap";
+import {
+  Modal,
+  Form,
+  Button,
+  ButtonGroup,
+  Dropdown,
+  Spinner,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AddCarModalForm.module.css";
@@ -32,11 +39,12 @@ export default function AddCarModalForm({ onSubmit }) {
       const result = await locationService.getCityCoordinates(city, country);
       if (result.length === 0) {
         setValidationForCountryAndCity();
+        return false;
       }
-
+      return true;
     } catch (error) {
       setValidationForCountryAndCity();
-
+      return false;
     } finally {
       setLoading(false);
     }
@@ -46,19 +54,28 @@ export default function AddCarModalForm({ onSubmit }) {
     if (new Date(formValues.year).getFullYear() > new Date().getFullYear()) {
       setValidations((state) => ({
         ...state,
-        year: invalidYear,
+        year: carConstants.invalidYear
       }));
+      return false;
     }
+
+    return true;
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    // debugger;
+    let isValid = true;
 
-    await validateLocations(formValues.city, formValues.country);
-    validateDate();
+    if (!validateDate()) {
+      isValid = false;
+    }
+    if (!(await validateLocations(formValues.city, formValues.country))) {
+      isValid = false;
+    }
 
-    if (validations.city || validations.year) {
+    if (!isValid) {
       return;
     }
 
@@ -101,7 +118,7 @@ export default function AddCarModalForm({ onSubmit }) {
   const setValidationForCountryAndCity = () => {
     setValidations((state) => ({
       ...state,
-      city: notExistingCity,
+      city: carConstants.notExistingCity,
     }));
   };
 

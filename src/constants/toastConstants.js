@@ -4,6 +4,7 @@ const currentTime = new Date().toLocaleTimeString('bg-BG', { hour: '2-digit', mi
 export const editSuccess = `Edit Successfull at ${currentTime}`;
 export const addSuccess = `Add Successfull at ${currentTime}`;
 export const deleteSuccess = `Delete Successfull at ${currentTime}`;
+export const returnSuccess = `Return Successfull at ${currentTime}`;
 
 // fail
 export const editError = `Edit Failed at ${currentTime}`;

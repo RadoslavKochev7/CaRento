@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Modal, Form, Button, ButtonGroup, Dropdown, Spinner,} from "react-bootstrap";
+import {
+  Modal,
+  Form,
+  Button,
+  ButtonGroup,
+  Dropdown,
+  Spinner,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { invalidYear, notExistingCity } from "../../../constants/carConstants";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./EditCarModalForm.module.css";
 import * as locationService from "../../../services/locationService";
@@ -48,11 +56,16 @@ export default function EditCarModalForm({
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+    let isValid = true;
+    debugger;
+    if (!validateDate()) {
+      isValid = false;
+    }
+    if (!(await validateLocations(formValues.city, formValues.country))) {
+      isValid = false;
+    }
 
-    await validateLocations(formValues.city, formValues.country);
-    validateDate();
-
-    if (validations.city || validations.year) {
+    if (!isValid) {
       return;
     }
 
@@ -65,21 +78,33 @@ export default function EditCarModalForm({
       const result = await locationService.getCityCoordinates(city, country);
       if (result.length === 0) {
         setValidationForCountryAndCity();
+        return false;
       }
+      return true;
     } catch (error) {
       setValidationForCountryAndCity();
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
   const validateDate = () => {
-    if (new Date(formValues.year).getFullYear() > new Date().getFullYear()) {
+    if (new Date(formValues.year) > new Date()) {
       setValidations((state) => ({
         ...state,
         year: invalidYear,
       }));
+      return false;
     }
+    return true;
+  };
+
+  const setValidationForCountryAndCity = () => {
+    setValidations((state) => ({
+      ...state,
+      city: notExistingCity,
+    }));
   };
 
   const changeInputValueHandler = (e) => {
@@ -112,7 +137,9 @@ export default function EditCarModalForm({
     <div>
       <Modal show={true} onHide={closeModalHandler}>
         <Modal.Header>
-          <Modal.Title className={styles.modalTitle}>Please, populate the required fields</Modal.Title>
+          <Modal.Title className={styles.modalTitle}>
+            Please, populate the required fields
+          </Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={handleClose} />
           </button>
@@ -128,7 +155,9 @@ export default function EditCarModalForm({
         <Modal.Body>
           <Form className={styles.editCarModalForm} onSubmit={onSubmitHandler}>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Make</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Make
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="make"
@@ -139,7 +168,9 @@ export default function EditCarModalForm({
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Model</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Model
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="model"
@@ -150,7 +181,9 @@ export default function EditCarModalForm({
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Image URL</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Image URL
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="imageUrl"
@@ -161,7 +194,9 @@ export default function EditCarModalForm({
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Price</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Price
+              </Form.Label>
               <Form.Control
                 type="number"
                 name="rentalPrice"
@@ -175,11 +210,15 @@ export default function EditCarModalForm({
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[
+              <Form.Label
+                className={[
                   styles.dateInput,
                   styles.formLabel,
                   styles.required,
-                ]}>Year</Form.Label>
+                ]}
+              >
+                Year
+              </Form.Label>
               <Form.Control
                 type="month"
                 name="year"
@@ -217,7 +256,9 @@ export default function EditCarModalForm({
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>City</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                City
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="city"
@@ -244,7 +285,9 @@ export default function EditCarModalForm({
             </Form.Group>
 
             <Form.Group>
-              <Form.Label className={[styles.formLabel, styles.required]}>Country</Form.Label>
+              <Form.Label className={[styles.formLabel, styles.required]}>
+                Country
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="country"
@@ -279,10 +322,18 @@ export default function EditCarModalForm({
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu onClick={handleDropdownBehavior}>
-                  <Dropdown.Item className={styles.dropdownItem}>Diesel</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Gas</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Gasoline</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownItem}>Electric</Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Diesel
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Gas
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Gasoline
+                  </Dropdown.Item>
+                  <Dropdown.Item className={styles.dropdownItem}>
+                    Electric
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>

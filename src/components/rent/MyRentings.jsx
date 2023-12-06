@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../../contexts/AuthContext";
-import * as rentingService from "../../services/rentingService";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { details } from "../../constants/pathConstants";
+import { toast } from "react-toastify";
+import { returnSuccess } from "../../constants/toastConstants";
+import * as rentingService from "../../services/rentingService";
 
 export default function MyRentings() {
   const { userId } = useContext(authContext);
@@ -17,14 +19,36 @@ export default function MyRentings() {
       .catch((err) => console.log(err));
   }, [userId]);
 
-  console.log(rentingsData);
+  const returnHandler = async (e) => {
+    const carId = e.target.id;
+    const data = {
+      isAvailable: true,
+      rentalStartDate: "",
+      rentalEndDate: "",
+      renterId: "",
+      renterEmail: "",
+    };
+
+    try {
+      const result = await rentingService.returnCar(carId, data);
+      if (result.message) {
+        return toast.warning(result.message);
+      }
+
+      setRentingsData((state) => state.filter((data) => data._id !== carId));
+      toast.success(returnSuccess, { autoClose: 2000});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {rentingsData && (
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
+              <th>№</th>
               <th>Image</th>
               <th>Start Date</th>
               <th>End Date</th>
@@ -34,6 +58,7 @@ export default function MyRentings() {
               <th>Fuel Type</th>
               <th>Mileage</th>
               <th>Horse Power</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -58,30 +83,23 @@ export default function MyRentings() {
                   <td>{rd.fuelType}</td>
                   <td>{rd.mileage} km</td>
                   <td>{rd.horsePower} hp</td>
+                  <td>
+                    <button
+                      type="button"
+                      id={rd._id}
+                      className="btn btn-info"
+                      onClick={returnHandler}
+                    >
+                      Return
+                    </button>
+                  </td>
                 </tr>
               </>
             ))}
-            {/* <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr> */}
           </tbody>
         </Table>
       )}
-      {!rentingsData && <h2>No rentings</h2>}
+      {!rentingsData.length && <h2>No rentings</h2>}
     </>
   );
 }

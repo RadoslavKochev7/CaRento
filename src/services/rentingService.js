@@ -40,7 +40,7 @@ export const addCar = async (data) => {
         headers: headers,
         body: JSON.stringify(data)
     });
-    
+
     if (response.status === 404) {
         throw new Error(notFound);
     }
@@ -86,9 +86,9 @@ export const getCount = async () => {
     return count;
 }
 
-// Sends a PATCH request to the server and flips isAvailable, rentalStartDate and rentalEndDate
+// Sends a PATCH request to the server and set current userId to car's renterId
 export const rentCar = async (carId, carData) => {
-    const headers = {"X-Admin": ""};
+    const headers = { "X-Admin": "" };
     const response = await fetch(`${BASE_URL}${carId}`, {
         method: 'PATCH',
         headers: headers,
@@ -98,10 +98,28 @@ export const rentCar = async (carId, carData) => {
     if (response.status === 404) {
         throw new Error(notFound);
     }
-    
+
     return await response.json();
 }
 
+// Sends a PATCH request to the server and returns car from renter
+export const returnCar = async (carId, data) => {
+    
+    const headers = { "X-Admin": "" };
+    const response = await fetch(`${BASE_URL}${carId}`, {
+        method: 'PATCH',
+        headers: headers,
+        body: JSON.stringify(data)
+    });
+
+    if (response.status === 404) {
+        throw new Error(notFound);
+    }
+
+    return await response.json();
+}
+
+// Sends a GET request and returns all cars with renterId = current userId
 export const getMyRentings = async (userId) => {
     const query = new URLSearchParams({
         where: `renterId="${userId}"`

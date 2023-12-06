@@ -23,5 +23,5 @@ export const getCityName = async (latitude, longitude) => {
         throw new Error(badRequest);
     }
 
-    return data = await response.json();
+    return await response.json();
 }

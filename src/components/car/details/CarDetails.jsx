@@ -7,7 +7,7 @@ import { canUserManage } from "../../../utils/userManager";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { format } from 'date-fns';
-import { cars } from "../../../constants/pathConstants";
+import { cars, rentings } from "../../../constants/pathConstants";
 import { authContext } from "../../../contexts/AuthContext";
 import { authString, dateFormat } from "../../../constants/globalConstants";
 import RentForm from "../../rent/RentForm";
@@ -91,9 +91,10 @@ export default function CarDetails() {
 
       const result = await rentingService.rentCar(id, data);
       setCar(result);
-      toast.success(`Successfully rented from ${startDate} to ${endDate}`);
+      toast.success(`Successfully rented from ${startDate} to ${endDate}`, { autoClose: 2000});
 
-      console.log(result);
+      navigate(rentings);
+
     } catch (error) {
       console.log(error);
     }
@@ -177,9 +178,6 @@ export default function CarDetails() {
 
   return (
     <div className={styles.siteSection}>
-      <Link className="btn btn-secondary" onClick={() => navigate(-1)}>
-        Go Back
-      </Link>
       <div className="container">
         <div className="row">
           <div className="col-lg-6 mb-5 mb-lg-0">

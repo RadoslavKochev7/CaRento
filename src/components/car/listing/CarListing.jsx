@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCityCoordinates } from "../../../services/locationService";
 import { toast } from "react-toastify";
 import Car from "../car/Car";
+import Search from "../../Search";
 import AddCarModalForm from "../addCarModalForm/AddCarModalForm";
 import RentoMap from "../../map/RentoMap";
 import styles from "./CarListing.module.css";
@@ -10,18 +11,26 @@ import * as rentingService from "../../../services/rentingService";
 
 export default function CarListing() {
   const [cars, setCars] = useState([]);
-  window.scrollTo(0, 0);
-  
+  const [allCars, setAllCars] = useState([]);
+
   useEffect(() => {
     rentingService
       .getAllCars()
-      .then((result) => setCars(result))
+      .then((result) => {
+        setAllCars(result);
+        setCars(result);
+      })
       .catch((err) => console.error(err));
+
+    window.scrollTo(0, 0);
   }, []);
 
   const handleEdit = async (carId, carData) => {
     if (!carData.latitude || !carData.longitude) {
-      const coordinates = await getCityCoordinates(carData.city, carData.country);
+      const coordinates = await getCityCoordinates(
+        carData.city,
+        carData.country
+      );
       carData.latitude = coordinates[0].latitude;
       carData.longitude = coordinates[0].longitude;
     }
@@ -56,7 +65,7 @@ export default function CarListing() {
     if (coordinates.length === 0) {
       return toast.warning(carConstants.invalidCoordinates);
     }
-    
+
     car.longitude = coordinates[0]?.longitude;
     car.latitude = coordinates[0]?.latitude;
     const result = await rentingService.addCar(car);
@@ -68,10 +77,25 @@ export default function CarListing() {
     toast.success(carConstants.addSuccess);
   };
 
+  const searchHandler = async (searchPattern) => {
+    const filteredData = cars.filter((car) => {
+      return Object.values(car)
+        .join("")
+        .toLowerCase()
+        .includes(searchPattern.toLowerCase());
+    });
+
+    if (searchPattern && filteredData.length > 0) {
+      setCars(filteredData);
+    } else {
+      setCars(allCars);
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <div className="site-section bg-light">
-        <h1 className="heading text-center">Best Available Cars For Rent!</h1>
+        <h1 className="heading text-center">Best Cars For Rent</h1>
         <h2 className={styles.listingH2}>
           <b>
             You have an extra car, which you don't want to sell ? <br />
@@ -82,6 +106,7 @@ export default function CarListing() {
           <div className="row">
             <div className={`col-lg-7 ${styles.listingCol}`}>
               <AddCarModalForm onSubmit={submitHandler} />
+              <Search filterHandler={searchHandler} />
             </div>
           </div>
 
