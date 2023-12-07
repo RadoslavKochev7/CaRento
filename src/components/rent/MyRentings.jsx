@@ -36,7 +36,7 @@ export default function MyRentings() {
       }
 
       setRentingsData((state) => state.filter((data) => data._id !== carId));
-      toast.success(returnSuccess, { autoClose: 2000});
+      toast.success(returnSuccess, { autoClose: 2000 });
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +65,7 @@ export default function MyRentings() {
             {rentingsData.map((rd, index) => (
               <>
                 <tr key={rd._id}>
-                  <td>{++index}.</td>
+                  <td key={rd._id + index}>{++index}.</td>
                   <td>
                     <img
                       src={rd.imageUrl}
@@ -99,7 +99,11 @@ export default function MyRentings() {
           </tbody>
         </Table>
       )}
-      {!rentingsData.length && <h2>No rentings</h2>}
+      {!rentingsData.length && (
+        <div className="container mb-xl-4">
+          <h2>No rentings</h2>{" "}
+        </div>
+      )}
     </>
   );
 }

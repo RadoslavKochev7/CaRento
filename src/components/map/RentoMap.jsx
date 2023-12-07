@@ -62,7 +62,7 @@ export default function RentoMap({ carsData }) {
       <MapContainer
         center={[latitude, longitude]}
         zoom={zoomLevel}
-        style={{ height: "600px", width: "100%" }}
+        style={{ height: "600px" }}
         scrollWheelZoom={true}
       >
         {[...cars].map((car) => (

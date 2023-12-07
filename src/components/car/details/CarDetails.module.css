@@ -28,10 +28,6 @@
   list-style: none;
 }
 
-.content {
-  width: 80%;
-}
-
 .reviewsSection {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

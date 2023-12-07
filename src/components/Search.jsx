@@ -18,20 +18,19 @@ export default function Search({ filterHandler }) {
 
   return (
     <>
-      <Form className="form-inline my-2 my-lg-0">
+      <Form className="form-inline my-2 my-lg-0" onSubmit={onSearchSubmit}>
         <Form.Control
           type="text"
           placeholder="Search"
           className="form-control mr-sm-2"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ width: 500}}
+          style={{ width: 500 }}
         />
         <Button
           variant="outline-success"
           className="btn my-2 my-sm-0"
-          type="button"
-          onClick={onSearchSubmit}
+          type="submit"
         >
           <FontAwesomeIcon icon={faSearch} /> Search
         </Button>
@@ -41,7 +40,7 @@ export default function Search({ filterHandler }) {
           type="button"
           onClick={clearHandler}
         >
-         <FontAwesomeIcon icon={faEraser} /> Clear
+          <FontAwesomeIcon icon={faEraser} /> Clear
         </Button>
       </Form>
     </>

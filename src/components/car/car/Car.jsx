@@ -26,7 +26,6 @@ export default function Car(props) {
     onEditHandler,
   } = props;
 
-  // window.scrollTo(0, 0);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const navigate = useNavigate();
@@ -86,7 +85,11 @@ export default function Car(props) {
           <div>
             <span className="caption">
               <b>Currently at:</b> {country}, {city}
-              {address && `, ${address}`}
+            </span>
+          </div>
+          <div>
+          <span className="caption">
+              <b>Address: </b> {address}
             </span>
           </div>
           <div className={styles.isAvailable}>

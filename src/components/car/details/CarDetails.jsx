@@ -209,7 +209,7 @@ export default function CarDetails() {
                 data={car}
               />
             )}
-            <div className={styles.content}>
+            <div>
               <h3 className={styles.detailsHeading3}>
                 {car.make} {car.model}
               </h3>

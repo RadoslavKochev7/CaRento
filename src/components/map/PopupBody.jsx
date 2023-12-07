@@ -1,37 +1,56 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as styles from "./PopupBody.module.css";
+import { details } from "../../constants/pathConstants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 export default function PopupBody(car) {
-  const navigate = useNavigate();
-
   return (
     <div className={styles.cardWrapper}>
       <div>
         <img src={car.imageUrl} alt="Image" className="img-fluid" />
       </div>
-      <div className="listing-contents h-100">
-        <h3>
+      <div className="listing-contents h-100 p-2">
+        <h3 className="text-center">
           {car.make} {car.model}
         </h3>
         <div>
-          <strong className={styles.price}>{car.rentalPrice}$</strong>
-          <span className="mx-1">/</span>day
+          <span><b>Price: </b></span>
+          <span className={styles.price}>{car.rentalPrice}$ / day</span>
         </div>
         <div>
           <div>
-            <span>City:</span>
-            <span>{car.city}</span>
+            <span><b>Address: </b></span>
+            <span>
+              <i>{car.address}</i>
+            </span>
           </div>
-          <span>{car.isAvailable ? "Available" : "Rented"}</span>
-          <br />
+          {!car.isAvailable && (
+              <>
+                <span className={styles.carIconXmark}>
+                  <FontAwesomeIcon icon={faCircleXmark} />
+                </span>
+                <b>Rented</b>
+              </>
+            )}
+            {car.isAvailable && (
+              <>
+                <span className={styles.carIconCheck}>
+                  <FontAwesomeIcon icon={faCircleCheck} />
+                </span>
+                <b>Available</b>
+              </>
+            )}
           <div className={styles.buttonContainer}>
-            <button
+            <Link
               id="map-button"
-              className="btn btn-secondary"
-              onClick={() => navigate(`/cars/details/${car._id}`)}
+              className="btn btn-outline-secondary"
+              to={details.replace(":id", car._id)}
             >
+              <FontAwesomeIcon className="mr-1" icon={faCircleInfo} />
               View More
-            </button>
+            </Link>
           </div>
         </div>
       </div>
