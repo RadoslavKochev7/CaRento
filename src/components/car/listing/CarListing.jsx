@@ -103,9 +103,11 @@ export default function CarListing() {
           </b>
         </h2>
         <div className="container">
-          <div className="row">
-            <div className={`col-lg-7 ${styles.listingCol}`}>
+          <div className={styles.searchRow}>
+            <div className={styles.listingCol}>
               <AddCarModalForm onSubmit={submitHandler} />
+            </div>
+            <div className={styles.listingCol}>
               <Search filterHandler={searchHandler} />
             </div>
           </div>

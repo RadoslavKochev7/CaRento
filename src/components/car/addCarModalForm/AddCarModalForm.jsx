@@ -65,7 +65,6 @@ export default function AddCarModalForm({ onSubmit }) {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // debugger;
     let isValid = true;
 
     if (!validateDate()) {
@@ -123,14 +122,14 @@ export default function AddCarModalForm({ onSubmit }) {
   };
 
   return (
-    <div>
+    <div className={styles.addBtn}>
       <Button variant="primary" onClick={onModalLoad}>
         + Add Car
       </Button>
       <Modal show={showModal} onHide={closeModalHandler}>
         <Modal.Header>
           <Modal.Title className={styles.modalTitle}>
-            Please, populate the required fields
+            Please, populate the required fieldss
           </Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />

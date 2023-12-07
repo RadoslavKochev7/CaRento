@@ -1,8 +1,15 @@
 .listingCol {
   margin-top: 30px;
   margin-bottom: 30px;
+  margin-right: 20px;
 }
 
 .listingH2 {
   text-align: center;
+}
+
+.searchRow {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
 }

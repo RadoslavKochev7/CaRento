@@ -1,4 +1,4 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
@@ -17,7 +17,7 @@ export default function Search({ filterHandler }) {
   };
 
   return (
-    <div>
+    <>
       <Form className="form-inline my-2 my-lg-0">
         <Form.Control
           type="text"
@@ -25,6 +25,7 @@ export default function Search({ filterHandler }) {
           className="form-control mr-sm-2"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          style={{ width: 500}}
         />
         <Button
           variant="outline-success"
@@ -40,9 +41,9 @@ export default function Search({ filterHandler }) {
           type="button"
           onClick={clearHandler}
         >
-          Clear
+         <FontAwesomeIcon icon={faEraser} /> Clear
         </Button>
       </Form>
-    </div>
+    </>
   );
 }

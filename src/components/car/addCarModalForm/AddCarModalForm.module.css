@@ -5,6 +5,10 @@
   margin: 10px;
 }
 
+.addBtn {
+  width: 200px;
+}
+
 .modalTitle {
   font-weight: bold;
 }
