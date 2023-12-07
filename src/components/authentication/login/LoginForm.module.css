@@ -38,3 +38,8 @@
 input {
   margin-bottom: 6px;
 }
+
+.formLabel {
+  margin-bottom: 0;
+  font-weight: bold;
+}

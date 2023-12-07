@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+import { cars } from "../constants/pathConstants";
+
 export default function About() {
   return (
     <>
-    <h1 className="heading text-center">About Us</h1>
+      <h1 className="heading text-center">About Us</h1>
       <div className="site-section">
         <div className="container">
           <div className="row">
@@ -12,18 +15,19 @@ export default function About() {
                 className="img-fluid rounded"
               />
             </div>
-            <div className="col-lg-4 mr-auto">
-              <h2>Car Company</h2>
+            <section className="col-lg-4 mr-auto">
+              <h2>CaRento</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
-                suscipit, repudiandae similique accusantium eius nulla quam
-                laudantium sequi.
+                CaRento is a leading name in the car rental industry, dedicated
+                to offering seamless and reliable services to customers
+                worldwide. Whether you're a business traveler, a family on
+                vacation, or an adventurous solo explorer, we have the right car
+                to suit your needs.
               </p>
               <p>
-                Debitis voluptates corporis saepe molestias tenetur ab quae, quo
-                earum commodi, laborum dolore, fuga aliquid delectus cum ipsa?
+                Thank you for choosing CaRento. Let's make every mile count!
               </p>
-            </div>
+            </section>
           </div>
         </div>
       </div>
@@ -45,11 +49,14 @@ export default function About() {
                 />
 
                 <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
+                  <span className="meta">Chief Technology Officer (CTO)</span>
+                  <h2>Daniel Chang</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
+                    Daniel is the tech wizard at CaRento, overseeing the
+                    seamless integration of cutting-edge technology into our
+                    services. With a background in software engineering, he
+                    ensures that our website and mobile app provide a
+                    user-friendly experience for all customers.
                   </p>
                 </div>
               </div>
@@ -63,11 +70,15 @@ export default function About() {
                 />
 
                 <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
+                  <span className="meta">Head of Customer Experience</span>
+                  <h2>Olivia Mitchell</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
+                    Olivia is dedicated to ensuring that every interaction with
+                    CaRento is a positive one. As the Head of Customer
+                    Experience, she leads a team focused on providing excellent
+                    service, resolving inquiries, and making sure your car
+                    rental experience exceeds expectations and provides you with
+                    the best service.
                   </p>
                 </div>
               </div>
@@ -82,68 +93,14 @@ export default function About() {
                 />
 
                 <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
+                  <span className="meta"> CEO and Founder</span>
+                  <h2>Emma Rodriguez</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-5">
-              <div className="post-entry-1 h-100 person-1">
-                <img
-                  src="images/person_4.jpg"
-                  alt="Image /"
-                  className="img-fluid"
-                />
-
-                <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-5">
-              <div className="post-entry-1 h-100 person-1">
-                <img
-                  src="images/person_5.jpg"
-                  alt="Image /"
-                  className="img-fluid"
-                />
-
-                <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-4 col-md-6 mb-5">
-              <div className="post-entry-1 h-100 person-1">
-                <img
-                  src="images/person_1.jpg"
-                  alt="Image /"
-                  className="img-fluid"
-                />
-
-                <div className="post-entry-1-contents">
-                  <span className="meta">Founder</span>
-                  <h2>James Doe</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa, sapiente.
+                    Emma Rodriguez - CEO and Founder Meet Emma, the visionary
+                    leader behind CaRento. With a passion for travel and a keen
+                    business acumen, Emma founded CaRento to revolutionize the
+                    car rental industry. Her commitment to customer satisfaction
+                    and innovation drives the company's success.
                   </p>
                 </div>
               </div>
@@ -163,15 +120,14 @@ export default function About() {
               />
             </div>
             <div className="col-lg-4 ml-auto">
-              <h2>Our History</h2>
+              <h2 className="text-center">Our Mission</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit
-                suscipit, repudiandae similique accusantium eius nulla quam
-                laudantium sequi.
-              </p>
-              <p>
-                Debitis voluptates corporis saepe molestias tenetur ab quae, quo
-                earum commodi, laborum dolore, fuga aliquid delectus cum ipsa?
+                Our mission at CaRento is to make car rental a hassle-free
+                experience. We strive to provide our customers with a wide range
+                of options, from compact cars for urban escapades to spacious
+                SUVs for family getaways. Our commitment to quality service,
+                transparency, and customer satisfaction sets us apart in the
+                competitive world of car rentals.
               </p>
             </div>
           </div>
@@ -183,15 +139,12 @@ export default function About() {
           <div className="row align-items-center">
             <div className="col-lg-7 mb-4 mb-md-0">
               <h2 className="mb-0 text-white">What are you waiting for?</h2>
-              <p className="mb-0 opa-7">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Obcaecati, laboriosam.
-              </p>
+              <p className="mb-0 opa-7">Check out our cars.</p>
             </div>
             <div className="col-lg-5 text-md-right">
-              <a href="#" className="btn btn-primary btn-white">
+              <Link to={cars} className="btn btn-primary btn-white">
                 Rent a car now
-              </a>
+              </Link>
             </div>
           </div>
         </div>

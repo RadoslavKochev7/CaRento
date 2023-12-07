@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { register } from "../constants/pathConstants";
+
 export default function Home() {
   return (
     <>
@@ -15,53 +18,6 @@ export default function Home() {
                   </h1>
                 </div>
               </div>
-
-              {/* <form className="trip-form">
-                <div className="row align-items-center">
-                  <div className="mb-3 mb-md-0 col-md-3">
-                    <select
-                      name=""
-                      id=""
-                      className="custom-select form-control"
-                    >
-                      <option value="">Select Type</option>
-                      <option value="">Ferrari</option>
-                      <option value="">Toyota</option>
-                      <option value="">Ford</option>
-                      <option value="">Lamborghini</option>
-                    </select>
-                  </div>
-                  <div className="mb-3 mb-md-0 col-md-3">
-                    <div className="form-control-wrap">
-                      <input
-                        type="text"
-                        id="cf-3"
-                        placeholder="Pick up"
-                        className="form-control datepicker px-3"
-                      />
-                      <span className="icon icon-date_range"></span>
-                    </div>
-                  </div>
-                  <div className="mb-3 mb-md-0 col-md-3">
-                    <div className="form-control-wrap">
-                      <input
-                        type="text"
-                        id="cf-4"
-                        placeholder="Drop off"
-                        className="form-control datepicker px-3"
-                      />
-                      <span className="icon icon-date_range"></span>
-                    </div>
-                  </div>
-                  <div className="mb-3 mb-md-0 col-md-3">
-                    <input
-                      type="submit"
-                      value="Search Now"
-                      className="btn btn-primary btn-block py-3"
-                    />
-                  </div>
-                </div>
-              </form> */}
             </div>
           </div>
         </div>
@@ -101,9 +57,7 @@ export default function Home() {
                 <div className="step-inner">
                   <span className="number text-primary">03.</span>
                   <h3>Enjoy</h3>
-                  <p>
-                    Enjoy driving with the best rental cars
-                  </p>
+                  <p>Enjoy driving with the best rental cars</p>
                 </div>
               </div>
             </div>
@@ -125,21 +79,25 @@ export default function Home() {
             </div>
             <div className="col-lg-4 ml-auto order-lg-1">
               <h3 className="mb-4 section-heading">
-                <strong>
-                  You can easily avail our promo for renting a car.
-                </strong>
+                <strong>Why Choose CaRento?</strong>
               </h3>
               <p className="mb-5">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Repudiandae, explicabo iste a labore id est quas, doloremque
-                veritatis! Provident odit pariatur dolorem quisquam,
-                voluptatibus voluptates optio accusamus, vel quasi quidem!
+                With CaRento, you have the freedom to explore the world. We
+                operate in various locations across the globe, ensuring that you
+                can rely on us wherever your travels take you. Our extensive
+                fleet comprises vehicles of all sizes and types. Whether you
+                need a fuel-efficient sedan, a rugged 4x4, or a luxurious
+                convertible, CaRento has you covered. Booking a car with CaRento
+                is a breeze. Our user-friendly website and mobile app make the
+                reservation process quick and straightforward. Just a few
+                clicks, and you're ready to hit the road.
               </p>
 
+              <h4>Not having an account ?</h4>
               <p>
-                <a href="#" className="btn btn-primary">
-                  Meet them now
-                </a>
+                <Link to={register} className="btn btn-primary">
+                  Register Now
+                </Link>
               </p>
             </div>
           </div>

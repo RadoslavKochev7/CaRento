@@ -34,10 +34,11 @@
   text-decoration: underline;
 }
 
-input {
+.formInput {
   margin-bottom: 6px;
 }
 
 label {
     font-weight: bold;
+    margin-bottom: 0;
 }
