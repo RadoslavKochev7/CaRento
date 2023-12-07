@@ -12,3 +12,4 @@ export const badRequest = "Bad Request";
 
 // date format
 export const dateFormat = "dd-MM-yyyy";
+export const reviewsDateFormat = "dd-MM-yyyy HH:mm:ss";

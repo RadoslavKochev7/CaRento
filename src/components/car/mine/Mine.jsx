@@ -49,7 +49,7 @@ export default function Mine() {
   return (
     <div className="page-wrapper">
       <div className="site-section bg-light">
-        <h1 className="heading text-center">My Cars</h1>
+        <h1 className="heading text-center mb-xl-4">My Cars</h1>
         <div className="container">
           <div className="row">
             {cars &&
