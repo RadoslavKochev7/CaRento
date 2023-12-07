@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
-  const { isAuthenticated, username } = useContext(authContext);
+  const { isAdmin, isAuthenticated, username } = useContext(authContext);
   const navigate = useNavigate();
 
   return (
@@ -69,6 +69,13 @@ export default function Header() {
                     <span className={styles.userSpan}>
                       Welcome, {username}!
                     </span>
+                    {isAdmin && (
+                       <li>
+                       <Link to={pathConstants.reviews} className={styles.navItem}>
+                         All Reviews
+                       </Link>
+                     </li>
+                    )}
                   </>
                 )}
                 {!isAuthenticated && (

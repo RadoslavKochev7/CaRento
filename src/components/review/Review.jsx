@@ -2,9 +2,9 @@ import { faEdit, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ButtonGroup } from "react-bootstrap";
 import { canUserManage } from "../../utils/userManager";
-import styles from "./Review.module.css";
 import { format } from "date-fns";
-import { dateFormat, reviewsDateFormat } from "../../constants/globalConstants";
+import { reviewsDateFormat } from "../../constants/globalConstants";
+import styles from "./Review.module.css";
 
 export const Review = (props) => {
   const deleteClickHandler = () => {

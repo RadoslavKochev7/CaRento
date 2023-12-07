@@ -2,13 +2,13 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faCircleCheck, faPlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faCircleXmark, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { canUserManage } from "../../../utils/userManager";
+import { details } from "../../../constants/pathConstants";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
 import DeleteModal from "../../deleteModal/DeleteModal";
 import styles from "./Car.module.css";
-import { details } from "../../../constants/pathConstants";
 
 export default function Car(props) {
   const {
@@ -117,7 +117,7 @@ export default function Car(props) {
               onClick={() => navigate(details.replace(":id", _id))}
             >
               <span className={styles.spanSVG}>
-                <FontAwesomeIcon icon={faPlus} />
+                <FontAwesomeIcon icon={faCircleInfo} />
               </span>
               Details
             </button>

@@ -5,7 +5,7 @@ const BASE_URL = 'http://localhost:3030/data/reviews/';
 export const getAllReviewsForCurrentCar = async (carId) => {
     const query = new URLSearchParams({
         where: `carId="${carId}"`,
-        load: `owner=_ownerId:users`,
+        load: `owner=_ownerId:users`
     });
 
     const result = await fetch(`${BASE_URL}?${query}`);
@@ -34,12 +34,21 @@ export const deleteReview = async (id) => {
     return response.json();
 }
 
+export const getAll = async () => {
+    const query = new URLSearchParams({
+        load: 'owner=_ownerId:users'
+    });
+
+    const response = await fetch(`${BASE_URL}?${query}`);
+    return await response.json();
+}
+
 export const editReview = async (id, text) => {
     const headers = createHeaders();
     const response = await fetch(`${BASE_URL}${id}`, {
         headers: headers,
         method: "PUT",
-        body: JSON.stringify({text: text})
+        body: JSON.stringify({ text: text })
     })
 
     return response.json();

@@ -14,6 +14,7 @@ import CaRentoToastContainer from "./components/CaRentoToastContainer";
 import CarDetails from "./components/car/details/CarDetails";
 import CarListing from "./components/car/listing/CarListing";
 import MyRentings from "./components/rent/MyRentings";
+import AllReviews from "./components/review/AllReviews";
 
 import * as pathConstants from "../src/constants/pathConstants";
 
@@ -34,6 +35,7 @@ function App() {
           <Route path={pathConstants.logout} element={<Logout />} />
           <Route path={pathConstants.error} element={<Error />} />
           <Route path={pathConstants.rentings} element={<MyRentings />} />
+          <Route path={pathConstants.reviews} element={<AllReviews />} />
         </Routes>
 
         <CaRentoToastContainer />
