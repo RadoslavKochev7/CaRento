@@ -1,6 +1,7 @@
 .detailsHeading3 {
   font-weight: 600;
-  margin-top: 4rem;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .reviewInput {
@@ -11,6 +12,24 @@
 .reviewInput::placeholder {
   font-weight: lighter;
   color: #afb2b3 !important;
+}
+
+.contentBody {
+  display: grid;
+  width: 100%;
+  padding: 0;
+}
+
+.detailsRow {
+  gap: 50px;
+}
+
+.contentBody li {
+  list-style: none;
+}
+
+.content {
+  width: 80%;
 }
 
 .reviewsSection {
@@ -28,8 +47,16 @@
 }
 
 .rentinForm {
-    margin-top: 60px;
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.contentBody b {
+  font-weight: bold;
+}
+
+.contentBody span {
+  font-size: large;
 }

@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { canUserManage } from "../../../utils/userManager";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, ButtonGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import { cars, rentings } from "../../../constants/pathConstants";
 import { authContext } from "../../../contexts/AuthContext";
 import { authString, dateFormat } from "../../../constants/globalConstants";
@@ -39,7 +39,7 @@ export default function CarDetails() {
     rentingService
       .getCarById(id)
       .then((result) => setCar(result))
-      .then(window.scrollTo(0,0))
+      .then(window.scrollTo(0, 0))
       .catch((err) => console.error(err));
 
     reviewService
@@ -86,15 +86,16 @@ export default function CarDetails() {
         rentalStartDate: format(new Date(startDate), dateFormat),
         rentalEndDate: format(new Date(endDate), dateFormat),
         renterId: userId,
-        renterEmail: email
+        renterEmail: email,
       };
 
       const result = await rentingService.rentCar(id, data);
       setCar(result);
-      toast.success(`Successfully rented from ${startDate} to ${endDate}`, { autoClose: 2000});
+      toast.success(`Successfully rented from ${startDate} to ${endDate}`, {
+        autoClose: 2000,
+      });
 
       navigate(rentings);
-
     } catch (error) {
       console.log(error);
     }
@@ -179,7 +180,7 @@ export default function CarDetails() {
   return (
     <div className={styles.siteSection}>
       <div className="container">
-        <div className="row">
+        <div className={`row ${styles.detailsRow}`}>
           <div className="col-lg-6 mb-5 mb-lg-0">
             {car.imageUrl && (
               <img
@@ -189,11 +190,11 @@ export default function CarDetails() {
                     : car.imageUrl
                 }
                 alt="Image"
-                className="img-fluid rounded"
+                className="img-fluid rounded mt-4"
               />
             )}
           </div>
-          <div className="col-lg-4 ml-auto">
+          <div className="col-lg-4">
             {showDeleteModal && (
               <DeleteModal
                 deleteHandler={deleteModalHandler}
@@ -208,52 +209,83 @@ export default function CarDetails() {
                 data={car}
               />
             )}
-            <div className="listing-contents">
+            <div className={styles.content}>
               <h3 className={styles.detailsHeading3}>
                 {car.make} {car.model}
               </h3>
-              <div className="rent-price">
-                <span>
-                  <b>Price:</b>
-                </span>
-                <strong> {car.rentalPrice}$</strong>
-                <span className="mx-1">/</span>day
-              </div>
-              <div className="listing-feature">
-                <span className="caption">
-                  <b>Year:</b> {car.year}
-                </span>
-                <span className="caption">
-                  <b>HP :</b> {car.horsePower}
-                </span>
-                <span className="caption">
-                  <b>Mileage: </b>
-                  {car.mileage} km
-                </span>
-              </div>
 
-              <div>
-                <div>
+              <ul className={styles.contentBody}>
+                <li className="list-unstyled rent-price">
+                  <span>
+                    <b>Price:</b>
+                  </span>
+                  <span className="mx-1">{car.rentalPrice}$ /</span>day
+                </li>
+
+                <li className="listing-feature">
+                  <span className="caption">
+                    <b>Year:</b> {car.year}
+                  </span>
+                </li>
+                <li>
+                  <span className="caption">
+                    <b>HP:</b> {car.horsePower}
+                  </span>
+                </li>
+
+                <li>
+                  <span className="caption">
+                    <b>Mileage: </b>
+                    {car.mileage} km
+                  </span>
+                </li>
+
+                <li>
                   <span className="caption">
                     <b>City:</b> {car.city}
                   </span>
+                </li>
+
+                <li>
                   <span className="caption">
                     <b>Country: </b>
-                    {car.country}
+                    <span>{car.country}</span>
                   </span>
-                </div>
-              </div>
-              <span className="caption">
-                <b>Description:</b>
-              </span>
-              <p>{car.description}</p>
-              <p>{car.fuelType}</p>
-              <p>{car.isAvailable ? "Available" : "Rented"}</p>
-              <p>{car.address}</p>
-              <hr />
+                </li>
+
+                <li>
+                  <span className="caption">
+                    <b>Fuel Type: </b>
+                    {car.fuelType}
+                  </span>
+                </li>
+
+                <li>
+                  <span className="caption">
+                    <b>State: </b>
+                    {car.isAvailable ? "Available" : "Rented"}
+                  </span>
+                </li>
+
+                <li>
+                  <span className="caption">
+                    <span>
+                      <b>Address: </b>
+                    </span>
+                    <span>{car.address}</span>
+                  </span>
+                </li>
+
+                <li>
+                  <span className="caption">
+                    <b>Description: </b>
+                    {car.description}
+                  </span>
+                </li>
+              </ul>
               {canUserManage(car._ownerId) && (
-                <>
-                  <button
+                <ButtonGroup>
+                  <Button
                     className={`btn btn-danger ${styles.buttonItem}`}
                     onClick={onDeleteModalClick}
                   >
@@ -261,8 +293,8 @@ export default function CarDetails() {
                       <FontAwesomeIcon icon={faTrashCan} />
                     </span>
                     Delete
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     className={`btn btn-warning ${styles.buttonEdit}`}
                     onClick={editModalClick}
                   >
@@ -270,8 +302,8 @@ export default function CarDetails() {
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </span>
                     Edit
-                  </button>
-                </>
+                  </Button>
+                </ButtonGroup>
               )}
             </div>
           </div>

@@ -16,7 +16,7 @@ export default function About() {
               />
             </div>
             <section className="col-lg-4 mr-auto">
-              <h2>CaRento</h2>
+              <h2>Who we are</h2>
               <p>
                 CaRento is a leading name in the car rental industry, dedicated
                 to offering seamless and reliable services to customers

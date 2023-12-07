@@ -56,12 +56,14 @@ export default function Footer() {
               </div>
             </div>
           </div>
+          
         </div>
-        <div className="row pt-5 mt-5 text-center">
-          <div className="col-md-12">
+
+        <div className="position-relative text-center" style={{  bottom: 200, left: 40}}>
+          <div>
             <div>
-              CaRento - Your Journey, Your Way © {new Date().getFullYear()} CaRento. All rights
-              reserved.
+              CaRento - Your Journey, Your Way © {new Date().getFullYear()}
+              CaRento. All rights reserved.
             </div>
             <div className="border-top pt-5">
               <p>
