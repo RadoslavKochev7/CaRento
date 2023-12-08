@@ -22,7 +22,7 @@ export default function carDataDetailsBody({ carData }) {
       <li>
         <span className="caption">
           <b>Mileage: </b>
-          {carData.mileage} km
+          {carData.mileage && `${carData.mileage} km`}
         </span>
       </li>
 

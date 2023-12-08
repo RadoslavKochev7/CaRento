@@ -9,4 +9,5 @@ export const allRentings = "/rentings/all";
 export const reviews = "/reviews";
 export const login = "/login";
 export const logout = "/logout";
+export const unauthorized = "/unauthorized";
 export const error = "*";
