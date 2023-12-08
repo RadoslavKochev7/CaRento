@@ -84,7 +84,7 @@ export default function CarListing() {
         .toLowerCase()
         .includes(searchPattern.toLowerCase());
     });
-
+    
     if (searchPattern && filteredData.length > 0) {
       setCars(filteredData);
     } else {

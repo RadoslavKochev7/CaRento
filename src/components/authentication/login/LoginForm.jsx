@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, FormGroup } from "react-bootstrap";
 import { authContext } from "../../../contexts/AuthContext";
+import { register } from "../../../constants/pathConstants";
+import { inavalidPasswordLength, invalidEmail } from "../../../constants/globalConstants";
 import styles from "./LoginForm.module.css";
 
 export default function LoginForm() {
@@ -31,16 +33,13 @@ export default function LoginForm() {
     event.preventDefault();
     let valid = true;
 
-    if (password.trim() === "") {
-      setPasswordError("Password is required");
+    if (password.length < 3) {
+      setPasswordError(inavalidPasswordLength);
       valid = false;
     }
 
-    if (email.trim() === "") {
-      setEmailError("Email address is required");
-      valid = false;
-    } else if (!isValidEmail(email)) {
-      setEmailError("Invalid email address");
+    if (!isValidEmail(email)) {
+      setEmailError(invalidEmail);
       valid = false;
     }
 
@@ -82,6 +81,7 @@ export default function LoginForm() {
               value={password}
               onChange={handlePasswordChange}
               isInvalid={!!passwordError}
+              required
             />
             <Form.Control.Feedback type="invalid">
               {passwordError}
@@ -96,6 +96,7 @@ export default function LoginForm() {
               value={email}
               onChange={handleEmailChange}
               isInvalid={!!emailError}
+              required
             />
             <Form.Control.Feedback type="invalid">
               {emailError}
@@ -111,7 +112,7 @@ export default function LoginForm() {
               variant="info"
               type="button"
               as={Link}
-              to={"/register"}
+              to={register}
             >
               Register
             </Button>

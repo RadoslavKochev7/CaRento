@@ -46,7 +46,6 @@ const AuthProvider = ({ children }) => {
         toast.success(`${username} ${toastConstants.registerSucces}`, { autoClose: 2000 });
         navigate(pathConstants.login);
       }
-      console.log(result);
     } catch (error) {
       console.log(error);
       navigate(pathConstants.error);

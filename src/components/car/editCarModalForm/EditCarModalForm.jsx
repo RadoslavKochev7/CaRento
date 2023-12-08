@@ -57,10 +57,11 @@ export default function EditCarModalForm({
     e.preventDefault();
     setLoading(true);
     let isValid = true;
-    debugger;
+
     if (!validateDate()) {
       isValid = false;
     }
+    
     if (!(await validateLocations(formValues.city, formValues.country))) {
       isValid = false;
     }

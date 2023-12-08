@@ -1,9 +1,10 @@
 import { Form, Button } from "react-bootstrap";
 import { useContext, useState } from "react";
+import { authContext } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import * as globalConstants from "../../../constants/globalConstants";
 
 import styles from "./Register.module.css";
-import { authContext } from "../../../contexts/AuthContext";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -33,24 +34,24 @@ export default function Register() {
     event.preventDefault();
     let isValid = true;
 
-    if (!isValidEmail) {
-      setEmailError("Please, enter valid email address");
+    if (isValidEmail()) {
+      setEmailError(globalConstants.invalidEmail);
       isValid = false;
     }
 
-    if (!isConfirmPasswordValid) {
-      setConfirmPasswordError("Confirm password does not match");
+    if (!isConfirmPasswordValid()) {
+      setConfirmPasswordError(globalConstants.invalidConfirmPassword);
       isValid = false;
     }
 
-    if (!isPasswordLengthValid) {
-      setPasswordError("Password must be longer than 3 characters");
+    if (!isPasswordLengthValid()) {
+      setPasswordError(globalConstants.inavalidPasswordLength);
       isValid = false;
     }
 
     if (isValid) {
       try {
-        registerSubmitHandler(email, password, username);
+        await registerSubmitHandler(email, password, username);
       } catch (error) {
         console.log(error);
       }

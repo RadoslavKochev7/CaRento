@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -9,17 +9,20 @@ import { toast } from "react-toastify";
 import { format } from "date-fns";
 import { cars, rentings } from "../../../constants/pathConstants";
 import { authContext } from "../../../contexts/AuthContext";
+import { getCityCoordinates } from "../../../services/locationService";
 import { authString, dateFormat } from "../../../constants/globalConstants";
+
 import RentForm from "../../rent/RentForm";
 import DeleteModal from "../../deleteModal/DeleteModal";
 import EditCarModalForm from "../editCarModalForm/EditCarModalForm";
 import Review from "../../review/Review";
+import CarDetailsBody from "./CarDetailsBody";
 import styles from "./CarDetails.module.css";
+
 import * as toastConstants from "../../../constants/toastConstants";
 import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
 import * as reviewsConstant from "../../../constants/reviewConstants";
-import CarDetailsBody from "./CarDetailsBody";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -58,6 +61,14 @@ export default function CarDetails() {
   };
 
   const editHandler = async (carId, carData) => {
+    if (!carData.latitude || !carData.longitude) {
+      const coordinates = await getCityCoordinates(
+        carData.city,
+        carData.country
+      );
+      carData.latitude = coordinates[0].latitude;
+      carData.longitude = coordinates[0].longitude;
+    }
     const result = await rentingService.editCarById(carId, carData);
     if (result.message) {
       // toast with validation with the message from request
@@ -75,7 +86,7 @@ export default function CarDetails() {
         return toast.warning(result.message);
       }
       toast.success(toastConstants.deleteSuccess);
-      navigate("/cars");
+      navigate(cars);
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +128,6 @@ export default function CarDetails() {
   const editReview = async () => {
     const result = await reviewService.editReview(editingReviewId, reviewText);
     if (result.message) {
-      console.log(result);
       return toast.warning(result.message);
     }
 
@@ -137,6 +147,7 @@ export default function CarDetails() {
     reviewButton.style.color = reviewsConstant.addButtonColor;
     setIsEditMode(false);
   };
+  
   const submitHandler = async (e) => {
     e.preventDefault();
 

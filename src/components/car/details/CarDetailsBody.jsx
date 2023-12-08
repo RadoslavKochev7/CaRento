@@ -15,7 +15,7 @@ export default function carDataDetailsBody({ carData }) {
       </li>
       <li>
         <span className="caption">
-          <b>HP:</b> {carData.horsePower}
+          <b>HP:</b> {carData.horsePower && `${carData.horsePower} hp`}
         </span>
       </li>
 

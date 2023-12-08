@@ -1,6 +1,7 @@
 import { useState } from "react";
-import styles from "./RentForm.module.css";
 import { toast } from "react-toastify";
+import { datesInThePast, invalidEndDate } from "../../constants/reviewConstants";
+import styles from "./RentForm.module.css";
 
 export default function RentForm({ rentHandler }) {
   const [startDate, setStartDate] = useState("");
@@ -25,7 +26,13 @@ export default function RentForm({ rentHandler }) {
     e.preventDefault();
 
     if (new Date(endDate) < new Date(startDate)) {
-      toast.warning("End Date cannot be before Start Date");
+      toast.warning(invalidEndDate);
+      return;
+    }
+
+    if (new Date(startDate).getDate() < new Date().getDate() 
+     || new Date(endDate).getDate() < new Date().getDate() ) {
+      toast.warning(datesInThePast);
       return;
     }
 
