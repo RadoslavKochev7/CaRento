@@ -19,6 +19,7 @@ import * as toastConstants from "../../../constants/toastConstants";
 import * as rentingService from "../../../services/rentingService";
 import * as reviewService from "../../../services/reviewsService";
 import * as reviewsConstant from "../../../constants/reviewConstants";
+import CarDetailsBody from "./CarDetailsBody";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -215,74 +216,9 @@ export default function CarDetails() {
               </h3>
 
               <ul className={styles.contentBody}>
-                <li className="list-unstyled rent-price">
-                  <span>
-                    <b>Price:</b>
-                  </span>
-                  <span className="mx-1">{car.rentalPrice}$ /</span>day
-                </li>
-
-                <li className="listing-feature">
-                  <span className="caption">
-                    <b>Year:</b> {car.year}
-                  </span>
-                </li>
-                <li>
-                  <span className="caption">
-                    <b>HP:</b> {car.horsePower}
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>Mileage: </b>
-                    {car.mileage} km
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>City:</b> {car.city}
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>Country: </b>
-                    <span>{car.country}</span>
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>Fuel Type: </b>
-                    {car.fuelType}
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>State: </b>
-                    {car.isAvailable ? "Available" : "Rented"}
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <span>
-                      <b>Address: </b>
-                    </span>
-                    <span>{car.address}</span>
-                  </span>
-                </li>
-
-                <li>
-                  <span className="caption">
-                    <b>Description: </b>
-                    {car.description}
-                  </span>
-                </li>
+                <CarDetailsBody carData={car} />
               </ul>
+
               {canUserManage(car._ownerId) && (
                 <ButtonGroup>
                   <Button

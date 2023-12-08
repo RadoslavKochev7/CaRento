@@ -5,6 +5,7 @@ export const about = "/about";
 export const cars = "/cars";
 export const mine = "/mine";
 export const rentings = "/rentings";
+export const allRentings = "/rentings/all";
 export const reviews = "/reviews";
 export const login = "/login";
 export const logout = "/logout";

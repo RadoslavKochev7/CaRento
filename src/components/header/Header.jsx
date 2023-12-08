@@ -24,7 +24,10 @@ export default function Header() {
 
           <div className="col-9  text-right">
             <span className="d-inline-block d-lg-none">
-              <Link to={pathConstants.home} className=" site-menu-toggle js-menu-toggle py-5">
+              <Link
+                to={pathConstants.home}
+                className=" site-menu-toggle js-menu-toggle py-5"
+              >
                 <span className="icon-menu h3 text-black"></span>
               </Link>
             </span>
@@ -49,7 +52,46 @@ export default function Header() {
                     About
                   </Link>
                 </li>
-                {isAuthenticated && (
+                {isAdmin && (
+                  <>
+                    <li>
+                      <Link
+                        to={pathConstants.reviews}
+                        className={styles.navItem}
+                      >
+                        All Reviews
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={pathConstants.rentings}
+                        className={styles.navItem}
+                      >
+                        My Rentings
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={pathConstants.allRentings}
+                        className={styles.navItem}
+                      >
+                        All Rentings
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={pathConstants.logout}
+                        className={styles.navItem}
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                    <span className={styles.userSpan}>
+                      Welcome, {username}!
+                    </span>
+                  </>
+                )}
+                {isAuthenticated && !isAdmin && (
                   <>
                     <li>
                       <Link to={pathConstants.mine} className={styles.navItem}>
@@ -57,31 +99,34 @@ export default function Header() {
                       </Link>
                     </li>
                     <li>
-                      <Link to={pathConstants.rentings} className={styles.navItem}>
+                      <Link
+                        to={pathConstants.rentings}
+                        className={styles.navItem}
+                      >
                         My Rentings
                       </Link>
                     </li>
+
                     <li>
-                      <Link to={pathConstants.logout} className={styles.navItem}>
+                      <Link
+                        to={pathConstants.logout}
+                        className={styles.navItem}
+                      >
                         Logout
                       </Link>
                     </li>
                     <span className={styles.userSpan}>
                       Welcome, {username}!
                     </span>
-                    {isAdmin && (
-                       <li>
-                       <Link to={pathConstants.reviews} className={styles.navItem}>
-                         All Reviews
-                       </Link>
-                     </li>
-                    )}
                   </>
                 )}
                 {!isAuthenticated && (
                   <>
                     <li>
-                      <Link to={pathConstants.register} className={styles.navItem}>
+                      <Link
+                        to={pathConstants.register}
+                        className={styles.navItem}
+                      >
                         Register
                       </Link>
                     </li>
@@ -97,8 +142,12 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <Link className={`btn btn-secondary ${styles.backBtn}`} onClick={() => navigate(-1)}>
-      <FontAwesomeIcon className={styles.backBtnIcon} icon={faArrowLeft} /> Go Back
+      <Link
+        className={`btn btn-secondary ${styles.backBtn}`}
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon className={styles.backBtnIcon} icon={faArrowLeft} /> Go
+        Back
       </Link>
     </header>
   );

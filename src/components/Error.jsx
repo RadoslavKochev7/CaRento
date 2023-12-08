@@ -1,10 +1,9 @@
 export default function Error() {
   return (
-    <div>
+    <div className="container">
       <img
-        height={700}
-        className="img w-100"
-        src="public/images/error404.jpg"
+        className="img w-100 img-fluid"
+        src="images/404 not found.png"
         alt="error-image"
       />
     </div>

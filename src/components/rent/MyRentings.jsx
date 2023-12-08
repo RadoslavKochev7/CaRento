@@ -45,59 +45,64 @@ export default function MyRentings() {
   return (
     <>
       {rentingsData && (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>№</th>
-              <th>Image</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Make</th>
-              <th>Model</th>
-              <th>Price</th>
-              <th>Fuel Type</th>
-              <th>Mileage</th>
-              <th>Horse Power</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rentingsData.map((rd, index) => (
-              <>
-                <tr key={rd._id}>
-                  <td key={rd._id + index}>{++index}.</td>
-                  <td>
-                    <img
-                      src={rd.imageUrl}
-                      height={100}
-                      width={150}
-                      alt="image"
-                      onClick={() => navigate(details.replace(":id", rd._id))}
-                    />
-                  </td>
-                  <td>{rd.rentalStartDate}</td>
-                  <td>{rd.rentalEndDate}</td>
-                  <td>{rd.make}</td>
-                  <td>{rd.model}</td>
-                  <td>{rd.rentalPrice} $</td>
-                  <td>{rd.fuelType}</td>
-                  <td>{rd.mileage} km</td>
-                  <td>{rd.horsePower} hp</td>
-                  <td>
-                    <button
-                      type="button"
-                      id={rd._id}
-                      className="btn btn-info"
-                      onClick={returnHandler}
-                    >
-                      Return
-                    </button>
-                  </td>
-                </tr>
-              </>
-            ))}
-          </tbody>
-        </Table>
+        <>
+          <h2 className="text-center mt-1 mb-4">
+            <b>My Rented Cars</b>
+          </h2>
+          <Table striped bordered hover className="mt-2">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Image</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Fuel Type</th>
+                <th>Mileage</th>
+                <th>Horse Power</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rentingsData.map((rd, index) => (
+                <>
+                  <tr key={rd._id}>
+                    <td>{++index}.</td>
+                    <td>
+                      <img
+                        src={rd.imageUrl}
+                        height={100}
+                        width={150}
+                        alt="image"
+                        onClick={() => navigate(details.replace(":id", rd._id))}
+                      />
+                    </td>
+                    <td>{rd.rentalStartDate}</td>
+                    <td>{rd.rentalEndDate}</td>
+                    <td>{rd.make}</td>
+                    <td>{rd.model}</td>
+                    <td>{rd.rentalPrice} $</td>
+                    <td>{rd.fuelType}</td>
+                    <td>{rd.mileage} km</td>
+                    <td>{rd.horsePower} hp</td>
+                    <td>
+                      <button
+                        type="button"
+                        id={rd._id}
+                        className="btn btn-info"
+                        onClick={returnHandler}
+                      >
+                        Return
+                      </button>
+                    </td>
+                  </tr>
+                </>
+              ))}
+            </tbody>
+          </Table>
+        </>
       )}
       {!rentingsData.length && (
         <div className="container mb-xl-4">

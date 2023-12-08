@@ -8,7 +8,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./AddCarModalForm.module.css";
 import * as locationService from "../../../services/locationService";
 import * as carConstants from "../../../constants/carConstants";
@@ -124,7 +124,7 @@ export default function AddCarModalForm({ onSubmit }) {
   return (
     <div className={styles.addBtn}>
       <Button variant="primary" onClick={onModalLoad}>
-        + Add Car
+        <FontAwesomeIcon icon={faPlus} /> Add Car
       </Button>
       <Modal show={showModal} onHide={closeModalHandler}>
         <Modal.Header>

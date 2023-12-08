@@ -17,6 +17,8 @@ import MyRentings from "./components/rent/MyRentings";
 import AllReviews from "./components/review/AllReviews";
 
 import * as pathConstants from "../src/constants/pathConstants";
+import AllRentings from "./components/rent/AllRentings";
+import AuthGuard from "./components/guards/AuthGuard";
 
 function App() {
   return (
@@ -28,14 +30,19 @@ function App() {
           <Route path={pathConstants.home} element={<Home />} />
           <Route path={pathConstants.cars} element={<CarListing />} />
           <Route path={pathConstants.details} element={<CarDetails />} />
-          <Route path={pathConstants.mine} element={<Mine />} />
           <Route path={pathConstants.about} element={<About />} />
-          <Route path={pathConstants.login} element={<LoginForm />} />
           <Route path={pathConstants.register} element={<Register />} />
-          <Route path={pathConstants.logout} element={<Logout />} />
           <Route path={pathConstants.error} element={<Error />} />
-          <Route path={pathConstants.rentings} element={<MyRentings />} />
-          <Route path={pathConstants.reviews} element={<AllReviews />} />
+          <Route path={pathConstants.login} element={<LoginForm />} />
+
+          <Route element={<AuthGuard />}>
+            <Route path={pathConstants.mine} element={<Mine />} />
+            <Route path={pathConstants.logout} element={<Logout />} />
+            <Route path={pathConstants.rentings} element={<MyRentings />} />
+            <Route path={pathConstants.reviews} element={<AllReviews />} />
+            <Route path={pathConstants.allRentings} element={<AllRentings />} />
+          </Route>
+          
         </Routes>
 
         <CaRentoToastContainer />
