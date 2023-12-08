@@ -162,7 +162,7 @@ export default function CarDetails() {
     setReviews((state) => state.filter((review) => review._id !== id));
   };
 
-  const editReviewHandler = async (id, text) => {
+  const editReviewHandler = (id, text) => {
     setReviewText(text);
     setIsEditMode(true);
     setEditingReviewId(id);

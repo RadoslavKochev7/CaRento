@@ -48,7 +48,7 @@ export const editReview = async (id, text) => {
     const response = await fetch(`${BASE_URL}${id}`, {
         headers: headers,
         method: "PUT",
-        body: JSON.stringify({ text: text })
+        body: JSON.stringify({ text })
     })
 
     return response.json();
