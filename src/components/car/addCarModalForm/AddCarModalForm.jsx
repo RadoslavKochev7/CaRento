@@ -129,7 +129,7 @@ export default function AddCarModalForm({ onSubmit }) {
       <Modal show={showModal} onHide={closeModalHandler}>
         <Modal.Header>
           <Modal.Title className={styles.modalTitle}>
-            Please, populate the required fieldss
+            Please, populate the required fields
           </Modal.Title>
           <button className={styles.closeButton}>
             <FontAwesomeIcon icon={faXmark} onClick={closeModalHandler} />
